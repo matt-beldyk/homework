@@ -26,7 +26,8 @@ print STDERR "Postings: $postings_count\n";
 # If I have this module, wonderful, if not I can't get this info easily
 # http://search.cpan.org/~browseruk/Devel-Size/lib/Devel/Size.pm
 eval {
-    use Devel::Size qw(size total_size);
+    require Devel::Size;
+    Devel::Size->import(qw(size total_size));
 
     print STDERR "Size of pointers internal to \$index = " .size($index)."\n";
     print STDERR "Total Size of \$index = " .total_size($index)."\n";
