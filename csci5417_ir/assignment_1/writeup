@@ -7,6 +7,14 @@ For my output, I simply sorted the postings for each term, and then iterated ove
 Short Answer:
 Terms: 14480
 Postings: 91009
-My full index output file: 495536 bytes
+Size of pointers internal to $index = 506158
+Total Size of $index = 6224742
+Size of output file = 495536
 
-Which is about half the size of the corpus.  For something that is only one MB this isn't a big deal, but with tera-peta bytes, this becomes quite an issue (let alone how would one even sort that much data?)  For a larger corpus, I would change the structure of each term's posting list into some sort of tree to better search the contents.  
+Interestingly enough, the internal perl data structure jumped to 6X the size of the initial corpus.  I assume this is due to perl being exceedingly generous about how it allocates space for strings and other structures.  This of course, does not work for a corpus of any large size; on my laptop I'd be into swap space at about a 0.5G corpus.
+
+The output file format is 12X better than the internal perl data structure (which isn't sayning much,) but that is still problematic for anything large.
+
+For a larger corpus, I'd have to do significant tuning of my data structure, possibly forcing the system to prune the ends of all my strings and ints (which are stored as strings.) I would also have to create a more efficient way to store this information (perhaps using some of the suggested optimizations from class.)
+
+
