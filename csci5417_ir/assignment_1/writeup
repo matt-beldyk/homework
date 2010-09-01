@@ -1,0 +1,12 @@
+Basically, I iterate through the corpus one line at a time.  I keep track of which document I am in and add terms to my hash as I iterate (and an entry into each term's list showing which document held that term.)
+
+I tokenized the documents by splitting on a regular expression that basically stated "one or more NOT(dashes or alpha-numerics)"  The semantics of Perl's split function meant that on lines with leading whitespace, I was finding the empty string (and thus I needed to prune it.)
+
+For my output, I simply sorted the postings for each term, and then iterated over them to remove duplicates (if I cared about performance, I might have been inclined to use a different data structure than a list for these, but I would have to benchmark to determine which seemed to work the best. (In this case I optimized for developer free time.))
+
+Short Answer:
+Terms: 14480
+Postings: 91009
+My full index output file: 495536 bytes
+
+Which is about half the size of the corpus.  For something that is only one MB this isn't a big deal, but with tera-peta bytes, this becomes quite an issue (let alone how would one even sort that much data?)  For a larger corpus, I would change the structure of each term's posting list into some sort of tree to better search the contents.  
