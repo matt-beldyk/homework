@@ -62,11 +62,31 @@ sub read_file {
 
 	# incase the documents aren't in order
 	foreach my $key (sort keys %index){
-		# I explicitly want to sort these as numbers, not strings
-		@{$index{$key}} = sort {$a <=> $b }(@{$index{$key}});
+		@{$index{$key}} = prune_and_sort_list(@{$index{$key}});
 	}
 	return \%index;
 }
+
+sub prune_and_sort_list {
+
+    my @list = @_;
+
+	# I explicitly want to sort these as numbers, not strings
+    @list = sort {$a <=> $b} @list;
+
+    my @n;
+    my $last;
+
+    # Pruning some duplicate items from the lists
+    foreach my $item (@list){
+        if(!(defined $last && $item == $last)){
+            push (@n, $item);
+            $last = $item;
+        }
+    }
+    return @n;
+}
+
 
 =head1 COPYRIGHT 
 
