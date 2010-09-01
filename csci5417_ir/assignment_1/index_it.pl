@@ -16,7 +16,11 @@ open(my $fh, "< $fname") or croak "$fname wouldn't open, sorry.\n";
 
 my $index = read_file($fh);
 deserialize($index);
+print STDERR "Terms: ".(scalar (keys %$index)). "\n";
+my $postings_count = 0;
+map {$postings_count += (scalar @{$index->{$_}})} (keys %$index);
 
+print STDERR "Postings: $postings_count\n";
 
 exit;
 
