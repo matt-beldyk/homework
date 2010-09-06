@@ -10,12 +10,16 @@ if(!$ARGV[0]){
 }
 
 my $fname = $ARGV[0];
+my @c = qw(a b c d e);
+my @d = qw(b d e f g h);
 
+print join(' ', intersection(\@c, \@d)). "\n";
+exit;
 
 open(my $fh, "< $fname") or croak "$fname wouldn't open, sorry.\n";
 
 my $index = read_file($fh);
-deserialize($index);
+#deserialize($index);
 print STDERR "Terms: ".(scalar (keys %$index)). "\n";
 my $postings_count = 0;
 map {$postings_count += (scalar @{$index->{$_}})} (keys %$index);
@@ -35,6 +39,16 @@ eval {
 
 exit;
 
+sub intersection {
+    my $c = shift;
+    my $d = shift;
+
+    my %existance;
+    map {$existance{$_} += 1} (@$c);
+    map {$existance{$_} += 1} (@$d);
+
+    return (grep {$existance{$_} >= 2;} (keys %existance));
+}
 sub deserialize {
 	my $index = shift;
 
