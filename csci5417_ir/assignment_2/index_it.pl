@@ -8,17 +8,23 @@ if(!$ARGV[0]){
 		print STDERR "$0 <corpus_file>\n";
 		exit 1;
 }
+my $fname = shift @ARGV;
+my @query = @ARGV;
 
-my $fname = $ARGV[0];
-my @c = qw(a b c d e);
-my @d = qw(b d e f g h);
+my @foo = qw( a b c d e f);
+my @bar = qw( c e f a g h i j);
+my @que = qw( f g a);
 
-print join(' ', intersection(\@c, \@d)). "\n";
-exit;
+print join (',', intersection(\@foo, \@bar, \@que));
 
 open(my $fh, "< $fname") or croak "$fname wouldn't open, sorry.\n";
 
 my $index = read_file($fh);
+
+my @solutions = and_query($index, @query);
+
+
+exit;
 #deserialize($index);
 print STDERR "Terms: ".(scalar (keys %$index)). "\n";
 my $postings_count = 0;
@@ -39,15 +45,36 @@ eval {
 
 exit;
 
+sub and_query {
+    my $index = shift;
+    my @query = @_;
+    foreach my $item (@query){
+        if(!defined $index->{$item}){
+            $index->{$item} = [];
+        }
+    }
+
+    # sort my search terms in reverse order
+    my @ordered_query = sort {scalar @{$index->{$b}} <=> scalar @{$index->{$a}}} @query;
+    
+    print "Sorted Query: ".join(',', @ordered_query);
+    print join(' ',@query).','.join(',', (sort(intersection(map {$index->{$_};} @ordered_query))))."\n";
+    return;
+
+}
 sub intersection {
     my $c = shift;
-    my $d = shift;
+    my @rest = @_;
+    if(! @rest || scalar @rest == 0){ 
+        return @$c;
+    }else {
+        my %existance;
+        map {$existance{$_} += 1} (@$c);
+        map {$existance{$_} += 1} (intersection(@rest));
 
-    my %existance;
-    map {$existance{$_} += 1} (@$c);
-    map {$existance{$_} += 1} (@$d);
+        return (grep {$existance{$_} >= 2;} (keys %existance));
+    }
 
-    return (grep {$existance{$_} >= 2;} (keys %existance));
 }
 sub deserialize {
 	my $index = shift;
