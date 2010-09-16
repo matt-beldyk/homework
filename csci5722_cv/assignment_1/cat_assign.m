@@ -12,6 +12,7 @@ cat_h = sizes(1);
 cat_w = sizes(2);
 
 
+
 % read in files
 for i = 1:img_count
 
@@ -27,7 +28,8 @@ for i = 1:img_count
 end
 ref_mask = imread(strcat(path, '/spheremask.png'));
 cat_mask = imread(strcat(path, '/catmask.png'));
-size(ref_mask)
+
+foo = get_ref_invs(matte_pics, shiny_pics, ref_mask);
 
 %size(cat_pics)
 %pic = cat_pics(:,:,:,6)/255.;
@@ -97,5 +99,28 @@ function [pics] = allocate_buffer(file_name, count)
     pics = zeros(sizes(1),sizes(2),sizes(3),count);
 end
 
+function [pseudo] = get_ref_invs(ref1, ref2,mask)
+    sizes = size(ref1);
+    h = sizes(1);
+    w = sizes(2);
+    colors = sizes(3);
+    count = sizes(4);
+
+   
+    pseudo = zeros(h,w,2,2);
+    for x = 1:h
+        for y = 1:w
+            if is_masked(mask,x,y)
+                vect1 = reshape(ref1(x,y,:,:),count*colors,1);
+                vect2 = reshape(ref2(x,y,:,:),count*colors,1);
+                M = [vect1,vect2];
+                pseudo(x,y,:,:) = inv(M'*M);
+                inv(M'*M)
+            end
+        end
+    end
+    
+
+end
 
 
