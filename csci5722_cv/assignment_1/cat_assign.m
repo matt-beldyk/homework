@@ -29,7 +29,7 @@ end
 ref_mask = imread(strcat(path, '/spheremask.png'));
 cat_mask = imread(strcat(path, '/catmask.png'));
 
-foo = get_ref_invs(matte_pics, shiny_pics, ref_mask);
+invs = get_ref_invs(matte_pics, shiny_pics, ref_mask);
 
 %size(cat_pics)
 %pic = cat_pics(:,:,:,6)/255.;
@@ -49,7 +49,7 @@ for x = 1:30
            % [best_sx, best_sy] = find_closest_loc(shiny_pics, ref_mask, cat_vect, 128, 109);
           %  shiny_mapping(x,y,:) = [best_sx, best_sy];
         
-            [best_mx, best_my] = find_closest_loc(matte_pics, ref_mask, cat_vect, 128, 109);
+            [best_mx, best_my] = find_closest_loc(invs, ref_mask, cat_vect, 128, 109);
             matte_mapping(x,y,:) = [best_mx, best_my];
         end       
     end
@@ -71,17 +71,17 @@ end
 
 
 
-function [best_x,best_y] = find_closest_loc(ref_pics,ref_mask, real_vect, w, h)
+function [best_x,best_y] = find_closest_loc(invs, ref_mask, real_vect, w, h)
     best_val = Inf;
     
     for x = 1:w
         for y = 1:h
             if is_masked(ref_mask, x, y)
-                ref_vect = reshape(ref_pics(x,y,:,:),13*3,1);
-                if(norm(ref_vect-real_vect)<best_val)
+                ref_mat = reshape(invs(x,y,:,:),39,39);
+                if(norm(ref_mat*real_vect)<best_val)
                     best_x = x;
                     best_y = y;
-                    best_val = norm(real_vect-ref_vect);
+                    best_val = norm(ref_mat*real_vect);
                 end
             end
         end
@@ -107,15 +107,15 @@ function [pseudo] = get_ref_invs(ref1, ref2,mask)
     count = sizes(4);
 
    
-    pseudo = zeros(h,w,2,2);
+    pseudo = zeros(h,w,39,39);
     for x = 1:h
         for y = 1:w
             if is_masked(mask,x,y)
                 vect1 = reshape(ref1(x,y,:,:),count*colors,1);
                 vect2 = reshape(ref2(x,y,:,:),count*colors,1);
-                M = [vect1,vect2];
+                M = [vect1,vect2]';
                 pseudo(x,y,:,:) = inv(M'*M);
-                inv(M'*M)
+                inv(M'*M);
             end
         end
     end
