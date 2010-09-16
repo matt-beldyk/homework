@@ -1,14 +1,19 @@
 function [] = cat_assign()
 
-path = '/home/beldyk/Desktop/cat';
+path = '/home/beldyk/Desktop/cat/';
+img_count = 13;
 
-% Allocate space for files
-cat_pics = zeros(247,220,3,13);
-matte_pics = zeros(128,109,3,13);
-shiny_pics = zeros(128,109,3,13);
+cat_pics = allocate_buffer(strcat(path,'OBJ_01.png'), img_count);
+matte_pics = allocate_buffer(strcat(path, 'SPHERE_01.png'), img_count);
+shiny_pics = allocate_buffer(strcat(path, 'SHINY_01.png'), img_count);
+
+sizes = size(cat_pics);
+cat_h = sizes(1);
+cat_w = sizes(2);
+
 
 % read in files
-for i = 1:13
+for i = 1:img_count
 
     cat_file = strcat(path, sprintf('/OBJ_%02d.png',i));
     matte_file = strcat(path, sprintf('/SPHERE_%02d.png',i));
@@ -29,18 +34,18 @@ size(ref_mask)
 %pixle_space = cat_pics(100,100,:,:)
 %pic_size = size(pic);
 %image(pic);
-shiny_mapping = zeros(247, 220, 2);
-matte_mapping = zeros(247, 220, 2);
-%for x = 1:247
+shiny_mapping = zeros(cat_h, cat_w, 2);
+matte_mapping = zeros(cat_h, cat_w, 2);
+%for x = 1:cat_h
    
-for x = 1:247
+for x = 1:30
     x
-    for y = 1:220
+    for y = 1:cat_w
         if is_masked(cat_mask, x, y)
             
             cat_vect = reshape(cat_pics(x,y,:,:),39,1);
-            [best_sx, best_sy] = find_closest_loc(shiny_pics, ref_mask, cat_vect, 128, 109);
-            shiny_mapping(x,y,:) = [best_sx, best_sy];
+           % [best_sx, best_sy] = find_closest_loc(shiny_pics, ref_mask, cat_vect, 128, 109);
+          %  shiny_mapping(x,y,:) = [best_sx, best_sy];
         
             [best_mx, best_my] = find_closest_loc(matte_pics, ref_mask, cat_vect, 128, 109);
             matte_mapping(x,y,:) = [best_mx, best_my];
@@ -48,11 +53,11 @@ for x = 1:247
     end
 end
 
-matte_cat = zeros(247,220,3);
+matte_cat = zeros(cat_h,cat_w,3);
 for x = 1:247
     for y = 1:220
-        bx = matte_mapping(x,y,1)
-        by = matte_mapping(x,y,2)
+        bx = matte_mapping(x,y,1);
+        by = matte_mapping(x,y,2);
         if bx && by
             matte_vect = matte_pics(bx,by,:,1);
             matte_cat(x,y,:) = matte_vect/255;
@@ -85,6 +90,12 @@ function [masked] = is_masked(mask, x, y)
     masked = mask(x,y) >0 ;
 end
 
+function [pics] = allocate_buffer(file_name, count)
+    pics(:,:,:,1) = imread(file_name);
+    sizes = size(pics);
+    % Allocate space for files
+    pics = zeros(sizes(1),sizes(2),sizes(3),count);
+end
 
 
 
