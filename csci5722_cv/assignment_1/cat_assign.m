@@ -71,10 +71,10 @@ function [best_x,best_y] = find_closest_loc(invs, ref_mask, real_vect, w, h)
         for y = 1:h
             if is_masked(ref_mask, x, y)
                 ref_mat = reshape(invs(x,y,:,:),39,39);
-                if(norm(ref_mat*real_vect)<best_val)
+                if(norm(ref_mat*real_vect - real_vect)<best_val)
                     best_x = x;
                     best_y = y;
-                    best_val = norm(ref_mat*real_vect);
+                    best_val = norm(ref_mat*real_vect - real_vect);
                 end
             end
         end
