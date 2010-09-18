@@ -26,9 +26,10 @@ public class Indexer {
 		// TODO Auto-generated method stub
 
 		File indexDir = new File("/tmp/lu_index/");
-		String documents = "/home/beldyk/Desktop/medical.txt";
+		String documents = "/Users/beldyk/Desktop/medical.txt";
 		//String documents = "/home/beldyk/Desktop/short_med.txt";
 		index(indexDir, documents);
+		System.out.println("Huzza, I'm done!");
 
 	}
 
@@ -53,6 +54,7 @@ public class Indexer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	
 	}
 
 }
