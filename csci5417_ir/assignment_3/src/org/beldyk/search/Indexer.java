@@ -26,7 +26,7 @@ public class Indexer {
 		// TODO Auto-generated method stub
 
 		File indexDir = new File("/tmp/lu_index/");
-		String documents = "/Users/beldyk/Desktop/medical.txt";
+		String documents = "/home/beldyk/Desktop/medical.txt";
 		//String documents = "/home/beldyk/Desktop/short_med.txt";
 		index(indexDir, documents);
 		System.out.println("Huzza, I'm done!");
@@ -37,7 +37,7 @@ public class Indexer {
 		DocuReader rdr = new DocuReader();
 		IndexWriter wr = new IndexWriter(FSDirectory.open(indexDir),  
 				new StandardAnalyzer(Version.LUCENE_CURRENT), 
-				true, IndexWriter.MaxFieldLength.LIMITED);
+				true, new IndexWriter.MaxFieldLength(25000));
 
 		//			indexDir, new StandardAnalyzer(), true);
 
@@ -46,7 +46,11 @@ public class Indexer {
 			for(MedDoc d: docs){
 				Document doc = new Document();
 				for(String a:d.keySet()){
-					doc.add(new Field(a, d.get(a), Field.Store.YES, Field.Index.ANALYZED));
+					if(a.equalsIgnoreCase("W")){
+						//System.out.println(d.get(a));
+					}
+						doc.add(new Field(a, d.get(a), Field.Store.YES, Field.Index.ANALYZED));
+
 				}
 				wr.addDocument(doc);
 			}
@@ -54,6 +58,7 @@ public class Indexer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		wr.close();
 	
 	}
 
