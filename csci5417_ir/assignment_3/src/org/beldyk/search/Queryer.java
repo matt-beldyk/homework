@@ -25,11 +25,13 @@ public class Queryer {
 	 */
 	public static void main(String[] args) throws Exception {
 		String qPath = "/home/beldyk/Desktop/queries.txt";
+		String qRelPath = "/home/beldyk/Desktop/qrels.txt";
 		String indexDir = "/tmp/lu_index";
 		Directory fsDir = FSDirectory.open(new File(indexDir));
 
 
 
+		QRels qRels = new QRels(qRelPath);
 
 		QueryReader rdr = new QueryReader(qPath);
 		Collection<MedQuery> querys = rdr.readQueries();
@@ -37,7 +39,9 @@ public class Queryer {
 		for(MedQuery q: querys){
 			//System.out.println(q.toString());
 			Collection<Document> hits = search(q.getQuery(), fsDir);
-			System.out.println("There are "+hits.size()+" results for: "+q.getQuery());
+			Collection<String> goldStandard = qRels.getResults(q.getNumb());
+			System.out.println("There are "+hits.size()+" results for: "+q.getNumb()+":"+q.getQuery());
+			System.out.println("Out of a possible "+goldStandard.size());
 
 
 		}
