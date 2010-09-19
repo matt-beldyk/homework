@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class StatsUtil {
-	public static Double rPrecision(Collection<String> knownRelevant, Collection<String> returnedRelevant){
-		
-		return 0.0;
+	public static Double rPrecision(Integer count, Collection<String> knownRelevant, Collection<String> returnedRelevant){
+
+		Collection<String> prunedRet = new ArrayList<String>();
+		String[] rets = returnedRelevant.toArray(new String[1]);
+		for (int i =0; i<count && i <returnedRelevant.size(); ++i){
+			prunedRet.add(rets[i]);
+		}
+		return (double)intersection(knownRelevant, prunedRet).size()/(double)prunedRet.size();
 	}
 	public static Double precision(Collection<String> knownRelevant, Collection<String> returnedRelevant){
 		int retItems = returnedRelevant.size();
@@ -28,4 +33,11 @@ public class StatsUtil {
 		return inter;
 	}
 
+	public static double average(Collection<Double> b){
+		double tot = 0;
+		for (double a:b){
+			tot += a;
+		}
+		return tot/(double)b.size();
+	}
 }
