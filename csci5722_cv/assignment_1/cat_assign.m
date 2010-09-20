@@ -35,31 +35,39 @@ cat_mask = imread(strcat(path, '/catmask.png'));
 mapping = zeros(cat_h, cat_w, 2);
 
 
-for x = 1:cat_h   
-%for x = 1:30
+%for x = 1:cat_h   
+for x = 1:40
     x
     for y = 1:cat_w
         if is_masked(cat_mask, x, y)
             
             cat_vect = reshape(cat_pics(x,y,:,:),39,1);
-            [best_mx, best_my] = find_closest_loc(invs,refs, ref_mask, cat_vect, 128, 109);
+            [best_mx, best_my] = find_closest_loc(invs, ref_mask, cat_vect, 128, 109);
             mapping(x,y,:) = [best_mx, best_my];
         end       
     end
 end
 
 matte_cat = zeros(cat_h,cat_w,3);
+sphere_norms = map_mask_into_norms(ref_mask);
+cat_norms = zeros(cat_h, cat_w, 3);
+
 for x = 1:cat_h
     for y = 1:cat_w
         bx = mapping(x,y,1);
         by = mapping(x,y,2);
+        
         if bx && by
             matte_vect = matte_pics(bx,by,:,1);
             matte_cat(x,y,:) = matte_vect/255;
+            cat_norms(x,y,:) = sphere_norms(bx,by,:);
         end
     end
 end
 image(matte_cat);
+nrml = cat_norms;
+
+save('asgn1.mat', 'nrml')
 end
 
 function [norms] = map_mask_into_norms(mask)
@@ -78,8 +86,8 @@ end
 
 function [r, center_x, center_y] = find_radius_sphere(mask)
     sizes = size(mask);
-    w = sizes(1)
-    h = sizes(2)
+    h = sizes(1)
+    w = sizes(2)
     min_y=Inf;
     max_y=0;
     min_x=Inf;
@@ -106,8 +114,9 @@ function [r, center_x, center_y] = find_radius_sphere(mask)
     r = (max_x - min_x)/2;
     center_x = (max_x + min_x)/2;
     center_y = (max_y + min_y)/2;
-    
 end
+
+
 function [best_x,best_y] = find_closest_loc(invs, ref_mask, real_vect, w, h)
     best_val = Inf;
     

@@ -35,8 +35,8 @@ cat_mask = imread(strcat(path, '/catmask.png'));
 mapping = zeros(cat_h, cat_w, 2);
 
 
-for x = 1:cat_h   
-%for x = 1:30
+%for x = 1:cat_h   
+for x = 1:40
     x
     for y = 1:cat_w
         if is_masked(cat_mask, x, y)
@@ -49,13 +49,18 @@ for x = 1:cat_h
 end
 
 matte_cat = zeros(cat_h,cat_w,3);
+sphere_norms = map_mask_into_norms(ref_mask);
+cat_norms = zeros(cat_h, cat_w, 3);
+
 for x = 1:cat_h
     for y = 1:cat_w
         bx = mapping(x,y,1);
         by = mapping(x,y,2);
+        
         if bx && by
             matte_vect = matte_pics(bx,by,:,1);
             matte_cat(x,y,:) = matte_vect/255;
+            cat_norms(x,y,:) = sphere_norms(bx,by,:);
         end
     end
 end
@@ -65,13 +70,13 @@ end
 function [norms] = map_mask_into_norms(mask)
     [r, center_x, center_y] = find_radius_sphere(mask);
     sizes = size(mask);
-    norms = zeros(sizes(1), sizes(2), 3);
+    nrml = zeros(sizes(1), sizes(2), 3);
     for i = 1:sizes(1)
         for j = 1:sizes(2)
             norm_x = i - center_x;
             norm_y = j - center_y;
             norm_z = sqrt(r*r - norm_x*norm_x - norm_y*norm_y);
-            norms(i,j,:) = [norm_x, norm_y, norm_z];
+            nrml(i,j,:) = [norm_x, norm_y, norm_z];
         end
     end
 end
