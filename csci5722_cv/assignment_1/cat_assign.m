@@ -62,9 +62,53 @@ end
 image(matte_cat);
 end
 
+function [norms] = map_mask_into_norms(mask)
+    [r, center_x, center_y] = find_radius_sphere(mask);
+    sizes = size(mask);
+    norms = zeros(sizes(1), sizes(2), 3);
+    for i = 1:sizes(1)
+        for j = 1:sizes(2)
+            norm_x = i - center_x;
+            norm_y = j - center_y;
+            norm_z = sqrt(r*r - norm_x*norm_x - norm_y*norm_y);
+            norms(i,j,:) = [norm_x, norm_y, norm_z];
+        end
+    end
+end
 
-
-function [best_x,best_y] = find_closest_loc(invs,ref, ref_mask, real_vect, w, h)
+function [r, center_x, center_y] = find_radius_sphere(mask)
+    sizes = size(mask);
+    w = sizes(1)
+    h = sizes(2)
+    min_y=Inf;
+    max_y=0;
+    min_x=Inf;
+    max_x=0;
+    
+    for y = 1:h
+        for x = 1:w
+            if mask(y,x) >0 
+                if (min_y > y)
+                    min_y = y;
+                end
+                if (min_x > x)
+                    min_x = x;
+                end
+                if (max_y < y)
+                    max_y = y;
+                end
+                if (max_x < x)
+                    max_x = x;
+                end
+            end
+        end
+    end
+    r = (max_x - min_x)/2;
+    center_x = (max_x + min_x)/2;
+    center_y = (max_y + min_y)/2;
+    
+end
+function [best_x,best_y] = find_closest_loc(invs, ref_mask, real_vect, w, h)
     best_val = Inf;
     
     for x = 1:w
