@@ -24,42 +24,35 @@ for i = 1:img_count
     matte_pics(:,:,:,i) = imread(matte_file);
     shiny_pics(:,:,:,i) = imread(shiny_file);
     
-   % kitten(i) = cat_pic;
+  
 end
 ref_mask = imread(strcat(path, '/spheremask.png'));
 cat_mask = imread(strcat(path, '/catmask.png'));
 
-invs = get_ref_invs(matte_pics, shiny_pics, ref_mask);
+[invs, refs] = get_ref_invs(matte_pics, shiny_pics, ref_mask);
 
-%size(cat_pics)
-%pic = cat_pics(:,:,:,6)/255.;
-%pixle_space = cat_pics(100,100,:,:)
-%pic_size = size(pic);
-%image(pic);
-shiny_mapping = zeros(cat_h, cat_w, 2);
-matte_mapping = zeros(cat_h, cat_w, 2);
-%for x = 1:cat_h
-   
+
+mapping = zeros(cat_h, cat_w, 2);
+
+
+%for x = 1:cat_h   
 for x = 1:30
     x
     for y = 1:cat_w
         if is_masked(cat_mask, x, y)
             
             cat_vect = reshape(cat_pics(x,y,:,:),39,1);
-           % [best_sx, best_sy] = find_closest_loc(shiny_pics, ref_mask, cat_vect, 128, 109);
-          %  shiny_mapping(x,y,:) = [best_sx, best_sy];
-        
-            [best_mx, best_my] = find_closest_loc(invs, ref_mask, cat_vect, 128, 109);
-            matte_mapping(x,y,:) = [best_mx, best_my];
+            [best_mx, best_my] = find_closest_loc(invs,refs, ref_mask, cat_vect, 128, 109);
+            mapping(x,y,:) = [best_mx, best_my];
         end       
     end
 end
 
 matte_cat = zeros(cat_h,cat_w,3);
-for x = 1:247
-    for y = 1:220
-        bx = matte_mapping(x,y,1);
-        by = matte_mapping(x,y,2);
+for x = 1:cat_h
+    for y = 1:cat_w
+        bx = mapping(x,y,1);
+        by = mapping(x,y,2);
         if bx && by
             matte_vect = matte_pics(bx,by,:,1);
             matte_cat(x,y,:) = matte_vect/255;
@@ -71,17 +64,21 @@ end
 
 
 
-function [best_x,best_y] = find_closest_loc(invs, ref_mask, real_vect, w, h)
+function [best_x,best_y] = find_closest_loc(invs,ref, ref_mask, real_vect, w, h)
     best_val = Inf;
     
     for x = 1:w
         for y = 1:h
             if is_masked(ref_mask, x, y)
-                ref_vect = reshape(invs(x,y,:,:),2,2);
-                if(norm(ref_vect*real_vect)<best_val)
+                inv_mat = reshape(invs(x,y,:,:),39,39);
+                ref_mat = reshape(ref(x,y,:,:), 2, 39);
+                size(inv_mat*real_vect)
+                size(ref_mat*inv_mat*real_vect)
+                size(real_vect)
+                if(norm(ref_mat*inv_mat*real_vect - real_vect)<best_val)
                     best_x = x;
                     best_y = y;
-                    best_val = norm(real_vect-ref_vect);
+                    best_val = norm(ref_mat*inv_mat*real_vect - real_vect);
                 end
             end
         end
@@ -99,7 +96,7 @@ function [pics] = allocate_buffer(file_name, count)
     pics = zeros(sizes(1),sizes(2),sizes(3),count);
 end
 
-function [pseudo] = get_ref_invs(ref1, ref2,mask)
+function [pseudo, ref_mat] = get_ref_invs(ref1, ref2,mask)
     sizes = size(ref1);
     h = sizes(1);
     w = sizes(2);
@@ -107,13 +104,17 @@ function [pseudo] = get_ref_invs(ref1, ref2,mask)
     count = sizes(4);
 
    
-    pseudo = zeros(h,w,2,2);
+    pseudo = zeros(h,w,39,39);
+    ref_mat = zeros(h,w,2,colors*count);
     for x = 1:h
         for y = 1:w
             if is_masked(mask,x,y)
                 vect1 = reshape(ref1(x,y,:,:),count*colors,1);
                 vect2 = reshape(ref2(x,y,:,:),count*colors,1);
-                M = [vect1,vect2];
+                M = [vect1,vect2]';
+                size(M)
+                ref_mat(x,y,:,:) = M;
+                size(inv(M'*M)*M)
                 pseudo(x,y,:,:) = inv(M'*M);
                 inv(M'*M);
             end
