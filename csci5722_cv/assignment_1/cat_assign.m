@@ -1,24 +1,24 @@
 function [] = cat_assign()
 
-path = '/home/beldyk/Desktop/cat/';
+img_path = '/home/beldyk/Desktop/cat/';
 img_count = 13;
 
-cat_pics = allocate_buffer(strcat(path,'OBJ_01.png'), img_count);
-matte_pics = allocate_buffer(strcat(path, 'SPHERE_01.png'), img_count);
-shiny_pics = allocate_buffer(strcat(path, 'SHINY_01.png'), img_count);
+cat_pics = allocate_buffer(strcat(img_path,'OBJ_01.png'), img_count);
+matte_pics = allocate_buffer(strcat(img_path, 'SPHERE_01.png'), img_count);
+shiny_pics = allocate_buffer(strcat(img_path, 'SHINY_01.png'), img_count);
 
 sizes = size(cat_pics);
 cat_h = sizes(1);
 cat_w = sizes(2);
 
-
+path(path, '/home/beldyk/Desktop/');
 
 % read in files
 for i = 1:img_count
 
-    cat_file = strcat(path, sprintf('/OBJ_%02d.png',i));
-    matte_file = strcat(path, sprintf('/SPHERE_%02d.png',i));
-    shiny_file = strcat(path, sprintf('/SHINY_%02d.png',i));
+    cat_file = strcat(img_path, sprintf('/OBJ_%02d.png',i));
+    matte_file = strcat(img_path, sprintf('/SPHERE_%02d.png',i));
+    shiny_file = strcat(img_path, sprintf('/SHINY_%02d.png',i));
     
     cat_pics(:,:,:,i) = imread(cat_file);
     matte_pics(:,:,:,i) = imread(matte_file);
@@ -26,8 +26,8 @@ for i = 1:img_count
     
   
 end
-ref_mask = imread(strcat(path, '/spheremask.png'));
-cat_mask = imread(strcat(path, '/catmask.png'));
+ref_mask = imread(strcat(img_path, '/spheremask.png'));
+cat_mask = imread(strcat(img_path, '/catmask.png'));
 
 [invs, refs] = get_ref_invs(matte_pics, shiny_pics, ref_mask);
 
@@ -35,8 +35,8 @@ cat_mask = imread(strcat(path, '/catmask.png'));
 mapping = zeros(cat_h, cat_w, 2);
 
 
-%for x = 1:cat_h   
-for x = 1:40
+for x = 1:cat_h   
+%for x = 1:40
     x
     for y = 1:cat_w
         if is_masked(cat_mask, x, y)
@@ -66,9 +66,17 @@ for x = 1:cat_h
 end
 image(matte_cat);
 nrml = cat_norms;
+x_norm = nrml(:,:,1);
+y_norm = nrml(:,:,2);
+
+'about to integrate'
+g = integrate_horn2(x_norm, y_norm,cat_mask, 200000, 0);
+mesh(g)
 
 save('asgn1.mat', 'nrml')
+save('code_state.mat')
 end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [norms] = map_mask_into_norms(mask)
     [r, center_x, center_y] = find_radius_sphere(mask);
@@ -86,8 +94,8 @@ end
 
 function [r, center_x, center_y] = find_radius_sphere(mask)
     sizes = size(mask);
-    h = sizes(1)
-    w = sizes(2)
+    h = sizes(1);
+    w = sizes(2);
     min_y=Inf;
     max_y=0;
     min_x=Inf;
@@ -116,6 +124,7 @@ function [r, center_x, center_y] = find_radius_sphere(mask)
     center_y = (max_y + min_y)/2;
 end
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [best_x,best_y] = find_closest_loc(invs, ref_mask, real_vect, w, h)
     best_val = Inf;
