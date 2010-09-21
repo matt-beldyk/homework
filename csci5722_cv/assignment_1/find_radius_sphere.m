@@ -7,9 +7,9 @@ function [r, center_x, center_y] = find_radius_sphere(mask)
     min_x=Inf;
     max_x=0;
     
-    for y = 1:h
-        for x = 1:w
-            if mask(y,x) >0 
+    for x = 1:h
+        for y = 1:w
+            if mask(x,y) >0 
                 if (min_y > y)
                     min_y = y;
                 end
@@ -25,7 +25,13 @@ function [r, center_x, center_y] = find_radius_sphere(mask)
             end
         end
     end
-    r = (max_x - min_x)/2;
+    r_x = (max_x - min_x)/2;
+    r_y = (max_y - min_y)/2;
+    if r_x > r_y
+        r = r_x
+    else
+        r = r_y
+    end
     center_x = (max_x + min_x)/2;
     center_y = (max_y + min_y)/2;
 end

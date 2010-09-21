@@ -1,3 +1,5 @@
+% Matthew Beldyk
+% beldyk@colorado.edu
 function [] = cat_assign()
 
 img_path = '/home/beldyk/Desktop/cat/';
@@ -31,12 +33,10 @@ cat_mask = imread(strcat(img_path, '/catmask.png'));
 
 [invs, refs] = get_ref_invs(matte_pics, shiny_pics, ref_mask);
 
-
 mapping = zeros(cat_h, cat_w, 2);
 
-
-for x = 1:cat_h   
-%for x = 1:40
+%for x = 1:cat_h   
+for x = 1:40
     x
     for y = 1:cat_w
         if is_masked(cat_mask, x, y)
@@ -48,33 +48,23 @@ for x = 1:cat_h
     end
 end
 
-matte_cat = zeros(cat_h,cat_w,3);
-sphere_norms = map_mask_into_norms(ref_mask);
-cat_norms = zeros(cat_h, cat_w, 3);
+derv = map_mask_into_der(ref_mask);
+cat_map = map_cat(mapping, derv);
+nrml = map_cat(mapping, 
+y_norm = cat_map(:,:,2);
+x_norm = cat_map(:,:,1);
+g = integrate_horn2(x_norm, y_norm, cat_mask, 100000, 0);
+mesh(g)
+view(500, 1500)
 
-for x = 1:cat_h
-    for y = 1:cat_w
-        bx = mapping(x,y,1);
-        by = mapping(x,y,2);
-        
-        if bx && by
-            matte_vect = matte_pics(bx,by,:,1);
-            matte_cat(x,y,:) = matte_vect/255;
-            cat_norms(x,y,:) = sphere_norms(bx,by,:);
-        end
-    end
-end
-image(matte_cat);
-nrml = cat_norms;
-x_norm = nrml(:,:,1);
-y_norm = nrml(:,:,2);
 
 'about to integrate'
 g = integrate_horn2(x_norm, y_norm,cat_mask, 200000, 0);
 mesh(g)
+dpth = g;
 
-save('asgn1.mat', 'nrml')
-save('code_state.mat')
+save('asgn1.mat', 'nrml', 'dpth')
+%save('code_state.mat')
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

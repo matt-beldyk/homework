@@ -8,6 +8,20 @@ y_norm = cat_map(:,:,2);
 x_norm = cat_map(:,:,1);
 x_norm;
 g = integrate_horn2(x_norm, y_norm, cat_mask, 100000, 0);
+[h,w] = size(g)
+
+for x = 1:h
+    for y = 1:w
+        [x,y]
+        if(g(x,y)>100)
+            g(x,y) = 100;
+        end
+        if(g(x,y) < -100)            
+            g(x,y) = -100;
+        end
+    end
+end
+
 mesh(g)
-view(500, 1500)
-g
+%view(500, 1500)
+%g

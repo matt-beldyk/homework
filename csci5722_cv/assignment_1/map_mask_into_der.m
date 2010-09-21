@@ -4,7 +4,7 @@ function [derv] = map_mask_into_der(mask)
     derv = zeros(h, w, 3);
     for x = 1:h
         for y = 1:w
-            if mask(x,y)
+            if mask(x,y) == 255
                 if(norms(x,y,3))
                     derv(x,y,1) = norms(x,y,1)/norms(x,y,3);
                     derv(x,y,2) = norms(x,y,2)/norms(x,y,3);
