@@ -1,0 +1,15 @@
+Matthew Beldyk
+beldyk@colorado.edu
+
+    To run this, execute the cat_assign.m script.  It is rather hackish, because it will look for 13 files of each of the 
+various kinds with specific names in ‘/home/beldyk/Desktop’ modify the path variable to modify this.
+
+    Firstly, the code is wrong.  It’s not that wrong (I don’t think) but the cat looks like it is on a weird slant.  
+If you plot the cat with mesh(dpth) it looks very slanty, but if you plot with surface(dpth) it looks downright reasonable.  
+I’m pretty confident my functions that find the nearest sphere pixels for each cat pixel work, and my various mapping functions 
+do as well.  I’m pretty sure my issue is with my functions that calculate the normals for the spheres.  I figure with a little 
+more time, I could fix this, I’m pretty sure it is not a big deal, but I don’t know for sure (and I’m just out of time.)
+
+    I also had some quirks around the edges of both the cat and spheres.  Normals keep wanting to slide to NaN and Infinity.  
+I’ve changed my is_masked() function to look for values of 255 instead of >0 to step away for the edges a little.
+    
