@@ -4,10 +4,12 @@ function [norms] = map_mask_into_norms(mask)
     norms = zeros(sizes(1), sizes(2), 3);
     for i = 1:sizes(1)
         for j = 1:sizes(2)
-            norm_x = i - center_x;
-            norm_y = j - center_y;
-            norm_z = sqrt(r*r - norm_x*norm_x - norm_y*norm_y);
-            norms(i,j,:) = [norm_x, norm_y, norm_z];
+            if(mask(i,j))
+                norm_x = (i - center_x) - 1;
+                norm_y = (j - center_y) -1 ;
+                norm_z = real(sqrt(r*r - norm_x*norm_x - norm_y*norm_y));
+                norms(i,j,:) = [norm_x, norm_y, norm_z];
+            end
         end
     end
 end

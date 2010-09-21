@@ -78,65 +78,6 @@ save('code_state.mat')
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [norms] = map_mask_into_norms(mask)
-    [r, center_x, center_y] = find_radius_sphere(mask);
-    sizes = size(mask);
-    norms = zeros(sizes(1), sizes(2), 3);
-    for i = 1:sizes(1)
-        for j = 1:sizes(2)
-            norm_x = i - center_x;
-            norm_y = j - center_y;
-            norm_z = sqrt(r*r - norm_x*norm_x - norm_y*norm_y);
-            norms(i,j,:) = [norm_x, norm_y, norm_z];
-        end
-    end
-end
-function [derv] = map_mask_into_der(mask)
-    norms = map_mask_into_norms(mask);
-    [height, width] = size(mask);
-    derv = zeroes(height, width, 3);
-    for x = 1:height
-        for y = 1:width
-            derv(x,y,1) = norms(x,y,1)/norms(x,y,3);
-            derv(x,y,2) = norms(x,y,2)/norms(x,y,3);
-            derv(x,y,3) = 1;
-        end
-    end
-            
-end
-
-function [r, center_x, center_y] = find_radius_sphere(mask)
-    sizes = size(mask);
-    h = sizes(1);
-    w = sizes(2);
-    min_y=Inf;
-    max_y=0;
-    min_x=Inf;
-    max_x=0;
-    
-    for y = 1:h
-        for x = 1:w
-            if mask(y,x) >0 
-                if (min_y > y)
-                    min_y = y;
-                end
-                if (min_x > x)
-                    min_x = x;
-                end
-                if (max_y < y)
-                    max_y = y;
-                end
-                if (max_x < x)
-                    max_x = x;
-                end
-            end
-        end
-    end
-    r = (max_x - min_x)/2;
-    center_x = (max_x + min_x)/2;
-    center_y = (max_y + min_y)/2;
-end
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [best_x,best_y] = find_closest_loc(invs, ref_mask, real_vect, w, h)
