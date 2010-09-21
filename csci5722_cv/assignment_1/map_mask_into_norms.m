@@ -1,3 +1,8 @@
+% Matthew Beldyk
+% beldyk@colorado.edu
+
+% this function takes a mask of a sphere and calculates the normal at each
+% point.  
 function [norms] = map_mask_into_norms(mask)
     [r, center_x, center_y] = find_radius_sphere(mask)
   %  r = r + 1;

@@ -1,3 +1,8 @@
+% Matthew Beldyk
+% beldyk@colorado.edu
+
+% this function creates a cat normal object.  It is used once the closest
+% sphere points for each cat point are stored in mapping
 function [cat_norms] = map_cat(mapping, sphere_norms)
 
 [cat_h, cat_w, foo] = size(mapping);

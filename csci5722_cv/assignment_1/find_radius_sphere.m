@@ -1,3 +1,8 @@
+% Matthew Beldyk
+% beldyk@colorado.edu
+
+% finds the radius and center point of the sphere based upon the 
+% sphere mask file
 function [r, center_x, center_y] = find_radius_sphere(mask)
     sizes = size(mask);
     h = sizes(1);

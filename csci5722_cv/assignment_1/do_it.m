@@ -1,3 +1,10 @@
+% Matthew Beldyk
+% beldyk@colorado.edu
+
+% this is an ancillary file for running the last steps of my algorithm
+% because the search step to find the optimal point on the sphere
+% for each point on the cat takes hours, and I'm pretty sure
+% that logic is correct
 function [] = do_it()
 load('code_state.mat')
 %image(matte_cat)
