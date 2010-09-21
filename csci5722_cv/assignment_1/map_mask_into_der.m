@@ -5,9 +5,13 @@ function [derv] = map_mask_into_der(mask)
     for x = 1:h
         for y = 1:w
             if mask(x,y)
-                derv(x,y,1) = norms(x,y,1)/norms(x,y,3);
-                derv(x,y,2) = norms(x,y,2)/norms(x,y,3);
-                derv(x,y,3) = 1;
+                if(norms(x,y,3))
+                    derv(x,y,1) = norms(x,y,1)/norms(x,y,3);
+                    derv(x,y,2) = norms(x,y,2)/norms(x,y,3);
+                    derv(x,y,3) = 1;
+                end
+
+                
             end
         end
     end
