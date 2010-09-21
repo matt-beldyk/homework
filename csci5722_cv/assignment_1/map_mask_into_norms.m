@@ -5,7 +5,8 @@ function [norms] = map_mask_into_norms(mask)
     norms = zeros(sizes(1), sizes(2), 3);
     for i = 1:sizes(1)
         for j = 1:sizes(2)
-            if(mask(i,j) == 255)
+            if is_masked(mask, i, j)
+                
                 norm_x = (i - center_x) ;
                 norm_y = (j - center_y)  ;
                 norm_z = abs(sqrt((r*r) - (norm_x*norm_x) - (norm_y*norm_y)));
@@ -13,5 +14,5 @@ function [norms] = map_mask_into_norms(mask)
             end
         end
     end
-    norms(center_x, center_y, :) = [100,100,100];
+   norms(center_x, center_y, :) = [100,100,100];
 end

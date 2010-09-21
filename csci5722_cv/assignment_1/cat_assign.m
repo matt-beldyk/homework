@@ -35,8 +35,8 @@ cat_mask = imread(strcat(img_path, '/catmask.png'));
 
 mapping = zeros(cat_h, cat_w, 2);
 
-%for x = 1:cat_h   
-for x = 1:45
+for x = 1:cat_h   
+%for x = 1:45
     x
     for y = 1:cat_w
         if is_masked(cat_mask, x, y)
@@ -58,7 +58,7 @@ mesh(dpth)
 view(500, 1500);
 
 save('asgn1.mat', 'nrml', 'dpth')
-%save('code_state.mat')
+save('code_state1.mat')
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -85,9 +85,7 @@ function [best_x,best_y] = find_closest_loc(invs, ref_mask, real_vect, w, h)
     end
 end
 
-function [masked] = is_masked(mask, x, y)
-    masked = mask(x,y) >0 ;
-end
+
 
 function [pics] = allocate_buffer(file_name, count)
     pics(:,:,:,1) = imread(file_name);

@@ -10,6 +10,7 @@ x_norm;
 g = integrate_horn2(x_norm, y_norm, cat_mask, 100000, 0);
 [h,w] = size(g)
 
+if 1
 for x = 1:h
     for y = 1:w
         [x,y]
@@ -20,6 +21,7 @@ for x = 1:h
             g(x,y) = -100;
         end
     end
+end
 end
 
 mesh(g)
