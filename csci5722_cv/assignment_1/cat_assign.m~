@@ -35,8 +35,8 @@ cat_mask = imread(strcat(img_path, '/catmask.png'));
 mapping = zeros(cat_h, cat_w, 2);
 
 
-%for x = 1:cat_h   
-for x = 1:20
+for x = 1:cat_h   
+%for x = 1:40
     x
     for y = 1:cat_w
         if is_masked(cat_mask, x, y)
@@ -70,8 +70,8 @@ x_norm = nrml(:,:,1);
 y_norm = nrml(:,:,2);
 
 'about to integrate'
-g = integrate_horn(x_norm, y_norm,cat_mask, 10000, 1)
-
+g = integrate_horn2(x_norm, y_norm,cat_mask, 200000, 0);
+mesh(g)
 
 save('asgn1.mat', 'nrml')
 save('code_state.mat')
@@ -90,6 +90,19 @@ function [norms] = map_mask_into_norms(mask)
             norms(i,j,:) = [norm_x, norm_y, norm_z];
         end
     end
+end
+function [derv] = map_mask_into_derivitave(mask)
+    norms = map_mask_into_norms(mask);
+    [height, width] = size(mask);
+    derv = zeroes(height, width, 3);
+    for x = 1:height
+        for y = 1:width
+            derv(x,y,1) = norms(x,y,1)/norms(x,y,3);
+            derv(x,y,2) = norms(x,y,2)/norms(x,y,3);
+            derv(x,y,3) = 1;
+        end
+    end
+            
 end
 
 function [r, center_x, center_y] = find_radius_sphere(mask)

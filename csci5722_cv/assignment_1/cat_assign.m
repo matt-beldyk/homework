@@ -91,6 +91,19 @@ function [norms] = map_mask_into_norms(mask)
         end
     end
 end
+function [derv] = map_mask_into_der(mask)
+    norms = map_mask_into_norms(mask);
+    [height, width] = size(mask);
+    derv = zeroes(height, width, 3);
+    for x = 1:height
+        for y = 1:width
+            derv(x,y,1) = norms(x,y,1)/norms(x,y,3);
+            derv(x,y,2) = norms(x,y,2)/norms(x,y,3);
+            derv(x,y,3) = 1;
+        end
+    end
+            
+end
 
 function [r, center_x, center_y] = find_radius_sphere(mask)
     sizes = size(mask);
