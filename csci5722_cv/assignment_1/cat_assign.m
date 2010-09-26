@@ -71,7 +71,19 @@ nrml = map_cat(mapping, map_mask_into_norms(ref_mask));
 % Integrate over the slope of the cat
 y_norm = cat_map(:,:,2);
 x_norm = cat_map(:,:,1);
-dpth = integrate_horn2(x_norm, y_norm, cat_mask, 2000000, 0);
+sizes = size(cat_mask);
+
+%the Mask must be 1's or 0's
+cmask = zeros(sizes(1), sizes(2));
+for x=1:sizes(1)
+    for y=1:sizes(2)
+        if(cat_mask(x,y))
+            cmask(x,y) = 1;
+        end
+    end
+end
+
+dpth = integrate_horn2(y_norm, x_norm, cmask, 2000000, 0);
 
 % Display the cat
 mesh(dpth)
@@ -85,7 +97,7 @@ save('asgn1.mat', 'nrml', 'dpth')
 
 % Save the state of the program variables for future reference (and
 % debugging)
-save('code_state1.mat')
+save('code_state2.mat')
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

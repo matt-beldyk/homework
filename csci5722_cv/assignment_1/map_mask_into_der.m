@@ -12,8 +12,12 @@ function [derv] = map_mask_into_der(mask)
         for y = 1:w
            if is_masked(mask, x, y)
                 if(norms(x,y,3))
-                    derv(x,y,1) = norms(x,y,1)/norms(x,y,3);
-                    derv(x,y,2) = norms(x,y,2)/norms(x,y,3);
+                   derv(x,y,1) = norms(x,y,1)/norms(x,y,3);
+                   derv(x,y,2) = norms(x,y,2)/norms(x,y,3);
+                    %derv(x,y,1) = 1/norms(x,y,3);
+                    %derv(x,y,2) = 1/norms(x,y,3);
+                    %derv(x,y,1) = norms(x+1, y, 3) - norms(x,y,3);
+                    %derv(x,y,2) = norms(x, y+1, 3) - norms(x,y,3);
                     derv(x,y,3) = 1;
                 end
            end

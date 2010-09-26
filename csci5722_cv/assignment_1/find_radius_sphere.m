@@ -33,9 +33,9 @@ function [r, center_x, center_y] = find_radius_sphere(mask)
     r_x = (max_x - min_x)/2;
     r_y = (max_y - min_y)/2;
     if r_x > r_y
-        r = r_x
+        r = r_x +1
     else
-        r = r_y
+        r = r_y +1
     end
     center_x = (max_x + min_x)/2;
     center_y = (max_y + min_y)/2;
