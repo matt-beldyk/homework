@@ -4,11 +4,48 @@ size(images)
 
 convoluted = do_convolutions(images(:,:,1));
 features = find_features(convoluted);
+feat_vect = make_feature_vect(convoluted, features)
 end
+
+function [feat_vect] = make_feature_vect(conv_mat, features)
+    [w,h,n] = size(features);
+    i = 1;
+    feat_vect = zeros(1,5);
+    for x = 1:w
+        for y = 1:h
+            for z = 1:n
+                if(features(x,y,z) == 1)
+                    feat_vect(i,:) = [x,y,z,1,conv_mat(x,y,z)];
+                    i = i +1;
+                end
+                if(features(x,y,z) == -1)
+                    feat_vect(i,:) = [x,y,z,0,conv_mat(x,y,z)];
+                    i = i +1;
+                end
+            end
+        end
+    end
+end
+
 
 function [features] = find_features(conv_mat)
 features = zeros(size(conv_mat));
-size(features)
+[w,h,n] = size(features)
+for x = 2:w-1
+    x
+    for y = 2:h-1
+        for z = 2:n-1
+            
+        if (conv_mat(x,y,z) == max(max(max(conv_mat(x-1:x+1, y-1:y+1, z-1:z+1)))))
+            features(x,y,z) = 1;
+        end
+        if (conv_mat(x,y,z) == min(min(min(conv_mat(x-1:x+1, y-1:y+1, z-1:z+1)))))
+            features(x,y,z) = -1;
+        end
+        end
+    end
+end
+
 end
 
 function [convoluted] = do_convolutions(img)
@@ -22,9 +59,9 @@ function [convoluted] = do_convolutions(img)
 
     
         convoluted(:,:,i) =  conv2( single(img),single(f), 'same');   
-        size(convoluted)
-        image(convoluted(:,:,i))
-        pause()
+      %  size(convoluted)
+    %    image(convoluted(:,:,i))
+       % pause()
     end
 end
 
