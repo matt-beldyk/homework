@@ -2,6 +2,30 @@ function [] = do_it(pth)
 images = read_files(pth);
 size(images)
 
+convoluted = do_convolutions(images(:,:,1));
+features = find_features(convoluted);
+end
+
+function [features] = find_features(conv_mat)
+features = zeros(size(conv_mat));
+size(features)
+end
+
+function [convoluted] = do_convolutions(img)
+    [w, h ] = size(img);
+    convoluted = zeros(w,h, 6);
+    size(convoluted)
+    filter_sizes = [1,3,5,7,9,11]
+    for i = 1:6
+        f = create_filter(filter_sizes(i));
+   % single(images(:,:,1))
+
+    
+        convoluted(:,:,i) =  conv2( single(img),single(f), 'same');   
+        size(convoluted)
+        image(convoluted(:,:,i))
+        pause()
+    end
 end
 
 function [images] = read_files(pth)
@@ -13,9 +37,7 @@ function [images] = read_files(pth)
         fname = strcat(pth, listing(i).name)
         images(:,:,i) = rgb2gray(imread(fname));
     end
-    size(images)
-    size(images(:,:,1))
-    image(grey2rgb(images(:,:,1)));
+ 
 
 end
 
