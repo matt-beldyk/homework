@@ -5,6 +5,7 @@ size(images)
 convoluted = do_convolutions(images(:,:,1));
 features = find_features(convoluted);
 feat_vect = make_feature_vect(convoluted, features)
+size(feat_vect)
 end
 
 function [feat_vect] = make_feature_vect(conv_mat, features)
@@ -36,12 +37,25 @@ for x = 2:w-1
     for y = 2:h-1
         for z = 2:n-1
             
-        if (conv_mat(x,y,z) == max(max(max(conv_mat(x-1:x+1, y-1:y+1, z-1:z+1)))))
-            features(x,y,z) = 1;
-        end
-        if (conv_mat(x,y,z) == min(min(min(conv_mat(x-1:x+1, y-1:y+1, z-1:z+1)))))
-            features(x,y,z) = -1;
-        end
+
+            %top bottom
+            is_max = (conv_mat(x,y,z) > max(max(conv_mat(x-1:x+1, y-1, z-1:z+1)))) && (conv_mat(x,y,z) > max(max(conv_mat(x-1:x+1, y+1, z-1:z+1))));
+            is_min = (conv_mat(x,y,z) < min(min(conv_mat(x-1:x+1, y-1, z-1:z+1)))) && (conv_mat(x,y,z) < min(min(conv_mat(x-1:x+1, y+1, z-1:z+1))));
+            
+            %left right
+            is_max = is_max && (conv_mat(x,y,z) > max(max(conv_mat(x-1, y-1:y+1, z-1:z+1)))) && (conv_mat(x,y,z) > max(max(conv_mat(x+1, y-1:y+1, z-1:z+1))));
+            is_min = is_min && (conv_mat(x,y,z) < min(min(conv_mat(x-1, y-1:y+1, z-1:z+1)))) && (conv_mat(x,y,z) < min(min(conv_mat(x+1, y-1:y+1, z-1:z+1))));
+        
+            %back front
+            is_max = is_max && (conv_mat(x,y,z) > max(max(conv_mat(x-1:x+1, y-1:y+1, z-1)))) && (conv_mat(x,y,z) > max(max(conv_mat(x-1:x+1, y-1:y+1, z+1))));
+            is_min = is_min && (conv_mat(x,y,z) < min(min(conv_mat(x-1:x+1, y-1:y+1, z-1)))) && (conv_mat(x,y,z) < min(min(conv_mat(x-1:x+1, y-1:y+1, z+1))));
+            
+            if is_max 
+                features(x,y,z) = 1;
+            end
+            if is_min
+                features(x,y,z) = -1;
+            end
         end
     end
 end
@@ -58,7 +72,7 @@ function [convoluted] = do_convolutions(img)
    % single(images(:,:,1))
 
     
-        convoluted(:,:,i) =  conv2( single(img),single(f), 'same');   
+        convoluted(:,:,i) =  conv2( single(img),single(f), 'same')/(filter_sizes(i)*filter_sizes(i)*9);   
       %  size(convoluted)
     %    image(convoluted(:,:,i))
        % pause()
