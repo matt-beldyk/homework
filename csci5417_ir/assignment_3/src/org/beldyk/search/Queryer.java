@@ -20,39 +20,35 @@ import org.apache.lucene.util.Version;
 
 public class Queryer {
 
-	private Directory dir;
-	private static final String indexDir = "/tmp/lu_index/";
+	private Dials dials;
 	
-	public Queryer(Directory dir){
-		this.dir = dir;
+	public Queryer(Dials dials){
+		this.dials = dials;
 	}
 	/**
 	 * @param args
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {
-		Queryer q = new Queryer(FSDirectory.open(new File(indexDir)));
+		Queryer q = new Queryer(new Dials());
 		q.runQueries();
 	}
 
 	public  void runQueries() throws Exception{
-		String pth = "/Users/beldyk/Desktop/";
-		String qPath = pth +"queries.txt";
-		String qRelPath = pth + "qrels.txt";
-		String resultsPath = pth + "beldyk-assgn3-out.txt";
-
-		FileOutputStream outFile = new FileOutputStream(resultsPath);
 
 
-		QRels qRels = new QRels(qRelPath);
+		FileOutputStream outFile = new FileOutputStream(dials.getResultsPath());
 
-		QueryReader rdr = new QueryReader(qPath);
+
+		QRels qRels = new QRels(dials.getqRelPath());
+
+		QueryReader rdr = new QueryReader(dials.getqPath());
 		Collection<MedQuery> querys = rdr.readQueries();
 		Collection<Double> rPrecisions = new ArrayList<Double>();
 		
 		for(MedQuery q: querys){
 			//System.out.println(q.toString());
-			Collection<Document> hits = search(q.getQuery(), this.dir);
+			Collection<Document> hits = search(q.getQuery(), dials.getIndexDir());
 			Collection<String> goldStandard = qRels.getResults(q.getNumb());
 			Collection <String> results = new ArrayList<String>();
 			for (Document doc: hits){
@@ -73,7 +69,7 @@ public class Queryer {
 	}
 	public Collection<Document> search(String qry, Directory dir) throws CorruptIndexException, IOException, ParseException{
 		IndexSearcher is = new IndexSearcher(dir);
-		QueryParser qp = new QueryParser(Version.LUCENE_CURRENT, "W", new StandardAnalyzer(Version.LUCENE_CURRENT));
+		QueryParser qp = new QueryParser(Version.LUCENE_CURRENT, "W", dials.getAnalyz());
 		System.out.println("Searching: "+qry);
 		Query query = qp.parse(qry);
 
