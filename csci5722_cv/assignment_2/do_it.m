@@ -1,12 +1,66 @@
 function [] = do_it(pth)
-images = read_files(pth);
-size(images)
+    images = read_files(pth);
+    [w,h, count_images] = size(images)
+    showy = zeros(w,h,3,count_images);
+    
+    count_images = 2;
 
-convoluted = do_convolutions(images(:,:,1));
-features = find_features(convoluted);
-feat_vect = make_feature_vect(convoluted, features)
-size(feat_vect)
+    next_feat_vect  = 0;
+    for i = 1:count_images
+        this_image_is = i
+        old_feat_vect = next_feat_vect;
+        convoluted = do_convolutions(images(:,:,i));
+        features = find_features(convoluted);
+        next_feat_vect = make_feature_vect(convoluted, features);
+
+
+        xy_mapping = find_xy_mappings(old_feat_vect, next_feat_vect);
+
+        showy(:,:,:,i) = mark_up_picture(next_feat_vect, images(:,:,i));
+    end
+    save('code_state.mat');
+
+    size(xy_mapping)
+%    size(showy)
+    for i = 1:count_images
+ %       showy(:,:,1,i)
+    %    size(showy)
+        
+        image(showy(:,:,:,i)/255)
+        pause
+    end
 end
+function [mappings] = find_xy_mappings(old, next)
+    
+    for i = 1:size(old)
+        min_dist = Inf;
+        i
+        for j = 1:size(next)
+            distance = norm(old(i,:) - next(j,:))
+            if(distance < min_dist)
+                min_dist = distance;
+                min_j = j;
+            end
+            mappings(i,:) = [old(i,1), old(i,2), next(min_j,1), next(min_j,2)];
+        end
+    end
+
+end
+function [pic] = mark_up_picture(feat_vect, img)
+    pic  = grey2rgb(img);
+    green = [0,255,0];
+    red = [255,0,0];
+    [count_feat, foo] = size(feat_vect);
+    for i = 1:count_feat
+        if( feat_vect(i, 4))
+            pic(feat_vect(i,1), feat_vect(i,2), : ) = green;
+        else
+            pic(feat_vect(i,1), feat_vect(i,2), : ) = red;
+        end
+        
+    end
+end
+
 
 function [feat_vect] = make_feature_vect(conv_mat, features)
     [w,h,n] = size(features);
@@ -31,9 +85,9 @@ end
 
 function [features] = find_features(conv_mat)
 features = zeros(size(conv_mat));
-[w,h,n] = size(features)
+[w,h,n] = size(features);
 for x = 2:w-1
-    x
+  %  x
     for y = 2:h-1
         for z = 2:n-1
             
@@ -66,7 +120,7 @@ function [convoluted] = do_convolutions(img)
     [w, h ] = size(img);
     convoluted = zeros(w,h, 6);
     size(convoluted)
-    filter_sizes = [1,3,5,7,9,11]
+    filter_sizes = [1,3,5,7,9,11];
     for i = 1:6
         f = create_filter(filter_sizes(i));
    % single(images(:,:,1))
