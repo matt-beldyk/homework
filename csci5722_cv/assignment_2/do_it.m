@@ -4,25 +4,26 @@ function [] = do_it(pth)
     [w,h, count_images] = size(images)
     showy = zeros(w,h,3,count_images);
     
-  %  count_images = 2;
+ %   count_images = 2;
 
-    xy_mappings = cell(1,count_images);
-    next_feat_vect  = 0;
+    xy_mappings = cell(1,count_images - 1);
+    feat_vects = cell(1,count_images);
+
     for i = 1:count_images
         this_image_is = i
-        old_feat_vect = next_feat_vect;
+
         convoluted = do_convolutions(images(:,:,i));
         features = find_features(convoluted);
-        next_feat_vect = make_feature_vect(convoluted, features);
+        feat_vects{1,i} = make_feature_vect(convoluted, features);
 
 
         if(i > 1)
-            xy_mappings{1,i} = find_xy_mappings(old_feat_vect, next_feat_vect);
+            xy_mappings{1,i} = find_xy_mappings(feat_vects{1,i-1}, feat_vects{1,i});
         end
-        showy(:,:,:,i) = mark_up_picture(next_feat_vect, images(:,:,i));
+        showy(:,:,:,i) = mark_up_picture(feat_vects{1,i}, images(:,:,i));
     end
-    end_time = cpu_time;
-    total_time = end_time - begin_time;
+    end_time = cputime();
+    total_time = end_time - begin_time
     
     save('code_state.mat');
 
