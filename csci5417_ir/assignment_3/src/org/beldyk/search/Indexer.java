@@ -10,32 +10,40 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.LockObtainFailedException;
 import org.apache.lucene.util.Version;
 
 public class Indexer {
+	Directory dir;
+	final static String indexDir = "/tmp/lu_index/";
+	public Indexer(Directory dir){
+		this.dir = dir;
+	}
 
 	/**
 	 * @param args
-	 * @throws IOException 
-	 * @throws LockObtainFailedException 
-	 * @throws CorruptIndexException 
+	 * @throws Exception 
 	 */
-	public static void main(String[] args) throws CorruptIndexException, LockObtainFailedException, IOException {
-		// TODO Auto-generated method stub
-
-		File indexDir = new File("/tmp/lu_index/");
-		String documents = "/home/beldyk/Desktop/medical.txt";
-		//String documents = "/home/beldyk/Desktop/short_med.txt";
-		index(indexDir, documents);
-		System.out.println("Huzza, I'm done!");
+	public static void main(String[] args) throws Exception {
+		Indexer i = new Indexer(FSDirectory.open(new File(indexDir)));
+		i.indexEm();
+	
 
 	}
+	
+	public void indexEm() throws Exception, LockObtainFailedException, IOException{
+		String documents = "/Users/beldyk/Desktop/medical.txt";
+		//String documents = "/home/beldyk/Desktop/short_med.txt";
+		index(documents);
+		System.out.println("Huzza, I'm done!");
+	}
 
-	public static void index(File indexDir, String documents) throws CorruptIndexException, LockObtainFailedException, IOException{
+	public  void index(String documents) throws CorruptIndexException, LockObtainFailedException, IOException{
 		DocuReader rdr = new DocuReader();
-		IndexWriter wr = new IndexWriter(FSDirectory.open(indexDir),  
+		//	IndexWriter wr = new IndexWriter(FSDirectory.open(indexDir),  
+			IndexWriter wr = new IndexWriter(this.dir,  
 				new StandardAnalyzer(Version.LUCENE_CURRENT), 
 				true, new IndexWriter.MaxFieldLength(25000));
 
@@ -55,7 +63,6 @@ public class Indexer {
 				wr.addDocument(doc);
 			}
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		wr.close();

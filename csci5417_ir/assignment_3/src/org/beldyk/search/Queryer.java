@@ -20,29 +20,35 @@ import org.apache.lucene.util.Version;
 
 public class Queryer {
 
+	private Dials dials;
+	
+	public Queryer(Dials dials){
+		this.dials = dials;
+	}
 	/**
 	 * @param args
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {
-		String qPath = "/home/beldyk/Desktop/queries.txt";
-		String qRelPath = "/home/beldyk/Desktop/qrels.txt";
-		String resultsPath = "/home/beldyk/Desktop/beldyk-assgn3-out.txt";
-		String indexDir = "/tmp/lu_index";
-		Directory fsDir = FSDirectory.open(new File(indexDir));
+		Queryer q = new Queryer(new Dials());
+		q.runQueries();
+	}
 
-		FileOutputStream outFile = new FileOutputStream(resultsPath);
+	public  void runQueries() throws Exception{
 
 
-		QRels qRels = new QRels(qRelPath);
+		FileOutputStream outFile = new FileOutputStream(dials.getResultsPath());
 
-		QueryReader rdr = new QueryReader(qPath);
+
+		QRels qRels = new QRels(dials.getqRelPath());
+
+		QueryReader rdr = new QueryReader(dials.getqPath());
 		Collection<MedQuery> querys = rdr.readQueries();
 		Collection<Double> rPrecisions = new ArrayList<Double>();
 		
 		for(MedQuery q: querys){
 			//System.out.println(q.toString());
-			Collection<Document> hits = search(q.getQuery(), fsDir);
+			Collection<Document> hits = search(q.getQuery(), dials.getIndexDir());
 			Collection<String> goldStandard = qRels.getResults(q.getNumb());
 			Collection <String> results = new ArrayList<String>();
 			for (Document doc: hits){
@@ -51,7 +57,7 @@ public class Queryer {
 			for(String a: results){
 				outFile.write((q.getNumb()+" "+ a+"\n").getBytes());
 			}
-			Double prec = StatsUtil.rPrecision(100, qRels.getResults(q.getNumb()), results);
+			Double prec = StatsUtil.rPrecision(goldStandard.size(), qRels.getResults(q.getNumb()), results);
 			rPrecisions.add(prec);
 			
 			//System.out.println(results.toString());
@@ -59,12 +65,11 @@ public class Queryer {
 			System.out.println("Out of a possible "+goldStandard.size()+" Precision: "+prec);
 		}
 		outFile.close();
-		System.out.println("R-Precision: "+StatsUtil.average(rPrecisions));
+		System.out.println("Average R-Precision: "+StatsUtil.average(rPrecisions));
 	}
-
-	public static Collection<Document> search(String qry, Directory dir) throws CorruptIndexException, IOException, ParseException{
+	public Collection<Document> search(String qry, Directory dir) throws CorruptIndexException, IOException, ParseException{
 		IndexSearcher is = new IndexSearcher(dir);
-		QueryParser qp = new QueryParser(Version.LUCENE_CURRENT, "W", new StandardAnalyzer(Version.LUCENE_CURRENT));
+		QueryParser qp = new QueryParser(Version.LUCENE_CURRENT, "W", dials.getAnalyz());
 		System.out.println("Searching: "+qry);
 		Query query = qp.parse(qry);
 
