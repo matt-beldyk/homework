@@ -4,7 +4,7 @@ function [] = do_it(pth)
     [w,h, count_images] = size(images)
     showy = zeros(w,h,3,count_images);
     
- %   count_images = 2;
+  %  count_images = 3;
 
     xy_mappings = cell(1,count_images - 1);
     feat_vects = cell(1,count_images);
@@ -25,17 +25,17 @@ function [] = do_it(pth)
     end_time = cputime();
     total_time = end_time - begin_time
     
-    save('code_state.mat');
-
+   % save('code_state.mat');
+    show_results(showy, xy_mappings);
     size(xy_mappings);
 %    size(showy)
-    for i = 1:count_images
+   % for i = 1:count_images
  %       showy(:,:,1,i)
     %    size(showy)
         
-        image(showy(:,:,:,i)/255)
-        pause
-    end
+    %    image(showy(:,:,:,i)/255)
+   %     pause
+   % end
     %figure(1);image(showy(:,:,:,1)/255); pause; image(showy(:,:,:,2)/255); hold on; plot([xy(:,2),xy(:,4)]', [xy(:,1), xy(:,3)]'); hold off
 end
 
