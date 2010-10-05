@@ -4,7 +4,7 @@ function [] = do_it(pth)
     [w,h, count_images] = size(images)
     showy = zeros(w,h,3,count_images);
     
-  %  count_images = 3;
+    count_images = 3;
 
     xy_mappings = cell(1,count_images - 1);
     feat_vects = cell(1,count_images);
