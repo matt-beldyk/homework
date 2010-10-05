@@ -1,3 +1,4 @@
+% Matthew Beldyk
 
 % This is the main function, basically give it a path to the example
 % dataset provided (the *.ppm images of haybales.) and provides an 

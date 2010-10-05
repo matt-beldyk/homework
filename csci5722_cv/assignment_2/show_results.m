@@ -1,3 +1,5 @@
+% Matthew Beldyk
+
 % This is a simple external function to display the results of my algorithm
 
 function [] = show_results(imgs, xy_mappings)

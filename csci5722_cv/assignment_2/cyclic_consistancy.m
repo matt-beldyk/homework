@@ -1,3 +1,4 @@
+% Matthew Beldyk
 
 % this function makes sure that a result is contained in 
 % both a forwards search, and a backwards search

@@ -1,3 +1,5 @@
+%Matthew Beldyk
+
 % This function will take the collection of feature vectors from two images
 % in the series and find their nearest neighbors and make sure that these
 % results are consistant if time were moving backwards (Also, I think the
