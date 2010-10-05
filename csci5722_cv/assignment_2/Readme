@@ -1,0 +1,12 @@
+Matthew Beldyk
+CSCI 5722 - Computer Vision
+October 4, 2010
+
+To find feature matches, I used an incredibly simplistic measure.  I created a vector that included the X,Y position of the feature, which filter I found it with, whether it is a local minimum or maximum and the filter response value.  
+
+I create a set of these vectors for each image, then find the nearest feature vector (for each feature vector) in the next image.  In this process I also have code to make sure that I am matching minimums with minimums and maximums with maximums.  
+
+My next step is to repeat the previous step, but looking at the previous image (so looking a step back in time.) From this I create a second feature vector list.  I then take the intersection of these two steps because I want consistency in my features whether I’m going forwards in time or back.  
+
+My program does not include any thresholds to speak of.  If I were inclined to make the program faster, I could incorporate a threshold to minimize the search area for corresponding feature vectors (ie. only look within a few dozen pixels between each image.)  Also, if I were so inclined I could have different weights for the various parts of the feature vector.  I have done neither.
+
