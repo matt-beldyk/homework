@@ -1,3 +1,6 @@
+
+% This is the main function, basically give it a path to the example
+% dataset provided (the *.ppm images of haybales.) and provides an 
 function [] = do_it(pth)    
     begin_time = cputime();
     images = read_files(pth);
@@ -12,31 +15,34 @@ function [] = do_it(pth)
     for i = 1:count_images
         this_image_is = i
 
+        % convolute image with all the filters
         convoluted = do_convolutions(images(:,:,i));
+        
+        % find all my features for this image
         features = find_features(convoluted);
+        
+        % translate these features into more easily mathish vectors
         feat_vects{1,i} = make_feature_vect(convoluted, features);
 
 
+        % find the mappings from the last image to this one
         if(i > 1)
             xy_mappings{1,i} = find_xy_mappings(feat_vects{1,i-1}, feat_vects{1,i});
         end
+        
+        % mark up an image for my display purposes
         showy(:,:,:,i) = mark_up_picture(feat_vects{1,i}, images(:,:,i));
     end
     end_time = cputime();
     total_time = end_time - begin_time
     
+    % uncomment for debugging
    % save('code_state.mat');
+   
+   % Display my results
     show_results(showy, xy_mappings);
-    size(xy_mappings);
-%    size(showy)
-   % for i = 1:count_images
- %       showy(:,:,1,i)
-    %    size(showy)
-        
-    %    image(showy(:,:,:,i)/255)
-   %     pause
-   % end
-    %figure(1);image(showy(:,:,:,1)/255); pause; image(showy(:,:,:,2)/255); hold on; plot([xy(:,2),xy(:,4)]', [xy(:,1), xy(:,3)]'); hold off
+
+
 end
 
 % this function basically takes an image and a set of feature_vectors

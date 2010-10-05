@@ -18,7 +18,7 @@ end
 function [mp] = find_matches(A,B)
     for i = 1:size(A)
         min_dist = Inf;
-        if mod(i,100) == 0
+        if mod(i,1000) == 0
             i
         end
         for j = 1:size(B)
