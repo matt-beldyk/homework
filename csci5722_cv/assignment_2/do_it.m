@@ -4,7 +4,7 @@ function [] = do_it(pth)
     [w,h, count_images] = size(images)
     showy = zeros(w,h,3,count_images);
     
-    count_images = 3;
+   % count_images = 3;
 
     xy_mappings = cell(1,count_images - 1);
     feat_vects = cell(1,count_images);
@@ -39,6 +39,9 @@ function [] = do_it(pth)
     %figure(1);image(showy(:,:,:,1)/255); pause; image(showy(:,:,:,2)/255); hold on; plot([xy(:,2),xy(:,4)]', [xy(:,1), xy(:,3)]'); hold off
 end
 
+% this function basically takes an image and a set of feature_vectors
+% and puts a bunch of dots on the black and white image so I can see 
+% the features
 function [pic] = mark_up_picture(feat_vect, img)
     pic  = grey2rgb(img);
     green = [0,255,0];
@@ -54,7 +57,8 @@ function [pic] = mark_up_picture(feat_vect, img)
     end
 end
 
-
+% this function takes my marked up feature mask and translates it 
+% into a bunch of vectors
 function [feat_vect] = make_feature_vect(conv_mat, features)
     [w,h,n] = size(features);
     i = 1;
@@ -76,6 +80,14 @@ function [feat_vect] = make_feature_vect(conv_mat, features)
 end
 
 
+% This is where the magic happens, basically, I take my 3-d matrix of
+% convolutions and do a search for all the local minimas and maximas.  I
+% look at the various planes on each size to see if point N is bigger or
+% smaller than both, and iterate over all three dimensions.  Truely, if I
+% were aiming for speed, it might make sense to do some benchmarks and
+% lower the number of comparisons I'm doing.  But the real slowness in the
+% program isn't this function and it's likely that Matlab is doing a fine
+% job of loading in memory and that memory load is the big hit here
 function [features] = find_features(conv_mat)
 features = zeros(size(conv_mat));
 [w,h,n] = size(features);
@@ -109,6 +121,9 @@ end
 
 end
 
+
+% for every filter size, convolve the image and store the results in 
+% a big array of convolved images (a 3-D matrix)
 function [convoluted] = do_convolutions(img)
     [w, h ] = size(img);
     convoluted = zeros(w,h, 6);
@@ -126,6 +141,7 @@ function [convoluted] = do_convolutions(img)
     end
 end
 
+% Reads in all the files in a directory and stores them in a matrix
 function [images] = read_files(pth)
     listing = dir(strcat(pth, '*.ppm'))
     [fcount] = size (listing);
@@ -139,12 +155,15 @@ function [images] = read_files(pth)
 
 end
 
+% Does what it looks like, I just wanted another way to monkey with
+% images
 function [f] = grey2rgb(i)
     f(:,:,1) = i;
     f(:,:,2) = i;
     f(:,:,3) = i;
 end
 
+% creates a CenSurE filter of size N
 function [f] = create_filter(n)
     f = ones(3*n, 3*n);
     f(n+1:2*n, n+1:2*n) = -8;

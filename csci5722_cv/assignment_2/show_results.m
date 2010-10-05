@@ -1,3 +1,5 @@
+% This is a simple external function to display the results of my algorithm
+
 function [] = show_results(imgs, xy_mappings)
 [w,h, colors, img_count ] = size(imgs)
 %figure(1);image(showy(:,:,:,1)/255); pause; image(showy(:,:,:,2)/255); hold on; plot([xy(:,2),xy(:,4)]', [xy(:,1), xy(:,3)]'); hold off

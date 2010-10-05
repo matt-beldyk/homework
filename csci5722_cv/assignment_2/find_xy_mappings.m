@@ -5,29 +5,10 @@
 function [mappings] = find_xy_mappings(A,B)
     forward_matches = find_matches(A,B);
     back_matches = find_matches(B,A);
-    mappings = contains(forward_matches, back_matches);
+    mappings = cyclic_consistancy(forward_matches, back_matches);
 
 end
 
-% this function makes sure that a result is contained in 
-% both a forwards search, and a backwards search
-function [union] = contains(A,B)
-    k = 1;
-    C(:,1) = B(:,4);
-    C(:,2) = B(:,3);
-    C(:,3) = B(:,2);
-    C(:,4) = B(:,1);
-    
-    for i = 1:size(A)
-        for j = 1:size(C)
-            if(A(i,:) == C(j,:))
-                union(k,:) = A(i,:);
-                k = k +1;
-            end
-        end
-    end
-    
-end
 
 % This funcion searches for the closest vector for every vector
 % I'm just looking at euclidian distance 
