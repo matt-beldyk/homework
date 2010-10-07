@@ -9,6 +9,7 @@ import java.util.Collection;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.CorruptIndexException;
+import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
@@ -69,11 +70,13 @@ public class Queryer {
 	}
 	public Collection<Document> search(String qry, Directory dir, Integer howMany) throws CorruptIndexException, IOException, ParseException{
 		IndexSearcher is = new IndexSearcher(dir);
-		QueryParser qp = new QueryParser(
+		String [] fields = {"W", "M"};
+		QueryParser qp = new MultiFieldQueryParser(
 				Version.LUCENE_CURRENT, 
-				"W", 
+				fields, 
 				dials.getAnalyz()
 				);
+		
 		System.out.println("Searching: "+qry);
 		Query query = qp.parse(qry);
 
