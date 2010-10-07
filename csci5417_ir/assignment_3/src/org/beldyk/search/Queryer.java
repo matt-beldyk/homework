@@ -30,11 +30,12 @@ public class Queryer {
 	 * @param args
 	 * @throws Exception 
 	 */
+	/*
 	public static void main(String[] args) throws Exception {
 		Queryer q = new Queryer(new Dials());
 		q.runQueries();
 	}
-
+*/
 	public  void runQueries() throws Exception{
 
 
@@ -70,7 +71,7 @@ public class Queryer {
 	}
 	public Collection<Document> search(String qry, Directory dir, Integer howMany) throws CorruptIndexException, IOException, ParseException{
 		IndexSearcher is = new IndexSearcher(dir);
-		String [] fields = {"W", "M"};
+		String [] fields = {"W", "M", "T"};
 		QueryParser qp = new MultiFieldQueryParser(
 				Version.LUCENE_CURRENT, 
 				fields, 

@@ -26,12 +26,14 @@ public class Indexer {
 	 * @param args
 	 * @throws Exception 
 	 */
+	/*
 	public static void main(String[] args) throws Exception {
 		Indexer i = new Indexer(new Dials());
 		i.indexEm();
 
 
 	}
+	*/
 
 	public void indexEm() throws Exception, LockObtainFailedException, IOException{
 		index(dial.getDocPath());
