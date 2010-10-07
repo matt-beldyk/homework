@@ -15,12 +15,40 @@ public class Dials {
 	private String qPath = pth +"queries.txt";
 	private String qRelPath = pth + "qrels.txt";
 	private String resultsPath = pth + "beldyk-assgn3-out.txt";
+	private String docPath;
+	
+	
+	public String getQPath() {
+		return qPath;
+	}
+
+	public void setQPath(String path) {
+		qPath = path;
+	}
+
+	public String getQRelPath() {
+		return qRelPath;
+	}
+
+	public void setQRelPath(String relPath) {
+		qRelPath = relPath;
+	}
+
+	public String getDocPath() {
+		return docPath;
+	}
+
+	public void setDocPath(String docPath) {
+		this.docPath = docPath;
+	}
+
 	public Dials(){
-		pth = "/Users/beldyk/Desktop/";
+		//pth = "/Users/beldyk/Desktop/";
+		pth = "/home/beldyk/Desktop/";
 		qPath = pth +"queries.txt";
 		qRelPath = pth + "qrels.txt";
 		resultsPath = pth + "beldyk-assgn3-out.txt";
-		
+		docPath = pth + "medical.txt";
 		indexDir = new RAMDirectory();
 		analyz = new  StandardAnalyzer(Version.LUCENE_CURRENT);
 	}

@@ -16,10 +16,10 @@ import org.apache.lucene.store.LockObtainFailedException;
 import org.apache.lucene.util.Version;
 
 public class Indexer {
-	Directory dir;
+	private Dials dial;
 	final static String indexDir = "/tmp/lu_index/";
-	public Indexer(Directory dir){
-		this.dir = dir;
+	public Indexer(Dials dial){
+		this.dial = dial;
 	}
 
 	/**
@@ -27,24 +27,22 @@ public class Indexer {
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {
-		Indexer i = new Indexer(FSDirectory.open(new File(indexDir)));
+		Indexer i = new Indexer(new Dials());
 		i.indexEm();
 	
 
 	}
 	
 	public void indexEm() throws Exception, LockObtainFailedException, IOException{
-		String documents = "/Users/beldyk/Desktop/medical.txt";
-		//String documents = "/home/beldyk/Desktop/short_med.txt";
-		index(documents);
+		index(dial.getDocPath());
 		System.out.println("Huzza, I'm done!");
 	}
 
 	public  void index(String documents) throws CorruptIndexException, LockObtainFailedException, IOException{
 		DocuReader rdr = new DocuReader();
 		//	IndexWriter wr = new IndexWriter(FSDirectory.open(indexDir),  
-			IndexWriter wr = new IndexWriter(this.dir,  
-				new StandardAnalyzer(Version.LUCENE_CURRENT), 
+			IndexWriter wr = new IndexWriter(this.dial.getIndexDir(),  
+				this.dial.getAnalyz(), 
 				true, new IndexWriter.MaxFieldLength(25000));
 
 		//			indexDir, new StandardAnalyzer(), true);
@@ -57,7 +55,8 @@ public class Indexer {
 					if(a.equalsIgnoreCase("W")){
 						//System.out.println(d.get(a));
 					}
-						doc.add(new Field(a, d.get(a), Field.Store.YES, Field.Index.ANALYZED));
+						Field f = new Field(a, d.get(a), Field.Store.YES, Field.Index.ANALYZED);
+						doc.add(f);
 
 				}
 				wr.addDocument(doc);
