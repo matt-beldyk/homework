@@ -48,8 +48,8 @@ public class Queryer {
 		
 		for(MedQuery q: querys){
 			//System.out.println(q.toString());
-			Collection<Document> hits = search(q.getQuery(), dials.getIndexDir());
 			Collection<String> goldStandard = qRels.getResults(q.getNumb());
+			Collection<Document> hits = search(q.getQueryText(), dials.getIndexDir(),goldStandard.size());
 			Collection <String> results = new ArrayList<String>();
 			for (Document doc: hits){
 				results.add(doc.get("U"));
@@ -61,19 +61,23 @@ public class Queryer {
 			rPrecisions.add(prec);
 			
 			//System.out.println(results.toString());
-			System.out.println("There are "+hits.size()+" results for: "+q.getNumb()+":"+q.getQuery());
+			System.out.println("There are "+hits.size()+" results for: "+q.getNumb()+":"+q.getQueryText());
 			System.out.println("Out of a possible "+goldStandard.size()+" Precision: "+prec);
 		}
 		outFile.close();
 		System.out.println("Average R-Precision: "+StatsUtil.average(rPrecisions));
 	}
-	public Collection<Document> search(String qry, Directory dir) throws CorruptIndexException, IOException, ParseException{
+	public Collection<Document> search(String qry, Directory dir, Integer howMany) throws CorruptIndexException, IOException, ParseException{
 		IndexSearcher is = new IndexSearcher(dir);
-		QueryParser qp = new QueryParser(Version.LUCENE_CURRENT, "W", dials.getAnalyz());
+		QueryParser qp = new QueryParser(
+				Version.LUCENE_CURRENT, 
+				"W", 
+				dials.getAnalyz()
+				);
 		System.out.println("Searching: "+qry);
 		Query query = qp.parse(qry);
 
-		ScoreDoc[] hits = is.search(query, 100).scoreDocs;
+		ScoreDoc[] hits = is.search(query, howMany).scoreDocs;
 		Collection<Document> docs = new ArrayList<Document>();
 		for (ScoreDoc hit: hits) {
 			Document hitDoc = is.doc(hit.doc);

@@ -16,8 +16,8 @@ public class IndexNQuery {
 	 */
 	public static void main(String[] args) throws LockObtainFailedException, IOException, Exception {
 		// TODO Auto-generated method stub
-		Directory dir = new RAMDirectory();
 		Dials dial = new Dials();
+		dial.setAnalyz(new MattsAnalyzer());
 		Indexer dex = new Indexer(dial);
 		Queryer qyr = new Queryer(dial);
 		

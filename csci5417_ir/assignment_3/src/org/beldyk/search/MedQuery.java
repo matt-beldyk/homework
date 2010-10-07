@@ -13,6 +13,9 @@ public class MedQuery {
 	public String getQuery() {
 		return query;
 	}
+	public String getQueryText() {
+		return query + " " +title;
+	}
 	public void setQuery(String query) {
 		this.query = query;
 	}

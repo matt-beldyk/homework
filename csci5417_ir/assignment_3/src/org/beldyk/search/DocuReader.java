@@ -23,7 +23,10 @@ public class DocuReader {
 						curDoc = new MedDoc();
 
 					}
+
 				} else {
+					//state = "txt";
+
 					if(curDoc.containsKey(state)){
 						curDoc.put(state, curDoc.get(state)+line);
 					} else {

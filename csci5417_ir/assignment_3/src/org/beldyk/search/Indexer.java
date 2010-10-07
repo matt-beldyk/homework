@@ -29,10 +29,10 @@ public class Indexer {
 	public static void main(String[] args) throws Exception {
 		Indexer i = new Indexer(new Dials());
 		i.indexEm();
-	
+
 
 	}
-	
+
 	public void indexEm() throws Exception, LockObtainFailedException, IOException{
 		index(dial.getDocPath());
 		System.out.println("Huzza, I'm done!");
@@ -41,7 +41,7 @@ public class Indexer {
 	public  void index(String documents) throws CorruptIndexException, LockObtainFailedException, IOException{
 		DocuReader rdr = new DocuReader();
 		//	IndexWriter wr = new IndexWriter(FSDirectory.open(indexDir),  
-			IndexWriter wr = new IndexWriter(this.dial.getIndexDir(),  
+		IndexWriter wr = new IndexWriter(this.dial.getIndexDir(),  
 				this.dial.getAnalyz(), 
 				true, new IndexWriter.MaxFieldLength(25000));
 
@@ -52,11 +52,12 @@ public class Indexer {
 			for(MedDoc d: docs){
 				Document doc = new Document();
 				for(String a:d.keySet()){
-					if(a.equalsIgnoreCase("W")){
-						//System.out.println(d.get(a));
+
+					Field f = new Field(a, d.get(a), Field.Store.YES, Field.Index.ANALYZED);
+					if(a.equalsIgnoreCase("mesh")){
+						f.setBoost((float)71.0);
 					}
-						Field f = new Field(a, d.get(a), Field.Store.YES, Field.Index.ANALYZED);
-						doc.add(f);
+					doc.add(f);
 
 				}
 				wr.addDocument(doc);
@@ -65,7 +66,7 @@ public class Indexer {
 			e.printStackTrace();
 		}
 		wr.close();
-	
+
 	}
 
 }
