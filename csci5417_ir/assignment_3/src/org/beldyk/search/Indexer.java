@@ -56,9 +56,19 @@ public class Indexer {
 				for(String a:d.keySet()){
 
 					Field f = new Field(a, d.get(a), Field.Store.YES, Field.Index.ANALYZED);
+					/*
 					if(a.equalsIgnoreCase("mesh")){
 						f.setBoost((float)71.0);
 					}
+					*/
+					
+					if(a.equalsIgnoreCase("m") ){
+						f.setBoost((float)1.0);
+					}
+					if( a.equalsIgnoreCase("t")){
+						f.setBoost((float)0.6);
+					}
+					
 					doc.add(f);
 
 				}
