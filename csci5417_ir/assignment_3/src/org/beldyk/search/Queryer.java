@@ -68,7 +68,7 @@ public class Queryer {
 			//System.out.println(results.toString());
 			System.out.println("There are "+hits.size()+" results for: "+q.getNumb()+":"+q.getQueryText());
 			System.out.println("Expanded to : "+ expandedQuery);
-			System.out.println("Out of a possible "+goldStandard.size()+" Precision: "+prec);
+			System.out.println("Out of a possible "+goldStandard.size()+" Precision: "+prec+"\n");
 		}
 		outFile.close();
 		System.out.println("Average R-Precision: "+StatsUtil.average(rPrecisions));
