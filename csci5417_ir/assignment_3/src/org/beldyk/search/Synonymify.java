@@ -15,6 +15,8 @@ public class Synonymify {
 		//OSHU58
 		synonyms.put("scheurmann's", "Scheuermann's Scheuermann");
 		
+		//OSHU42
+		synonyms.put("thyrotoxicosis", "toxicosis Thyroxine");
 		//synonyms.put("hiv", "AIDS Syndrome/*PA;");
 		
 	 }
