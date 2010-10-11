@@ -8,10 +8,12 @@ public class Synonymify {
 	 
 	 public Synonymify(){
 		synonyms = new HashMap<String, String>();
+		
+		
 		//OSHU63
-	//	synonyms.put("hiv", "aids immune Immunodeficiency  ");
+		synonyms.put("hiv", "Immunodeficiency  ");
 		synonyms.put("w/hiv", "Immunodeficiency Kaposi's ileum");
-		synonyms.put("gi", " Gastrointestinal oesophageal Cytomegalovirus bowel oesophagus");
+		synonyms.put("gi", " Gastrointestinal oesophageal Cytomegalovirus bowel oesophagus gastroenterology");
 		
 		//OSHU58
 		synonyms.put("scheurmann's", "Scheuermann's Scheuermann");
