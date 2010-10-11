@@ -28,5 +28,7 @@ public class MedQuery {
 	public String toString(){
 		return numb+"\n"+title+"\n"+query;
 	}
+	
+
 
 }

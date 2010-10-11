@@ -47,11 +47,14 @@ public class Queryer {
 		QueryReader rdr = new QueryReader(dials.getqPath());
 		Collection<MedQuery> querys = rdr.readQueries();
 		Collection<Double> rPrecisions = new ArrayList<Double>();
+		Synonymify syn = new Synonymify();
 		
 		for(MedQuery q: querys){
 			//System.out.println(q.toString());
 			Collection<String> goldStandard = qRels.getResults(q.getNumb());
-			Collection<Document> hits = search(q.getQueryText(), dials.getIndexDir(),goldStandard.size());
+			String expandedQuery = syn.expandQuery(q.getQueryText());
+			Collection<Document> hits = search(expandedQuery, dials.getIndexDir(), goldStandard.size());
+			
 			Collection <String> results = new ArrayList<String>();
 			for (Document doc: hits){
 				results.add(doc.get("U"));
@@ -64,6 +67,7 @@ public class Queryer {
 			
 			//System.out.println(results.toString());
 			System.out.println("There are "+hits.size()+" results for: "+q.getNumb()+":"+q.getQueryText());
+			System.out.println("Expanded to : "+ expandedQuery);
 			System.out.println("Out of a possible "+goldStandard.size()+" Precision: "+prec);
 		}
 		outFile.close();
@@ -71,6 +75,7 @@ public class Queryer {
 	}
 	public Collection<Document> search(String qry, Directory dir, Integer howMany) throws CorruptIndexException, IOException, ParseException{
 		IndexSearcher is = new IndexSearcher(dir);
+		//String [] fields = {"W", "M", "T", "S"};
 		String [] fields = {"W", "M", "T"};
 		QueryParser qp = new MultiFieldQueryParser(
 				Version.LUCENE_CURRENT, 
