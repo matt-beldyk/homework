@@ -9,11 +9,14 @@ public class Synonymify {
 	 public Synonymify(){
 		synonyms = new HashMap<String, String>();
 		
+		//OSHU55
+		// no idea why these aren't being found
+		//synonyms.put("dysuria", "pregnancy pyelonephritis ciprofloxacin");
 		
 		//OSHU63
 		synonyms.put("hiv", "Immunodeficiency  ");
 		synonyms.put("w/hiv", "Immunodeficiency Kaposi's ileum");
-		synonyms.put("gi", " Gastrointestinal oesophageal Cytomegalovirus bowel oesophagus gastroenterology");
+		synonyms.put("gi", "gastroenterology Gastrointestinal oesophageal Cytomegalovirus bowel oesophagus gastroenterology \"gastrointestinal endoscopy\"");
 		
 		//OSHU58
 		synonyms.put("scheurmann's", "Scheuermann's Scheuermann");
@@ -30,7 +33,7 @@ public class Synonymify {
 		 String nQuery = oQuery;
 		 for(String q: oQuery.split(" ")){
 			 if(synonyms.containsKey(q.toLowerCase())){
-				 nQuery = nQuery + " " + synonyms.get(q.toLowerCase());
+				 nQuery = synonyms.get(q.toLowerCase()) + " " + nQuery;
 			 }
 		 }
 		 return nQuery;
