@@ -1,0 +1,17 @@
+My final system ended up being fairly simple:
+Porter snowball stemmer
+A minimal amount of field boosting
+    M = 1
+    T  = 0.6
+    S = 0.0
+A custom set of stop words (the top 60 words from the docs prepended to ENGLISH_STOP_WORDS_SET)
+And a hand tuned set of synonyms for query expansion (see Synonymify.java)
+All of which led up to an R-precision of 41.719.
+
+My basic experimental method was to take a single value (the field boost of T, for example) and play with different values looking for a value that gave me the highest value.  I played with the number of stop words and the field boosting initially, which gave me an R-precision of 37.96
+
+Then I began to play with synonyms.  I decided upon query expansion (mainly because it seemed easier to code.)  I’d pick a query with no results, and look at the query vs the contents of the documents to pick out some synonyms (frankly, manually attempting to find a term that found the proper documents but didn’t give too many false positives.)  This gave me my 41.719 value.
+
+I am also well aware that I completely overfit to the dataset, but that was the assignment.  
+
+ 

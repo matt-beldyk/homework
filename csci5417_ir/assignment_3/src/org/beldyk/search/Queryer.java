@@ -53,7 +53,8 @@ public class Queryer {
 			//System.out.println(q.toString());
 			Collection<String> goldStandard = qRels.getResults(q.getNumb());
 			String expandedQuery = syn.expandQuery(q.getQueryText());
-			Collection<Document> hits = search(expandedQuery, dials.getIndexDir(), goldStandard.size());
+			Collection<Document> hits = search(expandedQuery, dials.getIndexDir(), 100);
+			//Collection<Document> hits = search(q.getQueryText(), dials.getIndexDir(), goldStandard.size());
 			
 			Collection <String> results = new ArrayList<String>();
 			for (Document doc: hits){
