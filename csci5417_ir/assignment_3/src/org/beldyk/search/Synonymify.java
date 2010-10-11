@@ -9,15 +9,15 @@ public class Synonymify {
 	 public Synonymify(){
 		synonyms = new HashMap<String, String>();
 		//OSHU63
-		synonyms.put("hiv", "aids immune Immunodeficiency  ");
-		synonyms.put("gi", "Gastroenterol Gastrointestinal");
+	//	synonyms.put("hiv", "aids immune Immunodeficiency  ");
+	//	synonyms.put("gi", "Gastroenterol Gastrointestinal");
 		
 		//OSHU58
 		synonyms.put("scheurmann's", "Scheuermann's Scheuermann");
 		
 		//OSHU42
 		synonyms.put("thyrotoxicosis", "toxicosis Thyroxine");
-		synonyms.put("thyrotoxicosis,", "toxicosis Thyroxine Thyroid hypothyroidism");
+		synonyms.put("thyrotoxicosis,", "toxicosis Thyroxine Thyroid hypothyroidism hyperthyroidism Thyroidectomy");
 
 		//synonyms.put("hiv", "AIDS Syndrome/*PA;");
 		
