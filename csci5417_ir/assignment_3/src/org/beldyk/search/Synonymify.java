@@ -17,7 +17,7 @@ public class Synonymify {
 		
 		//OSHU42
 		synonyms.put("thyrotoxicosis", "toxicosis Thyroxine");
-		synonyms.put("thyrotoxicosis,", "toxicosis Thyroxine");
+		synonyms.put("thyrotoxicosis,", "toxicosis Thyroxine Thyroid hypothyroidism");
 
 		//synonyms.put("hiv", "AIDS Syndrome/*PA;");
 		
