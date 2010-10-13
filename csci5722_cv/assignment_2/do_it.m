@@ -2,7 +2,7 @@
 
 % This is the main function, basically give it a path to the example
 % dataset provided (the *.ppm images of haybales.) and provides an 
-function [] = do_it(pth)    
+function [] = do_it(pth, threshold)    
     begin_time = cputime();
     images = read_files(pth);
     [w,h, count_images] = size(images)
@@ -28,7 +28,8 @@ function [] = do_it(pth)
 
         % find the mappings from the last image to this one
         if(i > 1)
-            xy_mappings{1,i} = find_xy_mappings(feat_vects{1,i-1}, feat_vects{1,i});
+         %   xy_mappings{1,i} = find_xy_mappings(feat_vects{1,i-1}, feat_vects{1,i});
+            xy_mappings{1,i} = map_via_grid(feat_vects{1,i-1}, feat_vects{1,i}, w, h, threshold);
         end
         
         % mark up an image for my display purposes
@@ -38,7 +39,7 @@ function [] = do_it(pth)
     total_time = end_time - begin_time
     
     % uncomment for debugging
-   % save('code_state.mat');
+    save('code_state_oct_12.mat');
    
    % Display my results
     show_results(showy, xy_mappings);

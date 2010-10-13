@@ -12,6 +12,7 @@ function [mappings] = find_xy_mappings(A,B)
 end
 
 
+
 % This funcion searches for the closest vector for every vector
 % I'm just looking at euclidian distance 
 % (X,Y,Filter Size, is_minima or maxima, filter response)
