@@ -2,7 +2,7 @@
 
 % This is the main function, basically give it a path to the example
 % dataset provided (the *.ppm images of haybales.) and provides an 
-function [] = do_it(pth, threshold)    
+function [xy_mappings] = do_it(pth, threshold)    
     begin_time = cputime();
     images = read_files(pth);
     [w,h, count_images] = size(images)
@@ -42,7 +42,7 @@ function [] = do_it(pth, threshold)
     save('code_state_oct_12.mat');
    
    % Display my results
-    show_results(showy, xy_mappings);
+  %  show_results(showy, xy_mappings);
 
 
 end
