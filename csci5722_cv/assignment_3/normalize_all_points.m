@@ -1,7 +1,7 @@
 function [normed_vect] = normalize_all_points(m_vect, f, c1, c2)
-    K = [f 0 c1; 0 f c2; 0 0 1]
-    K_inv = inv(K)
-    [how_many, throwaway] = size (m_vect)
+    K = [f 0 c1; 0 f c2; 0 0 1];
+    K_inv = inv(K);
+    [how_many, throwaway] = size (m_vect);
     
     uv = ones(how_many, 6);
     

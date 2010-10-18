@@ -10,4 +10,8 @@ function [solut] = solve_for_e(point_matches)
         A(i,:) = [  x1(i)*x2(i), x1(i)*y2(i), x1(i), x2(i)*y1(i), y1(i)*y2(i), y1(i),x2(i), y2(i), 1];
     end
     [U, S, V] = svd(A'*A)
+    E = reshape(V(:,9), 3, 3)
+    [u, s, v] = svd(E)
+    s_tilde = [1 0 0; 0 1 0; 0 0 0]
+    E_tilde = u*s_tilde*v'
 end
