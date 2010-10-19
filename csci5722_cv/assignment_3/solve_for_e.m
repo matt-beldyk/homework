@@ -14,4 +14,12 @@ function [solut] = solve_for_e(point_matches)
     [u, s, v] = svd(E)
     s_tilde = [1 0 0; 0 1 0; 0 0 0]
     E_tilde = u*s_tilde*v'
+    [u_tilde, s_tilde, v_tilde] = svd(E_tilde)
+    t = u(:,3)
+
+    D = [0 1 0; -1 0 0; 0 0 1];
+    
+    Ra = u*D*v'
+    Rb = u*D'*v'
+
 end
