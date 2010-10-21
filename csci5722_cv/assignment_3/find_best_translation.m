@@ -39,9 +39,9 @@ function [t] = find_best_translation(xy_matches, pth, iterations)
             end
         end
     end
-    best_features;
-    best_distance;
-    best_P;
+  %  best_features;
+   % best_distance;
+   % best_P;
     de_norm_feats = de_normalize_all_points(best_features, cam.f, cam.C(1), cam.C(2));
     E = find_e(de_norm_feats);
     [u,s,v] = svd(E);
