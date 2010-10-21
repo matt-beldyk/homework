@@ -1,13 +1,13 @@
-function [P, E] = solve_for_e(point_matches)
+function [P, E, whichP] = solve_for_e(point_matches)
     
 
     
      E = find_e(point_matches);
-     P = find_p(E, point_matches);
+     [P, whichP] = find_p(E, point_matches);
     
 end
 
-function [P] = find_p(E, point_matches)
+function [P, which_P] = find_p(E, point_matches)
 
     [point_count, tmp] = size(point_matches);
     [u,s,v] = svd(E);
@@ -79,9 +79,11 @@ function [P] = find_p(E, point_matches)
           
     end
     P = 0;
+    which_P = 0;
     for i = 1:4
         if p_counter(i) == point_count
             P = Pi{i};
+            which_P = i;
         end
     end
 end

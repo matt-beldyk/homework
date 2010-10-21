@@ -1,12 +1,15 @@
-function [] = track_movement(pth)
+function [] = track_movement(pth, iterations)
   %  xy_mappings = do_it(pth,25);
-    load('code_state_oct_12.mat');
-    load('/home/beldyk/homework_data/cv_asgn3/cam.mat');
+    load('~/code_state_oct_12.mat');
+    load(strcat(pth,'/cam.mat'));
     [asdf, num_img] = size(xy_mappings);
-    normed_vect = cell(num_img,1);
+
+    all_the_translations = zeros(num_img, 3);
     for i = 2:num_img
-        normed_vect{i} = normalize_all_points(xy_mappings{i},cam.f, cam.C(1), cam.C(2));
+        i
+        all_the_translations(i, :) = find_best_translation(xy_mappings{i}, pth, iterations);
     end
 
+    save('~/code_state_oct_20.mat');
 end
 
