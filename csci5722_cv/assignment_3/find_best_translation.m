@@ -3,11 +3,11 @@ function [t] = find_best_translation(xy_matches, pth, iterations)
     load(strcat(pth, '/cam.mat'));
     normed_xy = normalize_all_points(xy_matches, cam.f, cam.C(1), cam.C(2));
     best_distance = Inf;
+    best_which = 0;
     for i =1:iterations
         random_features = normed_xy(randi(count_features, 1,8),:);
-        [P,wP] = solve_for_e(random_features);
+        [P, E, whichP] = solve_for_e(random_features);
         if P
-
 
             reasonable_features = random_features;
             dist_counter = 0;
@@ -25,7 +25,7 @@ function [t] = find_best_translation(xy_matches, pth, iterations)
                 best_features = reasonable_features;
                 best_distance = dist_counter;
                 best_P = P;
-                best_which = wP;
+                best_which = whichP;
             end
         end
     end
@@ -36,7 +36,9 @@ function [t] = find_best_translation(xy_matches, pth, iterations)
     E = find_e(de_norm_feats);
     [u,s,v] = svd(E);
     t = v(:,3)
+    
     if or((best_which == 2),(best_which ==4))
-        t = -t
+        sprintf('gotta flip t')
+        t = -t;
     end
 end

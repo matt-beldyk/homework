@@ -4,6 +4,7 @@ function [P, E, whichP] = solve_for_e(point_matches)
     
      E = find_e(point_matches);
      [P, whichP] = find_p(E, point_matches);
+
     
 end
 
