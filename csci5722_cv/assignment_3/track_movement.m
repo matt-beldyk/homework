@@ -5,7 +5,7 @@
 % I've found 1000 to be a reasonable number
 
 function [] = track_movement(pth, iterations)
-    xy_mappings = do_it(pth,25);
+    xy_mappings = find_features_and_mappings(pth,10);
    % load('~/code_state_oct_12.mat');
     load(strcat(pth,'/cam.mat'));
     [asdf, num_img] = size(xy_mappings);
