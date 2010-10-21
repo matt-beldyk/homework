@@ -57,6 +57,7 @@ for i = 1:w
                 down = h;
             end
             min_dist = Inf;
+            min_loc = [0,0];
             for k = left:right
                 for m = up:down
                     if(Mb{k,m})
