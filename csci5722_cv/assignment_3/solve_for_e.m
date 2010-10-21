@@ -1,22 +1,21 @@
-function [P] = solve_for_e(point_matches)
+function [P, E] = solve_for_e(point_matches)
     
+
+    
+     E = find_e(point_matches);
+     P = find_p(E, point_matches);
+    
+end
+
+function [P] = find_p(E, point_matches)
+
     [point_count, tmp] = size(point_matches);
-    
+    [u,s,v] = svd(E);
     x1 = point_matches(:,1);
     y1 = point_matches(:,2);
     x2 = point_matches(:,3);
     y2 = point_matches(:,4);
     
-    A = zeros(point_count, 9);
-    for i = 1:point_count
-        A(i,:) = [  x1(i)*x2(i), x1(i)*y2(i), x1(i), x2(i)*y1(i), y1(i)*y2(i), y1(i),x2(i), y2(i), 1];
-    end
-
-    [U, S, V] = svd(A'*A);
-    E = reshape(V(:,9), 3, 3);
-    [u, s, v] = svd(E);
-    s_tilde = [1 0 0; 0 1 0; 0 0 0];
-    E_tilde = u*s_tilde*v';
    % [u_tilde, s_tilde, v_tilde] = svd(E_tilde)
     t = u(:,3);
 
@@ -85,7 +84,6 @@ function [P] = solve_for_e(point_matches)
             P = Pi{i};
         end
     end
-    
 end
 
 
