@@ -1,3 +1,7 @@
+% Matthew Beldyk
+
+% this function plots the translations and locations between all the
+% images
 function [] = plot_translations(trns)
     [tns_count, tmp] = size(trns)
     loc = zeros(tns_count -1, 2);

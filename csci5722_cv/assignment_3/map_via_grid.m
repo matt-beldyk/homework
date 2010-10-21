@@ -1,3 +1,11 @@
+% Matthew Beldyk
+
+% This function will take two lists of features for two pictures
+% and find a reasonable mapping between the two of them
+% it is optimized by placing the features in a grid and only 
+% looking for coorespondances via a threshold
+
+
 function [mappings] = map_via_grid(A,B, w, h, threshold)
     Ma = map_features_grid(A, w, h);
     Mb = map_features_grid(B, w, h);
@@ -7,6 +15,7 @@ function [mappings] = map_via_grid(A,B, w, h, threshold)
     mappings = find_matches(Ma, Mb, w, h, threshold);
 end
 
+% puts the features into a grid
 function [M] = map_features_grid(A, w, h)
     M = cell(w,h);
     for i = 1: size(A)
@@ -14,6 +23,9 @@ function [M] = map_features_grid(A, w, h)
     end
 end
 
+
+% searches the two grids looking for cooresponances between 
+% the two of them
 function [matches] = find_matches(Ma, Mb, w, h, threshold)
 g = 1;
 

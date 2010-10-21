@@ -1,3 +1,13 @@
+% Matthew Beldyk
+% This function will find the best estimate of the translation
+% of the camera from how it moved from one picture to the next
+% it implements the RANSAC algorithm 
+% the input is:
+% a set of xy coorespondances
+% the path to the data
+% the number of random sets of coorespondances to try
+
+
 function [t] = find_best_translation(xy_matches, pth, iterations)
     [count_features, tmp] = size(xy_matches);
     load(strcat(pth, '/cam.mat'));
@@ -35,10 +45,10 @@ function [t] = find_best_translation(xy_matches, pth, iterations)
     de_norm_feats = de_normalize_all_points(best_features, cam.f, cam.C(1), cam.C(2));
     E = find_e(de_norm_feats);
     [u,s,v] = svd(E);
-    t = v(:,3)
+    t = v(:,3);
     
     if or((best_which == 2),(best_which ==4))
-        sprintf('gotta flip t')
-        t = -t;
+       % sprintf('gotta flip t')
+        t = -1*t;
     end
 end

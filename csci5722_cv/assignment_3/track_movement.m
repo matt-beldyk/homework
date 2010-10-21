@@ -1,3 +1,9 @@
+% Matthew Beldyk
+% this function will track the movement of a robot through
+% a field, given a directory of .ppm files
+% also give the number of ransac iterations to attempt
+% I've found 1000 to be a reasonable number
+
 function [] = track_movement(pth, iterations)
     xy_mappings = do_it(pth,25);
    % load('~/code_state_oct_12.mat');

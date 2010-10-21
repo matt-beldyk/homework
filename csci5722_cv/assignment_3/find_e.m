@@ -1,3 +1,7 @@
+% Matthew Beldyk
+
+% This function finds the elemenel matrix E based upon 
+% a given set of points.
 function [E] = find_e(point_matches)
     
     [point_count, tmp] = size(point_matches);

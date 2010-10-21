@@ -1,18 +1,24 @@
+% Matthew Beldyk
+
+% This function will take a list of f
+
 function [mappings] = map_via_grid(A,B, w, h, threshold)
-    Ma = map_features_grid(A, w, h, threshold);
-    Mb = map_features_grid(B, w, h, threshold);
-    forward_mappings = (
-    
+    Ma = map_features_grid(A, w, h);
+    Mb = map_features_grid(B, w, h);
+    %forward_matches = find_matches(Ma, Mb, w, h, threshold);
+    %back_matches = find_matches(Mb, Ma, w, h, threshold);
+    %mappings = cyclic_consistancy(forward_matches, back_matches);
+    mappings = find_matches(Ma, Mb, w, h, threshold);
 end
 
-function [M] = map_features_grid(A, w, h, threshold)
+function [M] = map_features_grid(A, w, h)
     M = cell(w,h);
     for i = 1: size(A)
         M{A(i,1), A(i,2)} = A(i,:);
     end
 end
 
-function [matches] = find_matches(Ma, Mb, w, h)
+function [matches] = find_matches(Ma, Mb, w, h, threshold)
 g = 1;
 
 for i = 1:w
@@ -56,6 +62,9 @@ for i = 1:w
             end
             matches(g,:) = [i, j, min_loc(1), min_loc(2)];
             g = g+1;
+            if(mod(g,100) == 0)
+                g
+            end
             
         end
     end

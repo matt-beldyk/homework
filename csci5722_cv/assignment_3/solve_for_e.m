@@ -1,6 +1,9 @@
-function [P, E, whichP] = solve_for_e(point_matches)
-    
+% Matthew Beldyk
 
+% This function finds the most optimal elemental matrix E
+% based on a set of point matches
+
+function [P, E, whichP] = solve_for_e(point_matches)
     
      E = find_e(point_matches);
      [P, whichP] = find_p(E, point_matches);
@@ -8,6 +11,9 @@ function [P, E, whichP] = solve_for_e(point_matches)
     
 end
 
+% this function calculates the matrix P to determine
+% between four possible solutions for the set of point
+% matches
 function [P, which_P] = find_p(E, point_matches)
 
     [point_count, tmp] = size(point_matches);

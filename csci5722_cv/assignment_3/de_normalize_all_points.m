@@ -1,3 +1,8 @@
+% Matthew Beldyk
+
+% This function will denormalize a set of points based upon a
+% camera calibration matrix (ie take the normalized points and 
+% turn them back into pixel locations)
 function [normed_vect] = de_normalize_all_points(m_vect, f, c1, c2)
     K = [f 0 c1; 0 f c2; 0 0 1];
 
