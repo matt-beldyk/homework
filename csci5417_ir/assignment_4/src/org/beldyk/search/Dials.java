@@ -11,10 +11,19 @@ public class Dials {
 	private Analyzer analyz;
 	private String lu_dir_name;
 	private Directory indexDir;
-	private String pth = "/Users/beldyk/Desktop/";
+	/*
+	private String pth = "/Users/beldyk/homework_data/ir_asgn4/";
 	private String qPath = pth +"queries.txt";
 	private String qRelPath = pth + "qrels.txt";
-	private String resultsPath = pth + "beldyk-assgn3-out.txt";
+	private String resultsPath = pth + "beldyk-assgn4-out.txt";
+		private String docPath;
+
+	*/
+	
+	private String pth;
+	private String qPath;
+	private String qRelPath;
+	private String resultsPath;
 	private String docPath;
 	
 	
@@ -44,10 +53,10 @@ public class Dials {
 
 	public Dials(){
 		//pth = "/Users/beldyk/Desktop/";
-		pth = "/home/beldyk/Desktop/";
+		pth = "/home/beldyk/homework_data/ir_asgn4/";
 		qPath = pth +"queries.txt";
 		qRelPath = pth + "qrels.txt";
-		resultsPath = pth + "beldyk-assgn3-out.txt";
+		resultsPath = pth + "beldyk-assgn4-out.txt";
 		docPath = pth + "medical.txt";
 		indexDir = new RAMDirectory();
 		analyz = new  StandardAnalyzer(Version.LUCENE_CURRENT);
