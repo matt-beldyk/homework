@@ -25,6 +25,7 @@ public class Dials {
 	private String qRelPath;
 	private String resultsPath;
 	private String docPath;
+	private String meshTermsPath;
 	
 	
 	public String getQPath() {
@@ -58,10 +59,20 @@ public class Dials {
 		qRelPath = pth + "qrels.txt";
 		resultsPath = pth + "beldyk-assgn4-out.txt";
 		docPath = pth + "medical.txt";
+		meshTermsPath = pth + "qrels.mesh.batch.87";
 		indexDir = new RAMDirectory();
 		analyz = new  StandardAnalyzer(Version.LUCENE_CURRENT);
 	}
 	
+	
+	public String getMeshTermsPath() {
+		return meshTermsPath;
+	}
+
+	public void setMeshTermsPath(String meshTermsPath) {
+		this.meshTermsPath = meshTermsPath;
+	}
+
 	public Analyzer getAnalyz() {
 		return analyz;
 	}

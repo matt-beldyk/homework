@@ -1,5 +1,7 @@
 package org.beldyk.search;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,8 +21,12 @@ import org.apache.lucene.util.Version;
 
 public class KNNFinder {
 	private Dials dials;
-	public KNNFinder(Dials dials){
+	private MeshTerms masterMeshTerms;
+	
+	
+	public KNNFinder(Dials dials) throws FileNotFoundException{
 		this.dials = dials;
+		this.masterMeshTerms = new MeshTerms(new File(dials.getMeshTermsPath()));
 	}
 
 	public List<String> findKNN(Integer k, MedDoc doc) throws CorruptIndexException, IOException, ParseException{
