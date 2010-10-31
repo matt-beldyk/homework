@@ -24,6 +24,14 @@ public class KNNFinder {
 	private MeshTerms masterMeshTerms;
 	
 	
+	public MeshTerms getMasterMeshTerms() {
+		return masterMeshTerms;
+	}
+
+	public void setMasterMeshTerms(MeshTerms masterMeshTerms) {
+		this.masterMeshTerms = masterMeshTerms;
+	}
+
 	public KNNFinder(Dials dials) throws FileNotFoundException{
 		this.dials = dials;
 		this.masterMeshTerms = new MeshTerms(new File(dials.getMeshTermsPath()));

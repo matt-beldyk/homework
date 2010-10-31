@@ -58,7 +58,8 @@ public class Dials {
 		qPath = pth +"queries.txt";
 		qRelPath = pth + "qrels.txt";
 		resultsPath = pth + "beldyk-assgn4-out.txt";
-		docPath = pth + "medical.txt";
+		//docPath = pth + "medical.txt";
+		docPath = pth + "short_med.txt";
 		meshTermsPath = pth + "qrels.mesh.batch.87";
 		indexDir = new RAMDirectory();
 		analyz = new  StandardAnalyzer(Version.LUCENE_CURRENT);
