@@ -2,6 +2,7 @@ package org.beldyk.search;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.search.Collector;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
@@ -26,6 +27,7 @@ public class Dials {
 	private String resultsPath;
 	private String docPath;
 	private String meshTermsPath;
+	private Integer howManyDocs2Lookat;
 	
 	
 	public String getQPath() {
@@ -58,9 +60,10 @@ public class Dials {
 		qPath = pth +"queries.txt";
 		qRelPath = pth + "qrels.txt";
 		resultsPath = pth + "beldyk-assgn4-out.txt";
-		//docPath = pth + "medical.txt";
-		docPath = pth + "short_med.txt";
+		docPath = pth + "medical.txt";
+		//docPath = pth + "short_med.txt";
 		meshTermsPath = pth + "qrels.mesh.batch.87";
+		howManyDocs2Lookat = 10;
 		indexDir = new RAMDirectory();
 		analyz = new  StandardAnalyzer(Version.LUCENE_CURRENT);
 	}
@@ -115,6 +118,14 @@ public class Dials {
 	}
 	public void setResultsPath(String resultsPath) {
 		this.resultsPath = resultsPath;
+	}
+
+	public Integer getHowManyDocs2Lookat() {
+		return howManyDocs2Lookat;
+	}
+
+	public void setHowManyDocs2Lookat(Integer howManyDocs2Lookat) {
+		this.howManyDocs2Lookat = howManyDocs2Lookat;
 	}
 	
 	

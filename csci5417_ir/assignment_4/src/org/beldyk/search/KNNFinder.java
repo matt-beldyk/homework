@@ -22,8 +22,8 @@ import org.apache.lucene.util.Version;
 public class KNNFinder {
 	private Dials dials;
 	private MeshTerms masterMeshTerms;
-	
-	
+
+
 	public MeshTerms getMasterMeshTerms() {
 		return masterMeshTerms;
 	}
@@ -42,7 +42,7 @@ public class KNNFinder {
 
 		List<String> topMeshTerms = findTopMeshTerms(k, doc);
 		List<String> meshTerms = new ArrayList<String>();
-		for(Integer i = 0; i < k ; ++i){
+		for(Integer i = 0; i < k && i <topMeshTerms.size(); ++i){
 			meshTerms.add(topMeshTerms.get(i));
 		}
 		return meshTerms;
@@ -60,23 +60,33 @@ public class KNNFinder {
 				dials.getAnalyz()
 		);
 
-		Query query = qp.parse(doc.get("T"));
+		String qString = doc.get("T")+"\n" + doc.get("W") + "\n" + doc.get("A");
+		qString = qString.replaceAll("[^\\w \n]", " ");
+		qString = qString.replaceAll("null", " ");
 
-		ScoreDoc[] hits = is.search(query, k).scoreDocs;
+		System.out.println("about to query upon '"+qString+"'");
+
+		Query query = qp.parse(qString);
+
+		ScoreDoc[] hits = is.search(query, dials.getHowManyDocs2Lookat()).scoreDocs;
 
 		HashMap<String, Integer> meshTerms = new HashMap<String, Integer>();
 
-		
+
 		for (ScoreDoc hit: hits) {
 			Document hitDoc = is.doc(hit.doc);
 			String id = hitDoc.get("U");
 			List<String> terms = masterMeshTerms.get(id);
-			for(String t: terms){
-				if(meshTerms.containsKey(t)){
-					meshTerms.put(t, meshTerms.get(t) + 1);
-				}else{
-					meshTerms.put(t, 1);
+			if(!(terms == null)){
+				for(String t: terms){
+					if(meshTerms.containsKey(t)){
+						meshTerms.put(t, meshTerms.get(t) + 1);
+					}else{
+						meshTerms.put(t, 1);
+					}
 				}
+			}else{
+				System.out.println("oi, "+id+" found no terms!!!");
 			}
 		}
 		Set <String> meshKeys = meshTerms.keySet();
@@ -84,7 +94,7 @@ public class KNNFinder {
 		for(String i: meshKeys){
 			allTerms.add(new NamedCounter(i, meshTerms.get(i)));
 		}
-		
+
 		Collections.sort(allTerms);
 		List <String> topKTerms = new ArrayList<String>();
 		for(Integer i = 0; i < k && i<allTerms.size(); ++i){
