@@ -60,9 +60,9 @@ public class Dials {
 		qPath = pth +"queries.txt";
 		qRelPath = pth + "qrels.txt";
 		resultsPath = pth + "beldyk-assgn4-out.txt";
-		//docPath = pth + "medical.txt";
+		docPath = pth + "medical.txt";
 		docs2Query = pth + "short_med.txt";
-		docPath = pth + "short_med.txt";
+		//docPath = pth + "short_med.txt";
 		meshTermsPath = pth + "qrels.mesh.batch.87";
 		howManyDocs2Lookat = 2;
 		indexDir = new RAMDirectory();
