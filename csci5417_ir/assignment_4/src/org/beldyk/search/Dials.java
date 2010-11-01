@@ -28,7 +28,7 @@ public class Dials {
 	private String docPath;
 	private String meshTermsPath;
 	private Integer howManyDocs2Lookat;
-	
+	private String docs2Query;
 	
 	public String getQPath() {
 		return qPath;
@@ -60,10 +60,11 @@ public class Dials {
 		qPath = pth +"queries.txt";
 		qRelPath = pth + "qrels.txt";
 		resultsPath = pth + "beldyk-assgn4-out.txt";
-		docPath = pth + "medical.txt";
-		//docPath = pth + "short_med.txt";
+		//docPath = pth + "medical.txt";
+		docs2Query = pth + "short_med.txt";
+		docPath = pth + "short_med.txt";
 		meshTermsPath = pth + "qrels.mesh.batch.87";
-		howManyDocs2Lookat = 10;
+		howManyDocs2Lookat = 2;
 		indexDir = new RAMDirectory();
 		analyz = new  StandardAnalyzer(Version.LUCENE_CURRENT);
 	}
@@ -126,6 +127,14 @@ public class Dials {
 
 	public void setHowManyDocs2Lookat(Integer howManyDocs2Lookat) {
 		this.howManyDocs2Lookat = howManyDocs2Lookat;
+	}
+
+	public void setDocs2Query(String docs2Query) {
+		this.docs2Query = docs2Query;
+	}
+
+	public String getDocs2Query() {
+		return docs2Query;
 	}
 	
 	

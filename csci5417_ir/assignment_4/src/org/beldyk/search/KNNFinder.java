@@ -60,11 +60,17 @@ public class KNNFinder {
 				dials.getAnalyz()
 		);
 
-		String qString = doc.get("T")+"\n" + doc.get("W") + "\n" + doc.get("A");
+		// if the document is blank, I'm just going to return null and assume it has no mesh terms
+		if(!(doc.containsKey("T") || doc.containsKey("W") || doc.containsKey("A"))){
+			return new ArrayList<String>();
+		}
+		String qString = doc.get("T")+" " + doc.get("W") + " " + doc.get("A");
 		qString = qString.replaceAll("[^\\w \n]", " ");
 		qString = qString.replaceAll("null", " ");
+		qString = qString.replaceAll("OR", " ");
+		qString = qString.replaceAll("NOT", " ");
 
-		System.out.println("about to query upon '"+qString+"'");
+		//	System.out.println("about to query upon '"+qString+"'");
 
 		Query query = qp.parse(qString);
 
@@ -76,17 +82,19 @@ public class KNNFinder {
 		for (ScoreDoc hit: hits) {
 			Document hitDoc = is.doc(hit.doc);
 			String id = hitDoc.get("U");
-			List<String> terms = masterMeshTerms.get(id);
-			if(!(terms == null)){
-				for(String t: terms){
-					if(meshTerms.containsKey(t)){
-						meshTerms.put(t, meshTerms.get(t) + 1);
-					}else{
-						meshTerms.put(t, 1);
+			if(!id.equals(doc.get("U"))){
+				List<String> terms = masterMeshTerms.get(id);
+				if(!(terms == null)){
+					for(String t: terms){
+						if(meshTerms.containsKey(t)){
+							meshTerms.put(t, meshTerms.get(t) + 1);
+						}else{
+							meshTerms.put(t, 1);
+						}
 					}
+				}else{
+					System.out.println("oi, "+id+" found no terms!!!");
 				}
-			}else{
-				System.out.println("oi, "+id+" found no terms!!!");
 			}
 		}
 		Set <String> meshKeys = meshTerms.keySet();
