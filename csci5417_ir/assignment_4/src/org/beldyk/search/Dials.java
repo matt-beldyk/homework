@@ -68,7 +68,7 @@ public class Dials {
 		//docPath = pth + "short_med.txt";
 		meshTermsPath = pth + "qrels.mesh.batch.87";
 		howManyDocs2Lookat = 12;
-		termCount2Search = 5;
+		termCount2Search = 2;
 		
 		testSetPath = pth + "knn-test.txt";
 		
