@@ -35,26 +35,37 @@ public class KNNasgnment {
 		FileOutputStream outFile = new FileOutputStream(dials.getResultsPath());
 
 		Collection<Double> fmeasures = new ArrayList<Double>();
+		Collection<Double> precisions = new ArrayList<Double>();
+		Collection<Double> recalls = new ArrayList<Double>();
 		for(String docID: mappedSearchDocs.keySet()){
 			
 			System.out.println("About to find kNN for "+ docID);
-			List<String> results = knnF.findKNN(10, mappedSearchDocs.get(docID));
+			List<String> results = knnF.findKNN(dials.getTermCount2Search(), mappedSearchDocs.get(docID));
 			for(String res: results){
 				outFile.write((docID+" "+res+"\n").getBytes());
 			}
 			System.out.println("Optimally: " + masterMeshTerms.get(docID));
 			System.out.println("Found: " + results);
-			System.out.println("Precision: "+StatsUtil.precision(masterMeshTerms.get(docID), results));
-			System.out.println("Recall: "+StatsUtil.recall(masterMeshTerms.get(docID), results));
+			precisions.add(StatsUtil.precision(masterMeshTerms.get(docID), results));
+			recalls.add(StatsUtil.recall(masterMeshTerms.get(docID), results));
 			System.out.println("F1-Measure: "+StatsUtil.f1Measure(masterMeshTerms.get(docID), results));
 			Double f = StatsUtil.f1Measure(masterMeshTerms.get(docID), results);
 				fmeasures.add(f);
 		}
-		System.out.println("F1-Measures: "+ fmeasures);
+		//System.out.println("F1-Measures: "+ fmeasures);
 		System.out.println("Classified Documents: " + fmeasures.size());
 		System.out.println("Average F1-Measure: "+ StatsUtil.average(fmeasures));
+		System.out.println("Average Precision: "+ StatsUtil.average(precisions));
+		System.out.println("Average Recall: "+ StatsUtil.average(recalls));
+		
 
 		outFile.close();
+	}
+	
+	static public Collection<String> findIDs2Classify(String fPath){
+		Collection<String> ids = new ArrayList<String>();
+		
+		return ids;
 	}
 
 }

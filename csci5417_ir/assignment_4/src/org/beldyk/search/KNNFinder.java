@@ -106,6 +106,8 @@ public class KNNFinder {
 		Collections.sort(allTerms);
 		List <String> topKTerms = new ArrayList<String>();
 		for(Integer i = 0; i < k && i<allTerms.size(); ++i){
+			System.out.println(i + " "+ allTerms.get(i).getName() + 
+					" " +allTerms.get(i).getCount());
 			topKTerms.add(allTerms.get(i).getName());
 		}
 		return topKTerms;

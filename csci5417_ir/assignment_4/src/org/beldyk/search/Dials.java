@@ -29,6 +29,7 @@ public class Dials {
 	private String meshTermsPath;
 	private Integer howManyDocs2Lookat;
 	private String docs2Query;
+	private Integer termCount2Search;
 	
 	public String getQPath() {
 		return qPath;
@@ -64,7 +65,8 @@ public class Dials {
 		docs2Query = pth + "short_med.txt";
 		//docPath = pth + "short_med.txt";
 		meshTermsPath = pth + "qrels.mesh.batch.87";
-		howManyDocs2Lookat = 2;
+		howManyDocs2Lookat = 12;
+		termCount2Search = 5;
 		indexDir = new RAMDirectory();
 		analyz = new  StandardAnalyzer(Version.LUCENE_CURRENT);
 	}
@@ -135,6 +137,10 @@ public class Dials {
 
 	public String getDocs2Query() {
 		return docs2Query;
+	}
+
+	public Integer getTermCount2Search() {
+		return termCount2Search;
 	}
 	
 	

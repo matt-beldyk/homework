@@ -23,7 +23,7 @@ public class NamedCounter implements Comparable <NamedCounter>{
 	@Override
 	public int compareTo(NamedCounter o) {
 		// TODO Auto-generated method stub
-		return this.count.compareTo(o.count);
+		return -1 * this.count.compareTo(o.count);
 	}
 	
 	

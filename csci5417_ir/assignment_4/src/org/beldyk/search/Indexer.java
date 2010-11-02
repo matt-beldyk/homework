@@ -66,10 +66,10 @@ public class Indexer {
 						f.setBoost((float)1.0);
 					}
 					if( a.equalsIgnoreCase("t")){
-						f.setBoost((float)0.6);
+						f.setBoost((float)1.0);
 					}
 					if(a.equalsIgnoreCase("s")){
-						f.setBoost((float)0.0);
+						f.setBoost((float)1.0);
 					}
 					
 					doc.add(f);
