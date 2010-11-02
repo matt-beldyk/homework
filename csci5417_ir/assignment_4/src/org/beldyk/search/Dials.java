@@ -31,6 +31,8 @@ public class Dials {
 	private String docs2Query;
 	private Integer termCount2Search;
 	
+	private String testSetPath;
+	
 	public String getQPath() {
 		return qPath;
 	}
@@ -67,6 +69,9 @@ public class Dials {
 		meshTermsPath = pth + "qrels.mesh.batch.87";
 		howManyDocs2Lookat = 12;
 		termCount2Search = 5;
+		
+		testSetPath = pth + "knn-test.txt";
+		
 		indexDir = new RAMDirectory();
 		analyz = new  StandardAnalyzer(Version.LUCENE_CURRENT);
 	}
@@ -141,6 +146,14 @@ public class Dials {
 
 	public Integer getTermCount2Search() {
 		return termCount2Search;
+	}
+
+	public void setTestSetPath(String testSetPath) {
+		this.testSetPath = testSetPath;
+	}
+
+	public String getTestSetPath() {
+		return testSetPath;
 	}
 	
 	
