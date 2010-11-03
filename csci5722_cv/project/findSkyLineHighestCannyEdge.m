@@ -1,4 +1,4 @@
-function [annotatedImage, skyLine] = findSkyLine(colorImg)
+function [annotatedImage, skyLine] = findSkyLineHighestCannyEdge(colorImg)
 
 
     %image(img)
