@@ -21,9 +21,11 @@ function [annotatedImage, skyLine] = findSkyLineHighestCannyEdge(colorImg, monoI
         if skyLine(i)
             annotatedImage(skyLine(i),i,:) = [255,0,0];
         end
+        
     end
-    peaks = findPeaks(skyLine, 10)
-    for i = 1:size(peaks)
+    peaks = findPeaks(skyLine, 4);
+    size(peaks)
+    for i = peaks
         annotatedImage(skyLine(i), i ,:) = [0, 0, 255];
     end
   %  pause
@@ -37,7 +39,11 @@ function [peaks] = findPeaks(skyLine, winSize)
     for i = [winSize :count-winSize]
         skyLine(i - winSize +1 : i+winSize)
         % is a local max
-        if skyLine(i) > skyLine(i - winSize +1 : i+winSize)
+        if ((skyLine(i) > max(skyLine(i - winSize +1 : i-1))) && (skyLine(i) > max(skyLine(i+1 : i+winSize))))
+            peaks(peakCount) = i;
+            peakCount = peakCount + 1;
+        end
+        if ((skyLine(i) < min(skyLine(i - winSize +1 : i-1))) && (skyLine(i) < min(skyLine(i+1 : i+winSize))))
             peaks(peakCount) = i;
             peakCount = peakCount + 1;
         end
