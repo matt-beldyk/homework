@@ -1,13 +1,31 @@
 function [] = showSomeImages(pth)
     images = read_files(pth)
     [count,tmp] = size(images)
-    for i = 1:count
-        picture = findSkyLine(images{i});
-        image(picture)
-        pause
-    end
+
+    
+   for i = 1:count
+    %       doKmeans(images{i});
+       picture = findSkyLineHighestCannyEdge(images{i}, rgb2gray(images{i}));
+      image(picture)
+       pause
+   end
+   
 end
 
+function [] = doKmeans(img)
+     i = 6;
+    [mu, mask] = kmeans(img, i);
+    imshow(mask/i)
+    
+end
+function [] = multiSizeFilt(images)
+        for j = [1 2 3 5 7 10]
+            j
+            findSkyLineHorizontialFeatures(images{i},j);
+            %image(picture)
+            pause
+        end
+end
 function [images] = read_files(pth)
     listing = dir(strcat(pth, '*.jpg'))
     [fcount] = size (listing);

@@ -1,8 +1,10 @@
-function [annotatedImage, skyLine] = findSkyLineHighestCannyEdge(colorImg)
+function [annotatedImage, skyLine] = findSkyLineHighestCannyEdge(colorImg, monoImg)
 
 
     %image(img)
-    ximg = edge(rgb2gray(colorImg), 'canny')
+ %   ximg = edge(rgb2gray(colorImg), 'canny')
+   %ximg = edge(rgb2gray(colorImg), 'sobel');
+    ximg = edge(monoImg, 'sobel', 'horizontal');
     skyLine = findSkyEdge(ximg);
    % imshow(ximg)
     [w,h, c] = size(colorImg);
@@ -20,8 +22,26 @@ function [annotatedImage, skyLine] = findSkyLineHighestCannyEdge(colorImg)
             annotatedImage(skyLine(i),i,:) = [255,0,0];
         end
     end
+    peaks = findPeaks(skyLine, 10)
+    for i = 1:size(peaks)
+        annotatedImage(skyLine(i), i ,:) = [0, 0, 255];
+    end
   %  pause
     %image(colorImg)
+end
+
+function [peaks] = findPeaks(skyLine, winSize)
+    [count, tmp] = size(skyLine);
+    peakCount = 1;
+    peaks = [];
+    for i = [winSize :count-winSize]
+        skyLine(i - winSize +1 : i+winSize)
+        % is a local max
+        if skyLine(i) > skyLine(i - winSize +1 : i+winSize)
+            peaks(peakCount) = i;
+            peakCount = peakCount + 1;
+        end
+    end
 end
 
 function [skyline] = findSkyEdge(edgedImg)
@@ -35,20 +55,4 @@ function [skyline] = findSkyEdge(edgedImg)
             end
         end
     end
-end
-function [] = showVariousVertFilters(img)
-    hold on;
-    for i = 1:20
-        py = create_filter(i);
-        imgx = filter2(py,img);
-        imshow(imgx/255);
-        pause
-    end
-end
-
-function [f] = create_filter(n)
-    f = zeros(3*n, 3*n);
-    f(1:n, : ) = -1;
-    f(2*n + 1:end, :) = 1;
-    
 end
