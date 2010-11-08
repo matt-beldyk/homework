@@ -8,8 +8,7 @@ public class Mp3Harvester extends AbstractMediaHarvester {
 
 	@Override
 	public String getMediaType() {
-		// TODO Auto-generated method stub
-		return null;
+		return "mp3";
 	}
 
 }

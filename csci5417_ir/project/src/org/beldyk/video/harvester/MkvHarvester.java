@@ -1,6 +1,6 @@
 package org.beldyk.video.harvester;
 
-public class MkvHarvester extends AbstractMediaHarvester {
+public class MkvHarvester extends VideoHarvester {
 
 	public MkvHarvester(String path) {
 		super(path);
@@ -8,8 +8,7 @@ public class MkvHarvester extends AbstractMediaHarvester {
 
 	@Override
 	public String getMediaType() {
-		// TODO Auto-generated method stub
-		return null;
+		return "mkv";
 	}
 
 }

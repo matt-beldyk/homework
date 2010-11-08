@@ -1,6 +1,6 @@
 package org.beldyk.video.harvester;
 
-public class AviHarvester extends AbstractMediaHarvester {
+public class AviHarvester extends VideoHarvester {
 
 	public AviHarvester(String path) {
 		super(path);
