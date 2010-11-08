@@ -34,7 +34,7 @@ public class FileSystemSpider implements AbstractSpider {
 		}
 		if(path.isDirectory()){
 			for( String pth: path.list()){
-					parseFs(new File(path.getAbsolutePath() + File.pathSeparator + pth));
+					parseFs(new File(path.getAbsolutePath() + File.separator + pth));
 					}
 		} else {
 				allMediaFiles.add(path.getAbsolutePath());
