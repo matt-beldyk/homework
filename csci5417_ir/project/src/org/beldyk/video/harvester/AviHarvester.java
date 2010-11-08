@@ -9,13 +9,8 @@ public class AviHarvester extends VideoHarvester {
 	@Override
 	public String getMediaType() {
 		// TODO Auto-generated method stub
-		return null;
+		return "avi";
 	}
 
-	@Override
-	public void setPath(String path) {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 }

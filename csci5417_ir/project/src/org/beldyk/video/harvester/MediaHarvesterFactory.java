@@ -1,9 +1,10 @@
 package org.beldyk.video.harvester;
 
 public class MediaHarvesterFactory {
-	public static AbstractMediaHarvester getHarvesterInstance(String path){
+	public static AbstractMediaHarvester getHarvesterInstance(String path) throws Exception{
 		
 		String lcPath = path.toLowerCase();
+		
 		if(lcPath.endsWith("avi")){
 			return new AviHarvester(path);
 		}else if (lcPath.endsWith("mp3")){
@@ -11,7 +12,7 @@ public class MediaHarvesterFactory {
 		}else if (lcPath.endsWith("mkv")){
 			return new MkvHarvester(path);
 		}
-		return null;
+		throw new Exception("Unknown filetype: "+path);
 		
 	}
 
