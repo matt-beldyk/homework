@@ -19,7 +19,7 @@ function [dem] = readLatLonRange(minLat, maxLat, minLon, maxLon)
             %latEnd = (lat - minLat + 1) * demSize 
             %lonEnd = (lon - minLon + 1) * demSize 
             
-            dem(latStart:latEnd, lonStart:lonEnd) = flipdim(findSRTMData(minLat + i,minLon + j),2)';
+            dem(latStart:latEnd, lonStart:lonEnd) = flipdim(flipdim(findSRTMData(minLat + i,minLon + j),2)', 2);
             %dem(latStart:latEnd, lonStart:lonEnd) = findSRTMData(minLat + i,minLon + j)';
         end
     end
