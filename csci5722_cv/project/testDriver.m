@@ -36,12 +36,3 @@ function [] = testDriver()
     
     surf(dem)
 end
-
-function [x,y] = latLon2demIndex(lat,lon, sizeDem)
-    x = floor(sizeDem * (lat - floor(lat)));
-    y = floor(sizeDem * (lon - floor(lon)));
-end
-function [lat, lon] = demIndex2LatLon(x,y,sizeDem, lLat, lLon)
-    lat = lLat + x/sizeDem;
-    lon = lLon + y/sizeDem;
-end
