@@ -4,15 +4,23 @@ function [img] = createOptimalSkyline(lat, lon, distanceToLook, width, height)
    
     cornerLat = floor(lat);
     cornerLon = floor(lon);
-    dem = findSRTMData(cornerLat, cornerLon, 50);
-   
+    dem = findSRTMData(cornerLat, cornerLon, 20);
+    sprintf('DEM Loaded')
     %surf(dem);
     maxLoc = max(max(dem));
     img = zeros(height, width,3);
     [sizeDem, tmp] = size(dem);
     headings = zeros(sizeDem,sizeDem);
     dists = zeros(sizeDem, sizeDem);
+    
+    
+    demCorrection = calculateDemCorrection(lat, lon, cornerLat, cornerLon, sizeDem, latDist, lonDist);
+    sprintf('height correction calculated')
+    dem = dem-demCorrection;
+    sprintf('DEM height Corrected')
+    
     for i = 1:sizeDem
+        sprintf('%.1f%%', 100*i/sizeDem)
         for j = 1:sizeDem
             [mlat, mlon] = demIndex2LatLon(i,j, sizeDem, cornerLat, cornerLon);
            % sprintf('%d,%d = %3.4f,%3.4f', i,j, mlat, mlon);
@@ -23,7 +31,10 @@ function [img] = createOptimalSkyline(lat, lon, distanceToLook, width, height)
             
             % mark up the skyline pic to the floor
             skyLinePoint = floor((heading + pi) * width/(2*pi));
-            k = dem(i,j);
+            if skyLinePoint ==0
+                skyLinePoint = 1;
+            end
+            k = floor(dem(i,j));
             while k > 0 && ( not(img(k,skyLinePoint, 3)) || (img(k,skyLinePoint, 3) > dist))
              %   for k = 1:dem(i,j)
                   %  if not(img(k,skyLinePoint, 3)) || (img(k,skyLinePoint, 3) > dist)

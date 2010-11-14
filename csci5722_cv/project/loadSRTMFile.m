@@ -1,7 +1,14 @@
 function [dem] = loadSRTMFile(pth, decimationLevel)
     fid = fopen(pth, 'rb', 'ieee-be');
-    gridSize = floor(3601/decimationLevel) + 1;
-    dem = downsample(downsample(fread(fid,[3601 3601],  'int16', 'ieee-be'), decimationLevel)', decimationLevel)';
+    if ~decimationLevel
+        gridSize = 3601;
+    else
+        gridSize = floor(3601/decimationLevel) + 1;
+    end
+    dem = fread(fid,[3601 3601],  'int16', 'ieee-be');
+    if decimationLevel
+        dem = downsample(downsample(dem, decimationLevel)', decimationLevel)';
+    end
     sprintf('DEM Size %d\n', size(dem))
     
     % semi normalize missing data
