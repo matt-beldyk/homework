@@ -7,7 +7,7 @@
 function [] = cat_assign()
 
 % init allocation stuff
-img_path = '/home/beldyk/Desktop/cat/';
+img_path = '/home/beldyk/homework_data/cv_asgn1/';
 img_count = 13;
 
 cat_pics = allocate_buffer(strcat(img_path,'OBJ_01.png'), img_count);
@@ -19,7 +19,7 @@ cat_h = sizes(1);
 cat_w = sizes(2);
 
 % Add in integrate_horn2 since it's not in my repository
-path(path, '/home/beldyk/Desktop/');
+path(path, './external/');
 
 % read in files
 for i = 1:img_count
