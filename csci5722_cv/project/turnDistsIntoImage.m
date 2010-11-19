@@ -10,11 +10,11 @@ function [img] = turnDistsIntoImage(cloud)
     skyline = findSkylineFromPointCloud(cloud);
     sprintf('completed compution of skyline')
     green = [0,1,0];
-    for i = 2:size(skyline)-1
-        sprintf('marking up %i %i', i,skyline(i))
+    for i = 1:size(skyline)
+        %sprintf('marking up %i %i', i,skyline(i))
         if skyline(i)
             img(w-skyline(i),i,:) = green;
-            img(w-skyline(i)-1, i,:) = green;
+           % img(w-skyline(i)-1, i,:) = green;
         end
     end
     
