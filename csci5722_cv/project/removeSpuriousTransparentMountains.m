@@ -9,7 +9,7 @@ function [updatedCloud] = removeSpuriousTransparentMountains(cloud)
         loc = [0 0 0];
         while j > 0
             if( loc(3) && (loc(3) <= cloud(j,i,3)||~cloud(j,i,3)))
-                sprintf('updating %i,%i', i, j)
+               % sprintf('updating %i,%i', i, j)
                 updatedCloud(j,i,:) = loc;
             else
                 loc = cloud(j,i,:);
