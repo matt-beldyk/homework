@@ -26,25 +26,6 @@ for cornerLat = floor(lat) -distanceToLook:floor(lat)+distanceToLook
             end
             for j = 1:sizeDem
                 
-                minHeading = inf;
-                maxHeading = -inf;
-                distCounter = 0;
-                jump = 0.5 * decimationLevel;
-                for l = [i-jump, i+jump]
-                    for m = [j-jump, j+jump]
-                        [mlat, mlon] = demIndex2LatLon(l,m, sizeDem, cornerLat, cornerLon);
-                        [dist, heading] = findHeading(lat, lon, mlat, mlon,latDist, lonDist);
-                        %sprintf('l =%f, m = %f, mlat = %f, mlon = %f', l, m, mlat, mlon)
-                        if heading < minHeading
-                            minHeading = heading;
-                        end
-                        if heading > maxHeading
-                            maxHeading = heading;
-                        end
-                        distCounter = distCounter + dist;
-                    end
-                end
-                distance = distCounter/4;
                 %sprintf('minHeading=%f, maxHeading=%f', minHeading, maxHeading)
                 
                 % sprintf('%d,%d = %3.4f,%3.4f', i,j, mlat, mlon);
@@ -55,18 +36,22 @@ for cornerLat = floor(lat) -distanceToLook:floor(lat)+distanceToLook
                 % sprintf('Dist=%f Heading=%f\n', dist, heading)
                 %  headings(i,j) = heading;
                 %  dists(i,j) = dist;
-                dropoff = calculateDistDropoff(distance);
+
                 %sprintf('i=%d j=%d, dropoff=%.2f dist=%.2f', i,j,dropoff,dist)
                 
+                [minHeading, maxHeading, distance] = calculateHeadingWindow(i,j,lat, lon, cornerLat, cornerLon, latDist, lonDist, decimationLevel, sizeDem);
+                dropoff = calculateDistDropoff(distance);
                 % mark up the skyline pic
-                skyLinePoint = floor((heading + pi) * width/(2*pi));
+               % skyLinePoint = floor((heading + pi) * width/(2*pi));
                 leftSkyLinePoint =  floor((minHeading + pi) * width/(2*pi));
                 rightSkyLinePoint = floor((maxHeading + pi) * width/(2*pi));
                 
                 % oi vey, matlab indexing starts at 1
-                if skyLinePoint ==0
-                    skyLinePoint = 1;
-                end
+               % if skyLinePoint ==0
+               %     skyLinePoint = 1;
+               % end
+               
+               
                 if leftSkyLinePoint == 0
                     leftSkyLinePoint = 1;
                 end
@@ -88,6 +73,7 @@ for cornerLat = floor(lat) -distanceToLook:floor(lat)+distanceToLook
                 
                 % while k > 0 && ( not(img(k,skyLinePoint, 3)) || (img(k,skyLinePoint, 3) > dist))
                 if pointElevation> 0
+                    sprintf('distance=%f should be %i wide',distance, rightSkyLinePoint - leftSkyLinePoint +1);
                     for k = leftSkyLinePoint:rightSkyLinePoint
                         if not(img(pointElevation,k, 3)) || (img(pointElevation,k, 3) > distance)
                             %   for k = 1:dem(i,j)
