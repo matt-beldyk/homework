@@ -1,4 +1,4 @@
-function [img] = createOptimalSkyline(lat, lon, distanceToLook, width, height, decimationLevel)
+function [img] = createOptimalSkyline(lat, lon, distanceToLook, width, height, decimationLevel, myElevation)
 latDist = vdist(lat, lon, lat+1, lon)
 lonDist = vdist(lat, lon, lat, lon +1)
 tooCloseCutoff = 25000; % 15 KM
@@ -37,16 +37,7 @@ for cornerLat = floor(lat) -distanceToLook:floor(lat)+distanceToLook
                     leftSkyLinePoint =  heading2Index(minHeading, width);
                     rightSkyLinePoint = heading2Index(maxHeading, width);
                   
-                    pointElevation = floor(dem(i,j) + dropoff);
-                    
-                    % clip to my actual margins, don't run past
-                    if pointElevation > height
-                        if maxElevation < pointElevation
-                            maxElevation = pointElevation;
-                        end
-                        pointElevation = height -1;
-                    end
-                    
+                    pointElevation = calculatePointElevation(distance, myElevation, floor(dem(i,j) + dropoff), height);
                     
                     
                     if pointElevation> 0
