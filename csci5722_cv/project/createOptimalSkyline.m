@@ -1,7 +1,7 @@
 function [img] = createOptimalSkyline(lat, lon, distanceToLook, width, height, decimationLevel, myElevation)
 latDist = vdist(lat, lon, lat+1, lon)
 lonDist = vdist(lat, lon, lat, lon +1)
-tooCloseCutoff = 25000; % 15 KM
+tooCloseCutoff = 1000; % 15 KM
 
 %if( ~decimationLevel)
 %   decimationLevel = 50;
@@ -11,6 +11,9 @@ img = zeros(height, width,3);
 
 maxElevation = 0;
 demCounter = 1;
+minAngle = inf;
+maxAngle = -inf;
+
 for cornerLat = floor(lat) -distanceToLook:floor(lat)+distanceToLook
     for cornerLon = floor(lon) -distanceToLook :floor(lon) +distanceToLook
         dem = findSRTMData(cornerLat, cornerLon, decimationLevel);
@@ -29,19 +32,31 @@ for cornerLat = floor(lat) -distanceToLook:floor(lat)+distanceToLook
                 
                 %sprintf('i=%d j=%d, dropoff=%.2f dist=%.2f', i,j,dropoff,dist)
                 
-                [minHeading, maxHeading, distance] = calculateHeadingWindow(i,j,lat, lon, cornerLat, cornerLon, latDist, lonDist, decimationLevel, sizeDem);
+               % [minHeading, maxHeading, distance] = calculateHeadingWindow(i,j,lat, lon, cornerLat, cornerLon, latDist, lonDist, decimationLevel, sizeDem);
+               
+               %removing the too wide rendering
+                [mlat, mlon] = demIndex2LatLon(i,j, sizeDem, cornerLat, cornerLon);
+                [ distance, minHeading] = findHeading(lat, lon, mlat, mlon, latDist, lonDist);
+                maxHeading = minHeading;
+                
                 if distance > tooCloseCutoff
                     dropoff = calculateDistDropoff(distance);
                     
                     % mark up the skyline pic
-                    leftSkyLinePoint =  heading2Index(minHeading, width);
-                    rightSkyLinePoint = heading2Index(maxHeading, width);
+                   leftSkyLinePoint =  heading2Index(minHeading, width);
+                   rightSkyLinePoint = heading2Index(maxHeading, width);
+                   
                   
-                    pointElevation = calculatePointElevation(distance, myElevation, floor(dem(i,j) + dropoff), height);
-                    
+                    [pointElevation, angle] = calculatePointElevation(distance, myElevation, floor(dem(i,j) + dropoff), height);
+                    if angle > maxAngle
+                        maxAngle = angle;
+                    end
+                    if angle <minAngle
+                        minAngle = angle;
+                    end
                     
                     if pointElevation> 0
-                        sprintf('distance=%f should be %i wide',distance, rightSkyLinePoint - leftSkyLinePoint +1);
+
                         for k = leftSkyLinePoint:rightSkyLinePoint
                             if not(img(pointElevation,k, 3)) || (img(pointElevation,k, 3) > distance)
                                 
@@ -67,6 +82,7 @@ end
 %maxDistance = max(max(dists))
 maxElevation
 %minElevation = min(min(dem))
+sprintf('minAngle=%f, maxAngle=%f', minAngle, maxAngle)
 end
 
 

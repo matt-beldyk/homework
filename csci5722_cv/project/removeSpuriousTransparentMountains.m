@@ -3,7 +3,7 @@ function [updatedCloud] = removeSpuriousTransparentMountains(cloud)
     updatedCloud = cloud;
     for i = 1:h
         if (mod(i,50) == 0)
-            sprintf('Removing Transparent Mountains: %.2f%%', 100*i/w)
+            sprintf('Removing Transparent Mountains: %.2f%%', 100*i/h)
         end
         j = w;
         loc = [0 0 0];

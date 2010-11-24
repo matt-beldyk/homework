@@ -20,4 +20,5 @@ function [dem] = loadSRTMFile(pth, decimationLevel)
         end
     end
 
+    dem = flipdim(dem, 2);
 end
