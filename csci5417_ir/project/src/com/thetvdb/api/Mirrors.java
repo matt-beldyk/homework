@@ -2,6 +2,7 @@ package com.thetvdb.api;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import java.io.File;
 import javax.xml.parsers.DocumentBuilder;
@@ -37,7 +38,22 @@ import org.apache.http.util.EntityUtils;
 public class Mirrors {
 
 	static final private String apiKey = "F6DA4127EE279633";
+	private List<String> zipMirrors;
 
+	public Mirrors() throws ClientProtocolException, IOException, ParserConfigurationException, SAXException{
+		zipMirrors = this.findListMirrors();
+	}
+	
+	public String getZipMirror(){
+		Random rn = new Random();
+		if(zipMirrors.size() > 1){
+			return zipMirrors.get(rn.nextInt(zipMirrors.size()-1));
+		}else{
+			return zipMirrors.get(0);
+		}
+		
+	}
+	
 	public String getMirrorXML() throws ClientProtocolException, IOException{
 		String request = "http://thetvdb.com/api/"+apiKey+"/mirrors.xml";
 		HttpHost target = new HttpHost("thetvdb.com", 80, "http");

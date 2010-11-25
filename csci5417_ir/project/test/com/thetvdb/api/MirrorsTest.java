@@ -14,7 +14,12 @@ import org.xml.sax.SAXException;
 public class MirrorsTest {
 
 	@Test
-	public void grabXMLTest() throws ClientProtocolException, IOException{
+	public void getAMirror() throws ClientProtocolException, IOException, ParserConfigurationException, SAXException{
+		Mirrors m = new Mirrors();
+		assertEquals("http://thetvdb.com", m.getZipMirror());
+	}
+	@Test
+	public void grabXMLTest() throws ClientProtocolException, IOException, ParserConfigurationException, SAXException{
 		Mirrors m = new Mirrors();
 		String response = m.getMirrorXML();
 		System.err.println(response);
