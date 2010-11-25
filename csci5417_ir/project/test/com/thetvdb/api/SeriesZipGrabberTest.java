@@ -10,6 +10,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
+import com.moviejukebox.thetvdb.TheTVDB;
+import com.moviejukebox.thetvdb.model.Series;
+
 public class SeriesZipGrabberTest {
 
 	@Test
@@ -20,4 +23,6 @@ public class SeriesZipGrabberTest {
 		File zipFile = new File(Confs.cachedSeriesZipPath()+File.separator+whoId+".zip");
 		assertTrue(zipFile.exists());
 	}
+	
+
 }
