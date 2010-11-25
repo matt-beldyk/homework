@@ -1,5 +1,18 @@
 package com.thetvdb.api;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import java.io.File;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -65,4 +78,36 @@ public class Mirrors {
 		return mirrorsXml;
 	}
 
+	public List<String> findListMirrors() throws ClientProtocolException, IOException, ParserConfigurationException, SAXException{
+	//	String mirrorsXml = this.getMirrorXML();
+
+		List <String> paths = new ArrayList<String>();
+		
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		DocumentBuilder db = dbf.newDocumentBuilder();
+
+		Document doc = db.parse("http://thetvdb.com/api/"+apiKey+"/mirrors.xml");
+		doc.getDocumentElement().normalize();
+	//	System.out.println("Root element '" + doc.getDocumentElement().getNodeName()+"'");
+		NodeList nodeLst = doc.getElementsByTagName("Mirror");
+
+		for (int s = 0; s < nodeLst.getLength(); s++) {
+
+			Node fstNode = nodeLst.item(s);
+
+			if (fstNode.getNodeType() == Node.ELEMENT_NODE) {
+
+				Element fstElmnt = (Element) fstNode;
+				NodeList pthElmntLst = fstElmnt.getElementsByTagName("mirrorpath");
+				Element pthElmnt = (Element) pthElmntLst.item(0);
+				NodeList pth = pthElmnt.getChildNodes();
+			//	System.out.println("Mirror Path : "  + ((Node) pth.item(0)).getNodeValue());
+				paths.add( ( (Node) pth.item(0)).getNodeValue());
+			}
+
+			
+		}
+		return paths;
+	}
 }
+	
