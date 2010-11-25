@@ -37,7 +37,6 @@ import org.apache.http.util.EntityUtils;
 
 public class Mirrors {
 
-	static final private String apiKey = "F6DA4127EE279633";
 	private List<String> zipMirrors;
 
 	public Mirrors() throws ClientProtocolException, IOException, ParserConfigurationException, SAXException{
@@ -55,7 +54,7 @@ public class Mirrors {
 	}
 	
 	public String getMirrorXML() throws ClientProtocolException, IOException{
-		String request = "http://thetvdb.com/api/"+apiKey+"/mirrors.xml";
+		String request = "http://thetvdb.com/api/"+Confs.APIKey()+"/mirrors.xml";
 		HttpHost target = new HttpHost("thetvdb.com", 80, "http");
 
 		// general setup
@@ -76,7 +75,7 @@ public class Mirrors {
 				supportedSchemes);
 		DefaultHttpClient httpclient = new DefaultHttpClient(connMgr, params);
 
-		HttpGet req = new HttpGet("/api/"+apiKey+"/mirrors.xml");
+		HttpGet req = new HttpGet("/api/"+Confs.APIKey()+"/mirrors.xml");
 
 		HttpResponse rsp = httpclient.execute(target, req);
 		HttpEntity entity = rsp.getEntity();
@@ -102,7 +101,7 @@ public class Mirrors {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = dbf.newDocumentBuilder();
 
-		Document doc = db.parse("http://thetvdb.com/api/"+apiKey+"/mirrors.xml");
+		Document doc = db.parse("http://thetvdb.com/api/"+Confs.APIKey()+"/mirrors.xml");
 		doc.getDocumentElement().normalize();
 	//	System.out.println("Root element '" + doc.getDocumentElement().getNodeName()+"'");
 		NodeList nodeLst = doc.getElementsByTagName("Mirror");
