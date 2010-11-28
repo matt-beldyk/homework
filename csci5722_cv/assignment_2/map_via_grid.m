@@ -72,7 +72,7 @@ for i = 1:w
             matches(g,:) = [i, j, min_loc(1), min_loc(2)];
             g = g+1;
             if(mod(g,100) == 0)
-                g
+                g;
             end
             
         end
