@@ -18,7 +18,7 @@ function [xy_mappings] = find_features_and_mappings(pth, maxDist, threshold)
 
         % convolute image with all the filters
         convoluted = do_convolutions(images(:,:,i));
-        sprintf('convolved image %d of %d', i, count_images)
+        sprintf('processing image %d of %d', i, count_images)
         
         % find all my features for this image
         features = find_features(convoluted, threshold);
@@ -46,7 +46,7 @@ function [xy_mappings] = find_features_and_mappings(pth, maxDist, threshold)
     
     sprintf('total compute time: %f seconds', total_time)
     % uncomment for debugging
-    save('code_state_nov_27.mat');
+   % save('code_state_nov_27.mat');
    
    % Display my results
     show_results(showy, xy_mappings);
