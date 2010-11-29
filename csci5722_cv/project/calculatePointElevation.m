@@ -1,7 +1,7 @@
-function [pixelHeight, angle] = calculatePointElevation(distance, myElevation, farElevation, picHeight)
+function [pixelHeight, angle] = calculatePointElevation(distance, myElevation, farElevation, picHeight, maxClipAngle)
 
 angle = atan((farElevation - myElevation)/distance);
-pixelHeight = floor(picHeight*(angle)*10);
+pixelHeight = floor(picHeight*(angle/maxClipAngle));
 
 if pixelHeight == 0
     pixelHeight = 1;

@@ -1,4 +1,4 @@
-function [img] = createOptimalSkyline(lat, lon, distanceToLook, width, height, decimationLevel, myElevation)
+function [img] = createOptimalSkyline(lat, lon, distanceToLook, width, height, decimationLevel, myElevation, maxClipAngle)
 latDist = vdist(lat, lon, lat+1, lon)
 lonDist = vdist(lat, lon, lat, lon +1)
 tooCloseCutoff = 1000; % 15 KM
@@ -47,7 +47,7 @@ for cornerLat = floor(lat) -distanceToLook:floor(lat)+distanceToLook
                    rightSkyLinePoint = heading2Index(maxHeading, width);
                    
                   
-                    [pointElevation, angle] = calculatePointElevation(distance, myElevation, floor(dem(i,j) + dropoff), height);
+                    [pointElevation, angle] = calculatePointElevation(distance, myElevation, floor(dem(i,j) + dropoff), height,maxClipAngle);
                     if angle > maxAngle
                         maxAngle = angle;
                     end
