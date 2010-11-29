@@ -5,7 +5,7 @@
 function [xy_mappings] = find_features_and_mappings(pth, maxDist, threshold)    
     begin_time = cputime();
     images = read_files(pth);
-    [w,h, count_images] = size(images)
+    [w,h, count_images] = size(images);
     showy = zeros(w,h,3,count_images);
     
     %count_images = 3;
@@ -18,15 +18,15 @@ function [xy_mappings] = find_features_and_mappings(pth, maxDist, threshold)
 
         % convolute image with all the filters
         convoluted = do_convolutions(images(:,:,i));
-        sprintf('convolved image %d', i)
+        sprintf('convolved image %d of %d', i, count_images)
         
         % find all my features for this image
         features = find_features(convoluted, threshold);
-        sprintf('features found %d', i)
+       % sprintf('features found %d', i)
         
         % translate these features into more easily mathish vectors
         feat_vects{1,i} = make_feature_vect(convoluted, features);
-        sprintf('feature vects made %d', i)
+       % sprintf('feature vects made %d', i)
 
         % find the mappings from the last image to this one
         if(i > 1)
@@ -35,7 +35,11 @@ function [xy_mappings] = find_features_and_mappings(pth, maxDist, threshold)
         end
         
         % mark up an image for my display purposes
-        showy(:,:,:,i) = mark_up_picture(feat_vects{1,i}, images(:,:,i));
+        if i > 1
+            showy(:,:,:,i) = mark_up_picture(feat_vects{1,i-1},feat_vects{1,i}, images(:,:,i));
+        else
+            showy(:,:,:,i) = mark_up_picture([], feat_vects{1,i}, images(:,:,i));
+        end
     end
     end_time = cputime();
     total_time = end_time - begin_time;
@@ -50,23 +54,6 @@ function [xy_mappings] = find_features_and_mappings(pth, maxDist, threshold)
 
 end
 
-% this function basically takes an image and a set of feature_vectors
-% and puts a bunch of dots on the black and white image so I can see 
-% the features
-function [pic] = mark_up_picture(feat_vect, img)
-    pic  = grey2rgb(img);
-    green = [0,255,0];
-    red = [255,0,0];
-    [count_feat, foo] = size(feat_vect);
-    for i = 1:count_feat
-        if( feat_vect(i, 4))
-            pic(feat_vect(i,1), feat_vect(i,2), : ) = green;
-        else
-            pic(feat_vect(i,1), feat_vect(i,2), : ) = red;
-        end
-        
-    end
-end
 
 % this function takes my marked up feature mask and translates it 
 % into a bunch of vectors
@@ -125,13 +112,6 @@ function [images] = read_files(pth)
 
 end
 
-% Does what it looks like, I just wanted another way to monkey with
-% images
-function [f] = grey2rgb(i)
-    f(:,:,1) = i;
-    f(:,:,2) = i;
-    f(:,:,3) = i;
-end
 
 % creates a CenSurE filter of size N
 function [f] = create_filter(n)
