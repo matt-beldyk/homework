@@ -13,7 +13,7 @@ function [img] = turnDistsIntoImage(cloud)
     for i = 1:size(skyline)
         %sprintf('marking up %i %i', i,skyline(i))
         if skyline(i) && skyline(i)<w
-            sprintf('%f-%f,%f', w, skyline(i), i)
+            % sprintf('%f-%f,%f', w, skyline(i), i);
             img(w-skyline(i),i,:) = green;
            % img(w-skyline(i)-1, i,:) = green;
         end

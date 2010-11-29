@@ -1,4 +1,4 @@
-function [minHeading, maxHeading, distance] = calculateHeadingWindow(i,j,camLat, camLon, cornerLat, cornerLon, latDist, lonDist, decimationLevel, sizeDem)
+function [minHeading, maxHeading, distance] = calculateHeadingWindow(i,j,camLat, camLon, cornerLat, cornerLon, latDist, lonDist, sizeDem)
 minHeading = inf;
 maxHeading = -inf;
 distCounter = 0;

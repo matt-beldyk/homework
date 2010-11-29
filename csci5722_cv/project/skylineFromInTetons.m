@@ -1,6 +1,6 @@
 function [angleCloud, cleanedCloud, pic] = skylineFromInTetons()
 
-    startTime = cpuTime;
+    startTime = cputime;
     lat = 43.83841404128973;
     lon = 110.61624276579096;
     dist2look = 0;
@@ -10,14 +10,14 @@ function [angleCloud, cleanedCloud, pic] = skylineFromInTetons()
     elev = 2064; % in meters
     maxClipAngle = 1;
     angleCloud = createOptimalSkyline(lat, lon, dist2look, imgWidth, imgHeight, decLev, elev, maxClipAngle);
-    skyLineTime = cpuTime;
+    skyLineTime = cputime;
     
     cleanedCloud = removeSpuriousTransparentMountains(  angleCloud);
-    cleanedTime = cpuTime;
+    cleanedTime = cputime;
     
     %pic = turnDistsIntoImage(cleanedCloud); 
     pic = turnDistsIntoImage(angleCloud);
     image(pic);
     
-    sprintf('SkylineCalc Time = %f, CleaningTime = %f', skyLineTime - startTime, cleanedTime - skylineTime);
+    sprintf('SkylineCalc Time = %f, CleaningTime = %f', skyLineTime - startTime, cleanedTime - skyLineTime)
 end

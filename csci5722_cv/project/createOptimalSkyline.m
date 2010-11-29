@@ -32,12 +32,12 @@ for cornerLat = floor(lat) -distanceToLook:floor(lat)+distanceToLook
                 
                 %sprintf('i=%d j=%d, dropoff=%.2f dist=%.2f', i,j,dropoff,dist)
                 
-               % [minHeading, maxHeading, distance] = calculateHeadingWindow(i,j,lat, lon, cornerLat, cornerLon, latDist, lonDist, decimationLevel, sizeDem);
+               [minHeading, maxHeading, distance] = calculateHeadingWindow(i,j,lat, lon, cornerLat, cornerLon, latDist, lonDist, sizeDem);
                
                %removing the too wide rendering
-                [mlat, mlon] = demIndex2LatLon(i,j, sizeDem, cornerLat, cornerLon);
-                [ distance, minHeading] = findHeading(lat, lon, mlat, mlon, latDist, lonDist);
-                maxHeading = minHeading;
+               % [mlat, mlon] = demIndex2LatLon(i,j, sizeDem, cornerLat, cornerLon);
+               % [ distance, minHeading] = findHeading(lat, lon, mlat, mlon, latDist, lonDist);
+               % maxHeading = minHeading;
                 
                 if distance > tooCloseCutoff
                     dropoff = calculateDistDropoff(distance);
