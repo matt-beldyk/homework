@@ -1,7 +1,7 @@
 function [img] = createOptimalSkyline(lat, lon, distanceToLook, width, height, decimationLevel, myElevation, maxClipAngle)
 latDist = vdist(lat, lon, lat+1, lon)
 lonDist = vdist(lat, lon, lat, lon +1)
-tooCloseCutoff = 1000; % 15 KM
+tooCloseCutoff = 0; % 15 KM
 
 %if( ~decimationLevel)
 %   decimationLevel = 50;
@@ -40,7 +40,8 @@ for cornerLat = floor(lat) -distanceToLook:floor(lat)+distanceToLook
                % maxHeading = minHeading;
                 
                 if distance > tooCloseCutoff
-                    dropoff = calculateDistDropoff(distance);
+                    %dropoff = calculateDistDropoff(distance);
+                    dropoff = 0;
                     
                     % mark up the skyline pic
                    leftSkyLinePoint =  heading2Index(minHeading, width);
@@ -56,7 +57,9 @@ for cornerLat = floor(lat) -distanceToLook:floor(lat)+distanceToLook
                     end
                     
                     if pointElevation> 0
-
+                        %if(pointElevation > 100)
+                           % sprintf('pointElev=%f,dist=%f, dropoff=%f, %f,%f', pointElevation,distance,dropoff, lat, lon)
+                        %end
                         for k = leftSkyLinePoint:rightSkyLinePoint
                             if not(img(pointElevation,k, 3)) || (img(pointElevation,k, 3) > distance)
                                 
