@@ -8,7 +8,7 @@ function [angleCloud, cleanedCloud, pic] = skylineFromInTetons()
     dist2look = 0;
     imgWidth = 1500;
     imgHeight = 600;
-    decLev = 0;
+    decLev = 5;
     
     
      sprintf('elevation=%f', elev)
