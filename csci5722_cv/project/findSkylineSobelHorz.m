@@ -1,4 +1,4 @@
-function [skyline] = findSkylineSobelHorz(colorImg, monoImg)
+function [ximg] = findSkylineSobelHorz(colorImg, monoImg)
     sobConv = [-1 -2 -1; 0 0 0; 1 2 1];
     
     ximg = conv2(double(monoImg), double(sobConv), 'same');
@@ -14,8 +14,8 @@ function [skyline] = findSkylineSobelHorz(colorImg, monoImg)
     size(msk)
     ximg = msk .* ximg;
     
-    ximg = abs(ximg / max(max(abs(ximg))));
-    skyline(:,:,1) = ximg;
-    skyline(:,:,2) = ximg;
-    skyline(:,:,3) = ximg;
+   % ximg = abs(ximg / max(max(abs(ximg))));
+    %skyline(:,:,1) = ximg;
+   %% skyline(:,:,2) = ximg;
+   % skyline(:,:,3) = ximg;
 end
