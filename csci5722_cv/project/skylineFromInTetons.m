@@ -26,7 +26,7 @@ function [angleCloud, cleanedCloud, pic] = skylineFromInTetons()
     %pic = turnDistsIntoImage(cleanedCloud); 
     %pic = turnDistsIntoImage(angleCloud);
     maxDist = max(max(angleCloud(:,:,3)));
-    skyline
+
     pic = angleCloud(:,:,3);
    % for i = 1:imgWidth
     %    pic(skyline(i),i) = 50000;
