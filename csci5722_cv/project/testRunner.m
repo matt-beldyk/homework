@@ -1,5 +1,7 @@
 function[] = testRunner()
     colorPic = imread('~/homework_data/cv_project/lakeJenny1.jpg');
+    vertFieldOfView = 24.2 ; %degree
+    horzFieldOfView = 35.6; %degree
     monoPic = rgb2gray(colorPic);
     ximg = findSkylineSobelHorz(colorPic, monoPic);
   
