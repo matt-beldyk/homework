@@ -3,4 +3,5 @@ function [offset, scale] = matchSkyLines(photoSkyline, modelSkyline, photoAngleH
         % Math via http://www.bobatkins.com/photography/technical/field_of_view.html
         photoAngleHint = 35.6;
     end
+    scale = photoAngleHint;
 end

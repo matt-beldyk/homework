@@ -8,7 +8,7 @@ function [skyline] = findSkylineSobelHorz(colorImg, monoImg)
     
     absMax = max(max(abs(ximg)));
     
-    threash = .90;
+    threash = .80;
     threashMax = (1 - threash) * absMax;
     msk = abs(ximg) > threashMax;
     size(msk)
