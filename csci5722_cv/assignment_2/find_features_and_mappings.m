@@ -52,7 +52,7 @@ function [xy_mappings] = find_features_and_mappings(pth, maxDist, threshold)
    % save('code_state_nov_27.mat');
    
    % Display my results
-    show_results(showy, xy_mappings);
+  %  show_results(showy, xy_mappings);
 
 
 end
