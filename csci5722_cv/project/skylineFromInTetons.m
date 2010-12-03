@@ -1,4 +1,4 @@
-function [angleCloud, cleanedCloud, pic] = skylineFromInTetons()
+function [angleCloud, cleanedCloud, pic] = skylineFromInTetons(targetH, targetW)
 
     startTime = cputime;
     lat = 43.83841404128973;
@@ -6,9 +6,14 @@ function [angleCloud, cleanedCloud, pic] = skylineFromInTetons()
     elev = findElevation(lat, lon) + 100;
     
     dist2look = 0;
-    imgWidth = 1500;
-    imgHeight = 600;
-    decLev = 5;
+    if ~ (targetH && targetW)
+        imgWidth = 1500;
+        imgHeight = 600;
+    else
+        imgWidth = targetW;
+        imgHeight = targetH;
+    end
+    decLev = 10;
     
     
      sprintf('elevation=%f', elev)
