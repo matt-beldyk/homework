@@ -10,5 +10,5 @@ function [] = plot_translations(trns)
         
     end
 %    nxt = loc(2:end,:) +trns(1:end-1,:)
-        plot(loc(1:end-1,:), loc(2:end,:));
+        plot(loc(:,1), loc(:,2));
 end

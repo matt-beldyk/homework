@@ -6,6 +6,9 @@ function [xy_mappings] = find_features_and_mappings(pth, maxDist, threshold)
     begin_time = cputime();
     images = read_files(pth);
     [w,h, count_images] = size(images);
+    
+   % count_images = 20;
+    
     showy = zeros(w,h,3,count_images);
     
     %count_images = 3;
