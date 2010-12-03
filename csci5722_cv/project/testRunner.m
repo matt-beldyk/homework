@@ -64,5 +64,11 @@ function[angleSkyline, photoSkyline, radModelSkyline] = testRunner()
     figure(4);
     plot(radModelSkyline);
     
-  %  matchSkyLines(angleSkyline, photoSkyline)
+    offset =   matchSkyLines(angleSkyline, radModelSkyline)
+    
+   % radModelSkyline(offset,:) = max(max(radModelSkyline));
+    
+   % figure(5);
+  %  plot(radModelSkyline);
+    
 end
