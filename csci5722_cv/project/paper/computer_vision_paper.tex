@@ -41,6 +41,12 @@ There are a number of systems that currently do similar things to what my projec
 	After this, the skyline in the photograph must be calculated.  The photograph is decimated and several filters are ran on the image to calculate the edge where the ground ends and the sky begins. Once both of these skylines are rendered, I treat them as waveforms \cite{Schafer:DSP} and try to find where the photograph's window best fits the model skyline. 
 \subsection{Rendering from Model}
 The first step in my algorithms is to create a model skyline from some geodetic dataset.  I decided to use the  SRTM 30M DEM dataset as the basis of my model of the skyline.  The SRTM dataset provides 1 lat by 1 lon square tiles that each contain a 3601x3601 matrix of elevations to meter resolution. \cite{farr2007shuttle} This is a simple format to read, but care must be taken to make sure that the corners of the tiles are aligned properly and that the tile is not being read backwards. If either of these cases happen the error is not immediately apparent, and can easily cascade later into the system.  
+\begin{figure}
+	\centering
+	\includegraphics[width=0.5\textwidth]{boulderDem.png}
+	\caption{An example of the decimated SRTM DEM for the area nearby Boulder, Colorado (the N40W105 tile.)}
+	\label{fig:bldrDem}
+\end{figure}
 
 When I create my render, I load the DEM for the location where the photograph was taken.   If my location is too close to the edge of the DEM tile, I also need to render  neighbor tiles.  Once I have my DEM loaded, I need to render a full 360 view around where the photo was shot.  
 
