@@ -13,7 +13,7 @@ function [angleCloud, cleanedCloud, pic] = skylineFromInTetons(targetH, targetW)
         imgWidth = targetW;
         imgHeight = targetH;
     end
-    decLev = 10;
+    decLev = 3;
     
     
      sprintf('elevation=%f', elev)
@@ -45,5 +45,5 @@ function [angleCloud, cleanedCloud, pic] = skylineFromInTetons(targetH, targetW)
     colormap(hsv(floor(maxDist)));
     
     sprintf('SkylineCalc Time = %f, CleaningTime = %f', skyLineTime - startTime, cleanedTime - skyLineTime)
-    save('tetons_state_nov_30.mat');
+   % save('tetons_state_nov_30.mat');
 end

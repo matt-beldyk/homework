@@ -3,13 +3,25 @@ function [] = showSomeImages(pth)
     [count,tmp] = size(images)
 
     
-   for i = 1:count
-    %       doKmeans(images{i});
-    picture = findSkylineSobelHorz(images{i}, rgb2gray(images{i}));
-     %  picture = findSkyLineHighestCannyEdge(images{i}, rgb2gray(images{i}));
-      image(picture)
-       pause
-   end
+    for i = 1:count
+        %       doKmeans(images{i});
+        photo = imresize(images{i}, [nan 150]);
+        picture = findSkylineSobelHorz(photo, rgb2gray(photo));
+        %  picture = findSkyLineHighestCannyEdge(images{i}, rgb2gray(images{i}));
+        
+        photoSkyline = findSkyEdge(picture);
+        
+        % Draw all over my photo
+        %photoSkyline'
+        for j = 1:size(photoSkyline)
+            if photoSkyline(j)
+                photo(photoSkyline(j),j,:) = [0 255 0];
+            end
+        end
+        
+        image(photo)
+        pause
+    end
    
 end
 

@@ -16,7 +16,7 @@ function [offset] = matchSkyLines(photoSkyline, modelSkyline)
                 myDif = myDif + abs(modelSkyline(i+j) - photoSkyline(j));
             end
         end
-        sprintf('i=%d, diff=%f', i, myDif)
+       % sprintf('i=%d, diff=%f', i, myDif)
         
         if myDif < minDiffVal
             minDiffVal = myDif;

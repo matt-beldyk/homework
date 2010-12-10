@@ -32,7 +32,9 @@ for cornerLat = floor(lat) -distanceToLook:floor(lat)+distanceToLook
                 
                 %sprintf('i=%d j=%d, dropoff=%.2f dist=%.2f', i,j,dropoff,dist)
                 
-               [minHeading, maxHeading, distance] = calculateHeadingWindow(i,j,lat, lon, cornerLat, cornerLon, latDist, lonDist, sizeDem);
+                
+                % for wide rendering
+              [minHeading, maxHeading, distance] = calculateHeadingWindow(i,j,lat, lon, cornerLat, cornerLon, latDist, lonDist, sizeDem);
                
                %removing the too wide rendering
                % [mlat, mlon] = demIndex2LatLon(i,j, sizeDem, cornerLat, cornerLon);
