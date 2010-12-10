@@ -54,22 +54,48 @@ When I create my render, I load the DEM for the location where the photograph wa
 
 To create this render, I use an algorithm similar to ray tracing.  I create a blank image that represents this view.  So that I can deal with less normalization issues later, I take the field of view of my photo (online, one can look up the field of view parameters for a given camera for it`s various settings) and the number of pixels it is wide and tall to decide what size the 360 view model should be.  There are limitations to the amount of RAM in the computer for this render, so this 360 view should not be too large, so the image must be decimated.
 
-For every point in the DEM tile(s), I project this point into the image space.  I look at the point`s elevation, distance, and location to calculate the angle where it belongs in my render.  I use an external function \cite{vdist} to calculate the distance to a DEM grid point for the perfect skyline, but at the latitudes of my testset, I can treat the DEM tile as having cartesian coordinates; this allows me to significantly speed up the processing of the skyline\cite{behringer2002registration}.  I precalculate the size of the DEM tile in meters using vdist()\cite{vdist} and create the variables dist$_{\textrm{perLat}}$ and dist$_{\textrm{perLon}}$.
-\begin{displaymath}
+For every point in the DEM tile(s), I project this point into the image space.  I look at the point`s elevation, distance, and location to calculate the angle where it belongs in my render.  I use an external function \cite{vdist} to calculate the distance to a DEM grid point for the perfect skyline, but at the latitudes of my testset, I can treat the DEM tile as having cartesian coordinates; this allows me to significantly speed up the processing of the skyline\cite{behringer2002registration}.  I precalculate the size of the DEM tile in meters using vdist()\cite{vdist} and create the variables $dist_{\textrm{perLat}}$ and $dist_{\textrm{perLon}}$.
+\begin{equation}
 	lat_{dist} = dist_{perLat} * (lat_{point} - lat_{camera})
-\end{displaymath}
-\begin{displaymath}
+\label{eq:az1}
+\end{equation}
+\begin{equation}
 	lon_{dist} = dist_{perLon} * (lon_{point} - lon_{camera})
-\end{displaymath}
-\begin{displaymath}
+\end{equation}
+\begin{equation}
 	distance = \sqrt{lat_{dist}^2 + lon_{dist}^2}
-\end{displaymath}
-\begin{displaymath}
+\end{equation}
+\begin{equation}
 	azimuth = atan2(lat_{dist}, lon_{dist})
-\end{displaymath}
- FIXME(equation here) I store the latitude, longitude and distance from the camera for each pixel (mostly for future extensions of this work.) During this projection, I felt it would be important to give precedence to closer items in each image pixel, so I do a check to see if the newest point is closer than the point currently projected into the same pixel.  In some future version of this algorithm, it might make sense to look at other features that appear from one mountain in front of another, instead of simply the ground/sky edge. For example, with this mode of rendering, I might be able to also annotate mountains in my foreground or use canyons and gullies as features in a future version of this system.
+\label{eq:azend}
+\end{equation}
+I then need to calculate the angular elevation of the point. Using $elev_{point}$ and $elev_{camera}$ from the DEM
+\begin{equation}
+	elevation_{angle} = atan(\frac{elev_{point} - elev_{camera}}{distance})
+\end{equation}
+After this, I need to project these angles into the actual render picture
+\begin{equation}
+	pixel_{height} = floor(\frac{height_{render} * elevation_{angle}}{\pi})
+\end{equation}
+I store the latitude, longitude and distance from the camera for each pixel (mostly for future extensions of this work.) During this projection, I felt it would be important to give precedence to closer items in each image pixel, so I do a check to see if the newest point is closer than the point currently projected into the same pixel.  In some future version of this algorithm, it might make sense to look at other features that appear from one mountain in front of another, instead of simply the ground/sky edge. For example, with this mode of rendering, I might be able to also annotate mountains in my foreground or use canyons and gullies as features in a future version of this system.
 
-There are a number of issues that arise with this approach.  The first one noticed is that all of the points in the DEM are just that: points.  The skyline will result in a jagged edge that is not particularly useful for this system; Figure \ref{fig:tetPoints} shows an example of this.  I solved this approach by asserting that each point would represent a window halfway to it’s neighbors.  The azimuth for each point becomes a window calculated by taking the maximum and minimum angles calculated by adding ½ the distance to the neighboring points to the point I am attempting to render.  This approach creates a more realistic render that looks as if I am rendering a series of square tiles instead of a cloud of points; it also has the advantage that it makes closer items look larger and farther items look smaller. Figure \ref{fig:tetGood} shows the improvements this enhancement shows.  I then fill in the values for this specific point between the minimum and maximum azimuths found. FIXME(Equation here)
+There are a number of issues that arise with this approach.  The first one noticed is that all of the points in the DEM are just that: points.  The skyline will result in a jagged edge that is not particularly useful for this system; Figure \ref{fig:tetPoints} shows an example of this.  I solved this approach by asserting that each point would represent a window halfway to it`s neighbors.  The azimuth for each point becomes a window calculated by taking the maximum and minimum angles calculated by adding half the distance to the neighboring points to the point I am attempting to render.  This approach creates a more realistic render that looks as if I am rendering a series of square tiles instead of a cloud of points; it also has the advantage that it makes closer items look larger and farther items look smaller. To do this render I must first determine what is the location halfway to the next grid point.  Assuming the grid is square and size $size_{grid} * size_{grid}$ and we are counting points $point_{ij}$  to calculate the actual point location
+\begin{equation}
+	lat_{point} = \frac{i}{size_{grid}}+lat_{dem}
+\end{equation}
+\begin{equation}
+	lon_{point} = \frac{j}{size_{grid}}+lon_{dem}
+\end{equation}
+Then the relative azimuths must be calculated using $lat_{point}$ and $lon_{point}$ using equations \ref{eq:az1} and \ref{eq:azend}
+In reality, the minimum and maximum azimuths must be calculated from
+\begin{equation}
+	lat_{points} = \frac{i\pm0.5}{size_{grid}}+lat_{dem}
+\end{equation}
+\begin{equation}
+	lon_{points} = \frac{j\pm0.5}{size_{grid}}+lon_{dem}
+\end{equation}
+  I then fill in the values for this specific point between the minimum and maximum azimuths found. Figure \ref{fig:tetGood} shows the improvements this enhancement shows.
+
 \begin{figure}
 	\centering
 	\includegraphics[width=0.5\textwidth]{tetonsRenderPoints.png}
