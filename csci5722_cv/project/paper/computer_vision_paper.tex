@@ -1,6 +1,12 @@
 \documentclass{acm_proc_article-sp}
-\usepackage[pdftex]{graphicx}
+%\usepackage{graphicx}
+%\usepackage[pdftex]{graphicx}
+\usepackage{subfig}
 %\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+ \makeatletter
+ \let\@copyrightspace\relax
+ \makeatother
+
 \begin{document}
 
 \title{Mountain Skyline Recognition}
@@ -48,14 +54,23 @@ There are a number of issues that arise with this approach.  The first one notic
     There are numerous ways to find the edge where the ground meets the sky in a photograph.  I tried several convolution based methods, before I finally found one that suited my purposes:  a horizontal Sobel edge detector with some heuristic logic.  My initial testing involved using Matlab’s built in edge detectors \cite{mcandrew2004introduction} because it was trivial to try a large number of different filters quickly, but for my final version I wrote my own.  Initially, I tried a Canny edge detector, but it had too many false positives in the sky.  I next attempted to use several simple convolution \cite{Schafer:DSP} based filters of several different size, but most had too many false positives or simply did not find the skyline edge.  Finally, I settled on a 3x3 horizontal Sobel filter. \cite{behringer2002registration}  
 
 As a preprocessing step, I decimate the image into one much smaller so that I have enough RAM in my machine to store the full 360 model render.  For my system, I decimate my photographs to 150 pixels wide; I found this to be a good compromise as large enough to still see features, but small enough that I wouldn’t use too much RAM for my model render. After I decimated, I would find the results of a convolution with a horizontal Sobel filter. Once I had the results from the convolution, I would apply a secondary filter to only keep filter responses above a certain threshold.  After this filtration, I would search through each column of the image looking for the highest edge found; the relative elevation of these points in my image would be the skyline.  FIXME( put some images of annotated skylines and filter responses)
-
+\begin{figure*}
+	\centering
+	  \subfloat[Original Image with Annotated Skyline]{
+		\label{fig:org}
+		\includegraphics[width=0.5\textwidth]{picSkyline.png}}                	  
+	\subfloat[Threasholded Sobel Responses]{
+		\label{fig:sobel}
+		\includegraphics[width=0.5\textwidth]{picSobel.png}}                
+	\caption{An example Sobel filter response}
+\end{figure*}
     There are a number of assumptions in my code.  First, I make the assumption that the camera is upright, and the photograph was not taken at a strange angle.  I also make the assumption that there are no occlusions in the image, because they will appear as part of the skyline, and eventually throw off the entire eventual match.  This assumption is rather problematic, as it is rare to find a photograph with nothing nearby obscuring the full skyline, therefore cropping of images as a preprocessing step may be required.  Another issue with my algorithm is that cumulonimbus and other fluffy white clouds create false positives for my algorithm.   Another problematic situation is a wide open plane with mountains in the far distance; my algorithm will miss the light blue mountains and find the edge between the plane and the mountains.  
 \begin{figure}
 	\centering
-	\includegraphics[width=60mm]{tetonsCloudErrorSmallSkyline.png}
+	\includegraphics[width=0.5\textwidth]{tetonsCloudErrorSmallSkyline.png}
 	\caption{An example of when my algorithm fails due to both clouds and occlusions.}
 \end{figure}
-FIXME( put two trouble images here)
+FIXME( put whitesands pic here)
 \subsection{Matching the Photograph Skyline with the Model Skyline}
     Once the two skylines have been calculated, the subwindow that the photograph viewport represents must be matched with the corresponding view in the model skyline.  The literature suggests using local maximums and minimums (small peaks and valleys in the skyline) as features to match. My approach was to treat the entire skyline  waveform from the photo as a feature vector with a number of missing data points. At this point I have some waveform that goes through the photograph at some elevation in the field of view.  I need to normalized this waveform’s absolute angles to some relative angle.  I choose the median angle of all the skyline points that are actually defined, and then I subtract this median angle from the absolute angle in the skyline to create a new skyline with a median of zero.  I would then iterate over the entire model skyline looking at every possible window in a 360 view around the model skyline.  Each hypothesis window is normalized in the same way that I normalized the photo skyline, thus I am comparing two similar feature vectors.  My algorithm then looks for the closest match using a modified Euclidean distance, but ignoring the pixels in the feature vectors where they are undefined in the photograph skyline.  Once I’ve found the best match in the model skyline, I then need map the pixel coordinates back to the actual angles of the field of view.
 \section{Results}
