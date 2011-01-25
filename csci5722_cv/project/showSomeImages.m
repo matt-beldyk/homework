@@ -5,7 +5,7 @@ function [] = showSomeImages(pth)
     
     for i = 1:count
         %       doKmeans(images{i});
-        photo = imresize(images{i}, [nan 150]);
+        photo = imresize(images{i}, [nan 350]);
         picture = findSkylineSobelHorz(photo, rgb2gray(photo));
         %  picture = findSkyLineHighestCannyEdge(images{i}, rgb2gray(images{i}));
         

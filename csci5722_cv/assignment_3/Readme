@@ -1,18 +1,13 @@
 Matthew Beldyk
 Oct 20, 2010
 
-To run this code, execute the track_movement() function with the path 
-to the images and cam.mat and how many RANSAC iterations (I've found 
-1000 to be a reasonable choice with my code.)
+To run this code, execute the assignment3.m
 
 This code relies on my earlier version of the feature finding/tracking
-code (which I just discovered apparently puts out strange results/doesn't
-work, so I'll need to resubmit that.) Which might explain why I have 
-a bizarre robot track.
+code, so I've also included that codebase.
 
-I poked around and decided that 1000 iterations gave me results comperable
-to the 10000 iterations, so I decided that 1000 was good enough.  I don't
-do much thresholding (excluding what I have in my feature finding code),
+I poked around and decided that 10000 iterations gave me results that were
+good enough.  I don't do much thresholding (excluding what I have in my feature finding code),
 but I do only use sets of features in my calculation of E where all
 of the coorespondences have the same cheirality, and generally there 
 are only a half dozen to a dozen of these found in each 1000 iterations
