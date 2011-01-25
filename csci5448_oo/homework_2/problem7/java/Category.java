@@ -23,7 +23,7 @@ public class Category {
 	public Integer getCountMovies(){
 		return movies.size();
 	}
-	public Double getCostToRentAll(){
+	public Double getCostToRentAll4OneDay(){
 		return getCountMovies() * pricePerDay;
 	}
 	public void addMovie(Movie mov){

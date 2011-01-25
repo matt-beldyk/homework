@@ -36,5 +36,13 @@ public class InventorySystem {
 		
 		return tmp.toString();
 	}
+	
+	public Double calcCostToRentAllMovies4OneDay(){
+		Double ticker = 0.0;
+		for(Category c: categories){
+			ticker = ticker+ c.getCostToRentAll4OneDay();
+		}
+		return ticker;
+	}
 
 }
