@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class InventorySystem {
@@ -8,6 +10,9 @@ public class InventorySystem {
 	public InventorySystem(){
 		movies = new ArrayList<Movie>();
 	
+	}
+	public Collection<Movie> getMovies(){
+		return new ArrayList<Movie>(movies);
 	}
 	public String toString(){
 		StringBuilder tmp = new StringBuilder();
@@ -27,6 +32,22 @@ public class InventorySystem {
 		return tmp.toString();
 	}
 	
+	public void addMovie(Movie m){
+		movies.add(m);
+	}
 	
+	public Map<String, Integer> getCategoryCounts(){
+		Map<String, Integer> cats = new HashMap<String, Integer>();
+		for(Movie m: movies){
+			if(!cats.containsKey(m.getCategory())){
+				cats.put(m.getCategory(), 1);
+			}else{
+				cats.put(m.getCategory(), 1 + cats.get(m.getCategory()));
+			}
+		}
+		return cats;
+		
+		
+	}
 
 }
