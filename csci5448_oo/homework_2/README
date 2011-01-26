@@ -1,0 +1,9 @@
+To build, simply type `ant`
+to run problem 7 and 8 respectivly:
+`ant run-problem7`
+`ant run-problem8`
+
+or simply
+`ant run`
+
+
