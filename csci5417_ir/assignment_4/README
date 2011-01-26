@@ -1,0 +1,4 @@
+For assignment 4 I basically reused my previous code from assignment 3 (including most of my tuning parameters: stoplist, field weights, etc.)  I then took each search document, concatenated all the fields (minus the doc id and mesh terms) and used that as a query.  I had to do a bit of preprocessing because I discovered there was lots of interesting formatting issues that created problems for Lucene (including the fact that “OR” has meaning in queries and was creating parse exceptions.)  I then took the results from this query, removed the result that had the same doc id as my query document (it was doc one in almost every single case.)  and then had a voting system that found the top N mesh terms for the top K documents.  I ended up being satisfied with K=12 and N=2 and an F1Measure of .4038
+
+To Run this code, execute the main in the class KNNasgnment.java
+
