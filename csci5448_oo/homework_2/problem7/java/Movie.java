@@ -1,7 +1,10 @@
 
-public class Movie {
-
+public abstract class Movie {
 	private String movieName;
+	
+	public abstract String getCategory();
+	public abstract Double getPricePerDay();
+	
 	public Movie(String name){
 		setMovieName(name);
 	}
