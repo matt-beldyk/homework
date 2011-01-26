@@ -1,3 +1,4 @@
+package problem7;
 
 public class ActionMovie extends Movie {
 

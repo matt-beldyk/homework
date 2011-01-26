@@ -1,4 +1,5 @@
 
+package problem7;
 public class ComedyMovie extends Movie {
 
 	

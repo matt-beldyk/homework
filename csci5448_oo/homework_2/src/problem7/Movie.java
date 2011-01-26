@@ -1,4 +1,5 @@
 
+package problem7;
 public abstract class Movie {
 	private String movieName;
 	

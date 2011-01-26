@@ -1,3 +1,4 @@
+package problem7;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;

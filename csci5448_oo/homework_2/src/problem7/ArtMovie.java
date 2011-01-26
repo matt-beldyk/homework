@@ -1,4 +1,5 @@
 
+package problem7;
 public class ArtMovie extends Movie {
 
 	public ArtMovie(String string) {

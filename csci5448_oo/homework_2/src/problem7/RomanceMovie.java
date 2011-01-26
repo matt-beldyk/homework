@@ -1,4 +1,5 @@
 
+package problem7;
 public class RomanceMovie extends Movie {
 
 	public RomanceMovie(String movieName) {
