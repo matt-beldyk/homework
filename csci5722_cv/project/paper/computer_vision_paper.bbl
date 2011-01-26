@@ -1,0 +1,66 @@
+\begin{thebibliography}{10}
+
+\bibitem{behringer2002registration}
+R.~Behringer.
+\newblock {Registration for outdoor augmented reality applications using
+  computer vision techniques and hybrid sensors}.
+\newblock In {\em Virtual Reality, 1999. Proceedings., IEEE}, pages 244--251.
+  IEEE, 2002.
+
+\bibitem{burnette2010hello}
+E.~Burnette.
+\newblock {\em {Hello, Android: Introducing Google's Mobile Development
+  Platform}}.
+\newblock Pragmatic Bookshelf, 2010.
+
+\bibitem{chippendale2009environmental}
+P.~Chippendale, M.~Zanin, and C.~Andreatta.
+\newblock {Environmental Content Creation and Visualisation in the `Future
+  Internet`}.
+\newblock In {\em Future Internet-FIS 2008: First Future Internet Symposium
+  Vienna, Austria, September 28-30, 2008 Revised Selected Papers}, page~82.
+  Springer-Verlag New York Inc, 2009.
+
+\bibitem{chippendale2009spatial}
+P.~Chippendale, M.~Zanin, and C.~Andreatta.
+\newblock {Spatial and Temporal Attractiveness Analysis through Geo-Referenced
+  Photo Alignment}.
+\newblock In {\em Geoscience and Remote Sensing Symposium, 2008. IGARSS 2008.
+  IEEE International}, volume~2. IEEE, 2009.
+
+\bibitem{farr2007shuttle}
+T.~Farr, P.~Rosen, E.~Caro, R.~Crippen, R.~Duren, S.~Hensley, M.~Kobrick,
+  M.~Paller, E.~Rodriguez, L.~Roth, et~al.
+\newblock {The shuttle radar topography mission}.
+\newblock {\em Reviews of Geophysics}, 45(2), 2007.
+
+\bibitem{vdist}
+M.~Kleder.
+\newblock Vectorized geodetic distance and azimuth on the wgs84 earth
+  ellipsoid.
+\newblock
+  http://www.mathworks.com/matlabcentral/fileexchange/8607-vectorized-geodetic%
+-distance-and-azimuth-on-the-wgs84-earth-ellipsoid.
+
+\bibitem{heywhatsthat}
+M.~Kosowsky.
+\newblock Hey, what's that?, Dec. 2010.
+\newblock http://www.heywhatsthat.com/.
+
+\bibitem{mcandrew2004introduction}
+A.~McAndrew.
+\newblock {\em {An Introduction to Digital Image Processing with MATLAB}}.
+\newblock Course Technology Press Boston, MA, United States, 2004.
+
+\bibitem{Schafer:DSP}
+A.~V. Oppenheim and R.~W. Schafer.
+\newblock {\em Digital Signal Processing}.
+\newblock Prentice-Hall, Inc., Englewood Cliffs, New Jersey, 1975.
+
+\bibitem{wong2008we}
+J.~Wong and J.~Hong.
+\newblock {What do we mashup when we make mashups?}
+\newblock In {\em Proceedings of the 4th international workshop on End-user
+  software engineering}, pages 35--39. ACM, 2008.
+
+\end{thebibliography}
