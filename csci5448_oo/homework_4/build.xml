@@ -1,0 +1,53 @@
+<!DOCTYPE project>
+
+<project name="OO Homework 4" default="jar" basedir=".">
+
+	<property file="build.properties"/>
+	<property name="build" value="build"/>
+	<property name="src" value="src"/>
+	<property name="dist.dir" value="dist" />
+
+    <property name="pname" value="Beldyk_CSCI5448_HW4"/>
+	<target name="prepare" >
+		<mkdir dir="${build}" />
+		<mkdir dir="${dist.dir}" />
+	</target>
+
+	<target name="clean" >
+		<delete dir="${build}" />
+		<delete dir="${dist.dir}" />
+	</target>
+
+	<target name="compile" depends="clean,prepare">
+		<echo message="Compiling service implementation"/>
+
+				<javac srcdir="${src}" destdir="${build}" deprecation="true" failonerror="true" debug="true">
+				</javac>
+	</target>
+
+	<target name="jar" depends="compile">
+		<jar jarfile="dist/${pname}.jar" >
+			<fileset dir="${build}" />
+		</jar>
+	</target>
+
+    <target name="dist" depends="prepare">
+		<zip destfile="dist/${pname}.zip" >
+			<zipfileset dir="${src}" prefix="${pname}/src/"/>
+            <zipfileset file="build.xml" prefix="${pname}"/>
+            <zipfileset file="beldykHomework2.pdf" prefix="${pname}"/>
+            <zipfileset file="README" prefix="${pname}"/>
+                
+		</zip>
+	</target>
+
+    <target name="run-test" depends="compile">
+        <java fork="true" failonerror="no" classname="Test" classpath="build">  
+            <arg line=""/>
+        </java>
+    </target>
+
+
+    <target name="run" depends="run-test"/>
+
+</project>

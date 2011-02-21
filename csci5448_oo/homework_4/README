@@ -1,0 +1,6 @@
+To compile: javac *.java
+
+To run: java Test
+
+Be sure to run "java Test" in the hw4_original directory, otherwise the
+program will not be able to find its images.
