@@ -8,6 +8,9 @@
 	<property name="dist.dir" value="dist" />
 
     <property name="pname" value="Beldyk_CSCI5448_HW4"/>
+    <property name="writeup" value="Beldyk_CSCI5448_HW4.pdf"/>
+
+
 	<target name="prepare" >
 		<mkdir dir="${build}" />
 		<mkdir dir="${dist.dir}" />
@@ -34,8 +37,9 @@
     <target name="dist" depends="prepare">
 		<zip destfile="dist/${pname}.zip" >
 			<zipfileset dir="${src}" prefix="${pname}/src/"/>
+			<zipfileset dir="images" prefix="${pname}/images/"/>
             <zipfileset file="build.xml" prefix="${pname}"/>
-            <zipfileset file="beldykHomework2.pdf" prefix="${pname}"/>
+            <zipfileset file="${writeup}" prefix="${pname}"/>
             <zipfileset file="README" prefix="${pname}"/>
                 
 		</zip>
