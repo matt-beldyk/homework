@@ -1,7 +1,13 @@
+
+
 import java.awt.Component;
 import java.awt.Graphics;
 
 import javax.swing.Icon;
+
+import beldyk.canvas.Canvas;
+import beldyk.sprites.Sprite;
+import beldyk.sprites.Sprite.Direction;
 
 
 

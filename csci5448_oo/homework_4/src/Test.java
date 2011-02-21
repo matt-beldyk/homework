@@ -3,6 +3,11 @@ import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
+import beldyk.canvas.Canvas;
+import beldyk.sprites.BlueSprite;
+import beldyk.sprites.EastWestSprite;
+import beldyk.sprites.NorthSouthSprite;
+
 public class Test {
 
   public static void main(String[] args) {

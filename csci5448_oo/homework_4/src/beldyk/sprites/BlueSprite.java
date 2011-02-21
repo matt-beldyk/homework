@@ -1,9 +1,13 @@
+package beldyk.sprites;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+
+import beldyk.canvas.Canvas;
 
 public class BlueSprite extends Sprite implements KeyListener {
 

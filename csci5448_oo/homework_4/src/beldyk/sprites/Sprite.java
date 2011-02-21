@@ -1,9 +1,13 @@
+package beldyk.sprites;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.Icon;
+
+import beldyk.canvas.Canvas;
 
 public abstract class Sprite {
 

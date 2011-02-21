@@ -6,6 +6,8 @@ import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
+import beldyk.canvas.Canvas;
+
 public class RedSprite {
 
   public enum Direction {
