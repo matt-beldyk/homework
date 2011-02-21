@@ -11,6 +11,7 @@ public class Test {
 
     c.addSprite(new NorthSouthSprite(400, 400));
     c.addSprite(new EastWestSprite(200, 200));
+    c.addSprite(new RedSpriteAdaptor(350, 350));
 
     BlueSprite b = new BlueSprite(200, 200);
     c.addKeyListener(b);
