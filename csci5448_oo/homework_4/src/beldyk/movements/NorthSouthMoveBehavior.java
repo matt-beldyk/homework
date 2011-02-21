@@ -33,6 +33,7 @@ public class NorthSouthMoveBehavior extends MoveBehavior {
 
 	@Override
 	public void animate(Canvas c, Sprite s) {
+		//FIXME  this is terrible!!!!!
 		switch (s.getDirection()) {
 	      case NORTH:
 	        s.getCurrentTicker(0);
