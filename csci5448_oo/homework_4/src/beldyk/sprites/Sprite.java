@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.Icon;
 
 import beldyk.canvas.Canvas;
+import beldyk.movements.MoveBehavior;
 
 public abstract class Sprite {
 
@@ -21,8 +22,21 @@ public abstract class Sprite {
 
   protected List<Icon> images;
   protected int  current;
+  protected MoveBehavior mvBehavior;
 
-  public Sprite(int x, int y) {
+  public MoveBehavior getMvBehavior() {
+	return mvBehavior;
+}
+
+public void setMvBehavior(MoveBehavior mvBehavior) {
+	this.mvBehavior = mvBehavior;
+}
+
+public int getCurrent() {
+	return current;
+}
+
+public Sprite(int x, int y) {
     this.x  = x;
     this.y  = y;
     current = 0;
@@ -63,6 +77,9 @@ public abstract class Sprite {
 
   public Direction getDirection() {
     return direction;
+  }
+  public void setCurrent(int i){
+	  this.current = i;
   }
 
   public void setDirection(Direction direction) {

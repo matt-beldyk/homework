@@ -10,7 +10,7 @@ import beldyk.sprites.Sprite;
 public class NorthSouthMoveBehavior extends MoveBehavior {
 
 	@Override
-	public void move(Canvas c, Graphics g, Sprite s) {
+	public void move(Canvas c,  Sprite s) {
 		
 	    switch (s.getDirection()) {
 	      case NORTH:
@@ -36,10 +36,10 @@ public class NorthSouthMoveBehavior extends MoveBehavior {
 		//FIXME  this is terrible!!!!!
 		switch (s.getDirection()) {
 	      case NORTH:
-	        s.getCurrentTicker(0);
+	        s.setCurrent(0);
 	        break;
 	      case SOUTH:
-	        s.setCurrentTicker(1);
+	        s.setCurrent(1);
 	        break;
 	    }		
 	}

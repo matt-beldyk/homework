@@ -6,6 +6,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 import beldyk.canvas.Canvas;
+import beldyk.movements.NorthSouthMoveBehavior;
 
 public class NorthSouthSprite extends Sprite {
 
@@ -15,37 +16,17 @@ public class NorthSouthSprite extends Sprite {
     images.add(new ImageIcon("images/north.png"));
     images.add(new ImageIcon("images/south.png"));
     setDirection(Sprite.Direction.NORTH);
+    setMvBehavior(new NorthSouthMoveBehavior());
   }
 
   public void move(Canvas c) {
-    switch (getDirection()) {
-      case NORTH:
-        setY(getY() - 10);
-        if (getY() < 0) {
-          setY(0);
-          setDirection(Sprite.Direction.SOUTH);
-        }
-        break;
-      case SOUTH:
-        setY(getY() + 10);
-        Icon icon = getCurrentImage();
-        if (getY() + icon.getIconHeight() > c.getSize().getHeight()) {
-          setY((int)(c.getSize().getHeight() - icon.getIconHeight()));
-          setDirection(Sprite.Direction.NORTH);
-        }
-        break;
-    }
+	  this.mvBehavior.move(c, this);
+
   }
 
   public void animate(Canvas c) {
-     switch (getDirection()) {
-      case NORTH:
-        current = 0;
-        break;
-      case SOUTH:
-        current = 1;
-        break;
-    }
+	  this.mvBehavior.animate(c, this);
+     
   }
 
 }
