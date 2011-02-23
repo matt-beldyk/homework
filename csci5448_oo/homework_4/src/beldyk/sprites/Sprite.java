@@ -55,9 +55,15 @@ public Sprite(int x, int y) {
     g.draw3DRect(x, y, width, height, true);
 
   }
+  public void move(Canvas c) {
+	  this.mvBehavior.move(c, this);
 
-  public abstract void move(Canvas c);
-  public abstract void animate(Canvas c);
+  }
+
+  public void animate(Canvas c) {
+	  this.mvBehavior.animate(c, this);
+     
+  }
 
   public int getX() {
     return x;

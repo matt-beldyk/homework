@@ -19,14 +19,6 @@ public class NorthSouthSprite extends Sprite {
     setMvBehavior(new NorthSouthMoveBehavior());
   }
 
-  public void move(Canvas c) {
-	  this.mvBehavior.move(c, this);
-
-  }
-
-  public void animate(Canvas c) {
-	  this.mvBehavior.animate(c, this);
-     
-  }
+ 
 
 }
