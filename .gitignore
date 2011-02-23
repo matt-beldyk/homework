@@ -3,6 +3,8 @@
 .project
 bin/
 dist/
+build/
 *.mat
 *.zip
 *.tar
+.DS_Store
