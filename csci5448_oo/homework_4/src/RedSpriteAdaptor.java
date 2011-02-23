@@ -1,12 +1,13 @@
 
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 
 import javax.swing.Icon;
 
 import beldyk.canvas.Canvas;
-import beldyk.movements.DoNothingMoveBevahior;
+import beldyk.movements.DoNothingMoveBehavior;
 import beldyk.sprites.Sprite;
 import beldyk.sprites.Sprite.Direction;
 
@@ -22,7 +23,7 @@ public class RedSpriteAdaptor extends Sprite{
 		super(x, y);
 		rSprite = new RedSprite(x,y);
 		this.setDirection(Direction.NORTH);
-		this.setMvBehavior(new DoNothingMoveBevahior());
+		this.setMvBehavior(new DoNothingMoveBehavior());
 	}
 
 
@@ -42,7 +43,8 @@ public class RedSpriteAdaptor extends Sprite{
 	}
 	@Override
 	public void highlight(Component c, Graphics g) {
-		rSprite.drawMe(c, g);
+		rSprite.highlightMe(c, g);
+		//   	rSprite.drawMe(c, g);
 	}
 
 	public Icon getCurrentImage() {

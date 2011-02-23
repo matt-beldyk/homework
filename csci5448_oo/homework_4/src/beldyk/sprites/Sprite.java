@@ -10,7 +10,7 @@ import java.util.Map;
 import javax.swing.Icon;
 
 import beldyk.canvas.Canvas;
-import beldyk.movements.DoNothingMoveBevahior;
+import beldyk.movements.DoNothingMoveBehavior;
 import beldyk.movements.MoveBehavior;
 
 public abstract class Sprite {
@@ -39,7 +39,7 @@ public Sprite(int x, int y) {
     this.x  = x;
     this.y  = y;
     this.direction = Direction.NONE;
-    this.mvBehavior = new DoNothingMoveBevahior();
+    this.mvBehavior = new DoNothingMoveBehavior();
   }
 
   public void draw(Component c, Graphics g) {
