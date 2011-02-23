@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import javax.swing.Icon;
 
 import beldyk.canvas.Canvas;
+import beldyk.movements.DoNothingMoveBevahior;
 import beldyk.sprites.Sprite;
 import beldyk.sprites.Sprite.Direction;
 
@@ -21,6 +22,7 @@ public class RedSpriteAdaptor extends Sprite{
 		super(x, y);
 		rSprite = new RedSprite(x,y);
 		this.setDirection(Direction.NORTH);
+		this.setMvBehavior(new DoNothingMoveBevahior());
 	}
 
 
@@ -44,7 +46,7 @@ public class RedSpriteAdaptor extends Sprite{
 	}
 
 	public Icon getCurrentImage() {
-		return images.get(current);
+		return images.get(getDirection());
 	}
 
 

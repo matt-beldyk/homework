@@ -9,7 +9,7 @@ import beldyk.sprites.Sprite;
 public abstract class MoveBehavior {
 
 	
-	public abstract void move(Canvas c,  Sprite s);
-	  public abstract void animate(Canvas c, Sprite s);
+	public  void move(Canvas c,  Sprite s){};
+	  public  void animate(Canvas c, Sprite s){};
 
 }

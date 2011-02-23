@@ -5,9 +5,12 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+
 import javax.swing.Icon;
 
 import beldyk.canvas.Canvas;
+import beldyk.movements.DoNothingMoveBevahior;
 import beldyk.movements.MoveBehavior;
 
 public abstract class Sprite {
@@ -20,8 +23,7 @@ public abstract class Sprite {
   private int  y;
   private Direction direction;
 
-  protected List<Icon> images;
-  protected int  current;
+  protected Map<Direction,Icon> images;
   protected MoveBehavior mvBehavior;
 
   public MoveBehavior getMvBehavior() {
@@ -32,22 +34,20 @@ public void setMvBehavior(MoveBehavior mvBehavior) {
 	this.mvBehavior = mvBehavior;
 }
 
-public int getCurrent() {
-	return current;
-}
 
 public Sprite(int x, int y) {
     this.x  = x;
     this.y  = y;
-    current = 0;
+    this.direction = Direction.NONE;
+    this.mvBehavior = new DoNothingMoveBevahior();
   }
 
   public void draw(Component c, Graphics g) {
-    images.get(current).paintIcon(c, g, x, y);
+    images.get(direction).paintIcon(c, g, x, y);
   }
 
   public void highlight(Component c, Graphics g) {
-    Icon icon   = images.get(current);
+    Icon icon   = images.get(direction);
     int  height = icon.getIconHeight();
     int  width  = icon.getIconWidth();
 
@@ -84,16 +84,14 @@ public Sprite(int x, int y) {
   public Direction getDirection() {
     return direction;
   }
-  public void setCurrent(int i){
-	  this.current = i;
-  }
+  
 
   public void setDirection(Direction direction) {
     this.direction = direction;
   }
 
   public Icon getCurrentImage() {
-    return images.get(current);
+    return images.get(direction);
   }
 
 }

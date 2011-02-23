@@ -31,17 +31,6 @@ public class NorthSouthMoveBehavior extends MoveBehavior {
 	    }
 	}
 
-	@Override
-	public void animate(Canvas c, Sprite s) {
-		//FIXME  this is terrible!!!!!
-		switch (s.getDirection()) {
-	      case NORTH:
-	        s.setCurrent(0);
-	        break;
-	      case SOUTH:
-	        s.setCurrent(1);
-	        break;
-	    }		
-	}
+	
 
 }

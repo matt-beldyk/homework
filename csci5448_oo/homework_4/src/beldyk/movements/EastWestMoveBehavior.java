@@ -8,7 +8,7 @@ import beldyk.sprites.Sprite;
 public class EastWestMoveBehavior extends MoveBehavior {
 
 	@Override
-	public void animate(Canvas c, Sprite s) {
+	public void move(Canvas c, Sprite s) {
 		 switch (s.getDirection()) {
 	      case EAST:
 	        s.setX(s.getX() + 10);
@@ -29,16 +29,5 @@ public class EastWestMoveBehavior extends MoveBehavior {
 
 	}
 
-	@Override
-	public void move(Canvas c, Sprite s) {
-		   switch (s.getDirection()) {
-		      case EAST:
-		        s.setCurrent(0);
-		        break;
-		      case WEST:
-		        s.setCurrent(1);
-		        break;
-		    }
-	}
 
 }

@@ -2,6 +2,7 @@ package beldyk.sprites;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.Icon;
@@ -13,12 +14,12 @@ public class BlueSprite extends Sprite implements KeyListener {
 
   public BlueSprite(int x, int y) {
     super(x, y);
-    images = new LinkedList<Icon>();
-    images.add(new ImageIcon("images/BlueNorth.png"));
-    images.add(new ImageIcon("images/BlueSouth.png"));
-    images.add(new ImageIcon("images/BlueEast.png"));
-    images.add(new ImageIcon("images/BlueWest.png"));
-    setDirection(Sprite.Direction.NONE);
+    images = new HashMap<Direction,Icon>();
+    images.put(Direction.NORTH, new ImageIcon("images/BlueNorth.png"));
+    images.put(Direction.SOUTH, new ImageIcon("images/BlueSouth.png"));
+    images.put(Direction.EAST, new ImageIcon("images/BlueEast.png"));
+    images.put(Direction.WEST, new ImageIcon("images/BlueWest.png"));
+    setDirection(Sprite.Direction.NORTH);
   }
 
   public void move(Canvas c) {
@@ -58,24 +59,8 @@ public class BlueSprite extends Sprite implements KeyListener {
 
   }
 
-  public void animate(Canvas c) {
-    switch (getDirection()) {
-      case NONE:
-        break;
-      case NORTH:
-        current = 0;
-        break;
-      case SOUTH:
-        current = 1;
-        break;
-      case EAST:
-        current = 2;
-        break;
-      case WEST:
-        current = 3;
-        break;
-    }
-  }
+  
+  
 
   public void keyTyped(KeyEvent e) {
   }
