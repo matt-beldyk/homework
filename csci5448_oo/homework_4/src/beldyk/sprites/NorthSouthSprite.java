@@ -16,7 +16,7 @@ public class NorthSouthSprite extends Sprite {
     images = new HashMap<Direction,Icon>();
     images.put(Direction.NORTH, new ImageIcon("images/north.png"));
     images.put(Direction.SOUTH, new ImageIcon("images/south.png"));
-    setDirection(Sprite.Direction.NORTH);
+    setImgDirection(Sprite.Direction.NORTH);
     setMvBehavior(new NorthSouthMoveBehavior());
   }
 

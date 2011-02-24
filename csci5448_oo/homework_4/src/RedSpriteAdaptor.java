@@ -22,7 +22,7 @@ public class RedSpriteAdaptor extends Sprite{
 	public RedSpriteAdaptor(int x, int y) {
 		super(x, y);
 		rSprite = new RedSprite(x,y);
-		this.setDirection(Direction.NORTH);
+		this.setImgDirection(Direction.NONE);
 		this.setMvBehavior(new DoNothingMoveBehavior());
 	}
 
@@ -48,7 +48,7 @@ public class RedSpriteAdaptor extends Sprite{
 	}
 
 	public Icon getCurrentImage() {
-		return images.get(getDirection());
+		return images.get(getImgDirection());
 	}
 
 

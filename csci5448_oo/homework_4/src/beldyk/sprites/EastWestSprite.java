@@ -16,7 +16,7 @@ public class EastWestSprite extends Sprite {
     images = new HashMap<Direction,Icon>();
     images.put(Direction.EAST, new ImageIcon("images/east.png"));
     images.put(Direction.WEST, new ImageIcon("images/west.png"));
-    super.setDirection(Sprite.Direction.EAST);
+    super.setImgDirection(Sprite.Direction.EAST);
     super.setMvBehavior(new EastWestMoveBehavior());
   }
 

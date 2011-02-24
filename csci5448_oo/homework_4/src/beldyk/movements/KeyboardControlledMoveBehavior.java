@@ -19,7 +19,7 @@ public class KeyboardControlledMoveBehavior extends MoveBehavior {
 		int  canvasHeight = (int)c.getSize().getHeight();
 		int  canvasWidth  = (int)c.getSize().getWidth();
 
-		switch (s.getDirection()) {
+		switch (s.getImgDirection()) {
 		case NORTH:
 			s.setY(s.getY() - 10);
 			if (s.getY() < 0) {
@@ -63,16 +63,16 @@ public class KeyboardControlledMoveBehavior extends MoveBehavior {
 	
 	public void keyTyped(KeyEvent e, Sprite s) {
 		if (e.getKeyCode() == e.VK_UP) {
-		      s.setDirection(Sprite.Direction.NORTH);
+		      s.setImgDirection(Sprite.Direction.NORTH);
 		    }
 		    if (e.getKeyCode() == e.VK_DOWN) {
-		    	s.setDirection(Sprite.Direction.SOUTH);
+		    	s.setImgDirection(Sprite.Direction.SOUTH);
 		    }
 		    if (e.getKeyCode() == e.VK_RIGHT) {
-		    	s.setDirection(Sprite.Direction.EAST);
+		    	s.setImgDirection(Sprite.Direction.EAST);
 		    }
 		    if (e.getKeyCode() == e.VK_LEFT) {
-		    	s.setDirection(Sprite.Direction.WEST);
+		    	s.setImgDirection(Sprite.Direction.WEST);
 		    }
 	}
 

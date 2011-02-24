@@ -21,7 +21,7 @@ public abstract class Sprite {
 
   private int  x;
   private int  y;
-  private Direction direction;
+  private Direction imgDirection;
 
   protected Map<Direction,Icon> images;
   protected MoveBehavior mvBehavior;
@@ -38,16 +38,16 @@ public void setMvBehavior(MoveBehavior mvBehavior) {
 public Sprite(int x, int y) {
     this.x  = x;
     this.y  = y;
-    this.direction = Direction.NONE;
+    this.imgDirection = Direction.NONE;
     this.mvBehavior = new DoNothingMoveBehavior();
   }
 
   public void draw(Component c, Graphics g) {
-    images.get(direction).paintIcon(c, g, x, y);
+    images.get(imgDirection).paintIcon(c, g, x, y);
   }
 
   public void highlight(Component c, Graphics g) {
-    Icon icon   = images.get(direction);
+    Icon icon   = images.get(imgDirection);
     int  height = icon.getIconHeight();
     int  width  = icon.getIconWidth();
 
@@ -81,17 +81,17 @@ public Sprite(int x, int y) {
     this.y = y;
   }
 
-  public Direction getDirection() {
-    return direction;
+  public Direction getImgDirection() {
+    return imgDirection;
   }
   
 
-  public void setDirection(Direction direction) {
-    this.direction = direction;
+  public void setImgDirection(Direction direction) {
+    this.imgDirection = direction;
   }
 
   public Icon getCurrentImage() {
-    return images.get(direction);
+    return images.get(imgDirection);
   }
 
 }

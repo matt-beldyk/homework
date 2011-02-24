@@ -22,7 +22,7 @@ public class BlueSprite extends Sprite  {
     images.put(Direction.EAST, new ImageIcon("images/BlueEast.png"));
     images.put(Direction.WEST, new ImageIcon("images/BlueWest.png"));
     images.put(Direction.NONE, new ImageIcon("images/BlueNorth.png"));
-    setDirection(Sprite.Direction.NONE);
+    setImgDirection(Sprite.Direction.NONE);
     this.mvBehavior = new DoNothingMoveBehavior();
   }
 
