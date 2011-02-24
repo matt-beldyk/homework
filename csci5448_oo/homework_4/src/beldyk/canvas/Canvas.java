@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 
 import beldyk.movements.KeyboardControlledMoveBehavior;
+import beldyk.movements.MoveBehavior;
 import beldyk.sprites.Sprite;
 
 public class Canvas extends JComponent implements ActionListener, KeyListener {
@@ -18,6 +19,7 @@ public class Canvas extends JComponent implements ActionListener, KeyListener {
   private static Canvas canvas;
 
   private KeyboardControlledMoveBehavior keyMvBehav;
+  private MoveBehavior savedMoveBehav;
   
   public static Canvas getCanvas() {
     if (canvas == null) {
@@ -85,10 +87,17 @@ public class Canvas extends JComponent implements ActionListener, KeyListener {
 
   public void keyReleased(KeyEvent e) {
     if (e.getKeyCode() == e.VK_TAB) {
+    	if(this.savedMoveBehav != null){
+    		sprites.get(highlighted).setMvBehavior(this.savedMoveBehav);
+    	}
+    	savedMoveBehav = sprites.get(highlighted).getMvBehavior();
+    	
       highlighted = highlighted + 1;
       if (highlighted == sprites.size()) {
         highlighted = 0;
       }
+      sprites.get(highlighted).setMvBehavior(this.keyMvBehav);
+      
     }
   }
 
