@@ -5,6 +5,7 @@ import javax.swing.ImageIcon;
 
 import beldyk.canvas.Canvas;
 import beldyk.sprites.BlueSprite;
+import beldyk.sprites.CCSupermanSprite;
 import beldyk.sprites.EastWestSprite;
 import beldyk.sprites.NorthSouthSprite;
 
@@ -21,6 +22,7 @@ public class Test {
     BlueSprite b = new BlueSprite(200, 200);
   //  c.addKeyListener(b);
     c.addSprite(b);
+    c.addSprite(new CCSupermanSprite(300,300));
 
   }
 
