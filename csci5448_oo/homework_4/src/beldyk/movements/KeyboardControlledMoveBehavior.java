@@ -19,7 +19,7 @@ public class KeyboardControlledMoveBehavior extends MoveBehavior {
 		int  canvasHeight = (int)c.getSize().getHeight();
 		int  canvasWidth  = (int)c.getSize().getWidth();
 
-		switch (s.getImgDirection()) {
+		switch (getMvDirection()) {
 		case NORTH:
 			s.setY(s.getY() - 10);
 			if (s.getY() < 0) {
@@ -48,32 +48,58 @@ public class KeyboardControlledMoveBehavior extends MoveBehavior {
 	}
 
 
-	public void keyPressed(KeyEvent e, Sprite s) {
-		// TODO Auto-generated method stub
 
-	}
 
-	
 	public void keyReleased(KeyEvent e, Sprite s) {
-		   if (e.getKeyCode() != e.VK_TAB) {
-			      //setDirection(Sprite.Direction.NONE);
-			    }
+		if (e.getKeyCode() != e.VK_TAB) {
+			setMvDirection(Sprite.Direction.NONE);
+		}
 	}
 
-	
+
 	public void keyTyped(KeyEvent e, Sprite s) {
+		/*
+		System.out.println("type type");
 		if (e.getKeyCode() == e.VK_UP) {
-		      s.setImgDirection(Sprite.Direction.NORTH);
+		     // s.setImgDirection(Sprite.Direction.NORTH);
+		      setMvDirection(Sprite.Direction.NORTH);
 		    }
 		    if (e.getKeyCode() == e.VK_DOWN) {
-		    	s.setImgDirection(Sprite.Direction.SOUTH);
+		    //	s.setImgDirection(Sprite.Direction.SOUTH);
+		    	setMvDirection(Sprite.Direction.SOUTH);
 		    }
 		    if (e.getKeyCode() == e.VK_RIGHT) {
-		    	s.setImgDirection(Sprite.Direction.EAST);
+		    //	s.setImgDirection(Sprite.Direction.EAST);
+		    	setMvDirection(Sprite.Direction.EAST);
 		    }
 		    if (e.getKeyCode() == e.VK_LEFT) {
-		    	s.setImgDirection(Sprite.Direction.WEST);
+		    //	s.setImgDirection(Sprite.Direction.WEST);
+		    	setMvDirection(Sprite.Direction.WEST);
 		    }
+		 */
+	}
+
+
+
+
+	public void keyPressed(KeyEvent e, Sprite s) {
+		System.out.println("type type");
+		if (e.getKeyCode() == e.VK_UP) {
+			//     s.setImgDirection(Sprite.Direction.NORTH);
+			setMvDirection(Sprite.Direction.NORTH);
+		}
+		if (e.getKeyCode() == e.VK_DOWN) {
+			// 	s.setImgDirection(Sprite.Direction.SOUTH);
+			setMvDirection(Sprite.Direction.SOUTH);
+		}
+		if (e.getKeyCode() == e.VK_RIGHT) {
+			//	s.setImgDirection(Sprite.Direction.EAST);
+			setMvDirection(Sprite.Direction.EAST);
+		}
+		if (e.getKeyCode() == e.VK_LEFT) {
+			//	s.setImgDirection(Sprite.Direction.WEST);
+			setMvDirection(Sprite.Direction.WEST);
+		}		
 	}
 
 }

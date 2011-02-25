@@ -8,8 +8,20 @@ import beldyk.sprites.Sprite;
 
 public abstract class MoveBehavior {
 
-	
-	public  void move(Canvas c,  Sprite s){};
-	  public  void animate(Canvas c, Sprite s){};
+	private Sprite.Direction mvDirection;
+
+	public  void move(Canvas c,  Sprite s){}
+	public  void animate(Canvas c, Sprite s){}
+
+	public MoveBehavior(){
+		mvDirection  = Sprite.Direction.NONE;
+	}
+
+	public void setMvDirection(Sprite.Direction mvDirection) {
+		this.mvDirection = mvDirection;
+	}
+	public Sprite.Direction getMvDirection() {
+		return mvDirection;
+	};
 
 }
