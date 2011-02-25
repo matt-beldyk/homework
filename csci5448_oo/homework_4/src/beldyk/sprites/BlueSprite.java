@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import beldyk.canvas.Canvas;
 import beldyk.movements.DoNothingMoveBehavior;
 import beldyk.movements.KeyboardControlledMoveBehavior;
+import beldyk.movements.SpinMoveBehavior;
 
 public class BlueSprite extends Sprite  {
 
@@ -25,13 +26,16 @@ public class BlueSprite extends Sprite  {
     images.put(Direction.WEST, new ImageIcon("images/BlueWest.png"));
     images.put(Direction.NONE, new ImageIcon("images/BlueNorth.png"));
     setImgDirection(Sprite.Direction.NONE);
-    this.mvBehavior = new DoNothingMoveBehavior();
+    //  this.mvBehavior = new DoNothingMoveBehavior();
+      this.mvBehavior = new SpinMoveBehavior();
   }
   
+  /*
   @Override 
   public void draw(Component c, Graphics g) {
     images.get(this.mvBehavior.getMvDirection()).paintIcon(c, g, getX(), getY());
   }
+  */
 
 
   
