@@ -1,5 +1,7 @@
 package beldyk.sprites;
 
+import java.awt.Component;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
@@ -24,6 +26,11 @@ public class BlueSprite extends Sprite  {
     images.put(Direction.NONE, new ImageIcon("images/BlueNorth.png"));
     setImgDirection(Sprite.Direction.NONE);
     this.mvBehavior = new DoNothingMoveBehavior();
+  }
+  
+  @Override 
+  public void draw(Component c, Graphics g) {
+    images.get(this.mvBehavior.getMvDirection()).paintIcon(c, g, getX(), getY());
   }
 
 
