@@ -5,3 +5,8 @@ To run: ant run
 
     The code will create a number of sprites that use several different MoveBehaviors with the stragey pattern.  The BlueSprite has a default behavior of Spinning, and "Creative Commons Superman" will fly back and forth across the screen.  The RedSprite is available to my code via RedSpriteAdaptor, but because I cannot change any of the internals to RedSprite, I cannot control that Sprite with a keyboard.  
     I also use the Iterator pattern in my Canvas class to operate on my list of Sprites. Also, depending on how you think about things, my ant build script can be considered an example of the use of Facade pattern to simplify the compilation and not forcing the developer to understand all of the ideosyncrocies of javac, they just need to understand "run" and "compile" (heck, the example in the "Gang of Four" book is a compiler system.) 
+
+    The class diagrams are located at:
+     Beldyk_CSCI5448_HW4/docs/final_uml_diagram.png
+     Beldyk_CSCI5448_HW4/docs/initial_class_uml.png
+

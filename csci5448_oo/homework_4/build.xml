@@ -38,6 +38,7 @@
 		<zip destfile="dist/${pname}.zip" >
 			<zipfileset dir="${src}" prefix="${pname}/src/"/>
 			<zipfileset dir="images" prefix="${pname}/images/"/>
+			<zipfileset dir="docs" prefix="${pname}/docs/"/>
             <zipfileset file="build.xml" prefix="${pname}"/>
             <zipfileset file="${writeup}" prefix="${pname}"/>
             <zipfileset file="README" prefix="${pname}"/>
