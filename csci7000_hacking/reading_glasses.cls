@@ -665,7 +665,7 @@
   }
 \else
   \def\@normalsize{%changed next to 9 from 10
-    \@setsize\normalsize{13\p@}\ixpt\@ixpt
+    \@setsize\normalsize{14\p@}\ixpt\@ixpt
    \abovedisplayskip 6\p@ \@plus2\p@ \@minus\p@
     \belowdisplayskip \abovedisplayskip
     \abovedisplayshortskip 6\p@ \@minus 3\p@
