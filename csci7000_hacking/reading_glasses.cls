@@ -110,6 +110,7 @@
 %%% You may turn this hackery off via the -e option:
 %%%     dvips -e 0 foo.dvi >foo.ps
 %%%
+\typeout{Derp, this is the I need reading glassed template}
 \typeout{Document Class 'acm_proc_article-sp' <22nd. April '09>.  Modified by G.K.M. Tobin}
 \typeout{Based in part upon document Style `acmconf' <22 May 89>. Hacked 4/91 by}
 \typeout{shivers@cs.cmu.edu, 4/93 by theobald@cs.mcgill.ca}
@@ -142,12 +143,12 @@
 %% are OK as is. Olin.
 \advance\topmargin by -37pt     % Leave 37pt above text for headers
 \headheight 12pt                % Height of box containing running head.
-\headsep 25pt                   % Space between running head and text.
+\headsep 35pt                   % Space between running head and text.
 
-\textheight 666pt       % 9 1/4 column height
+\textheight 636pt       % 9 1/4 column height
 \textwidth 42pc         % Width of text line.
                         % For two-column mode:
-\columnsep 2pc          %    Space between columns
+\columnsep 3pc          %    Space between columns
 \columnseprule 0pt      %    Width of rule between columns.
 \hfuzz 1pt              % Allow some variation in column width, otherwise it's
                         % too hard to typeset in narrow columns.
